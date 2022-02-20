@@ -1,4 +1,6 @@
 package com.connection.utils.navigation
 
-class NavigationGraph {
-}
+sealed class Destination
+
+object Internal : Destination()
+object External : Destination()
