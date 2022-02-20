@@ -1,6 +1,6 @@
 # Connection
 
-Android chat application
+Android chat application.
 
 ## Getting started
 
