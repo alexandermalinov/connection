@@ -21,7 +21,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     }
 
     private fun observeUiLiveData() {
-        viewModel.uiLiveData.observe(viewLifecycleOwner) {}
+        viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
+            dataBinding.model = uiLiveData
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_register

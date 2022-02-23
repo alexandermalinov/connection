@@ -7,28 +7,17 @@ import com.connection.utils.common.Constants.EMPTY
 import java.util.*
 
 data class RegisterUiModel(
-    val id: UUID,
-    val profilePicture: String
+    val id: UUID = UUID.randomUUID(),
+    var email: String = EMPTY,
+    var username: String = EMPTY,
+    var password: String = EMPTY,
+    val profilePicture: String = EMPTY
 ) : BaseObservable() {
 
     @get:Bindable
-    var email: String = EMPTY
+    var loading: Boolean = false
         set(value) {
             field = value
-            notifyPropertyChanged(BR.email)
-        }
-
-    @get:Bindable
-    var username: String = EMPTY
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.username)
-        }
-
-    @get:Bindable
-    var password: String = EMPTY
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.password)
+            notifyPropertyChanged(BR.loading)
         }
 }
