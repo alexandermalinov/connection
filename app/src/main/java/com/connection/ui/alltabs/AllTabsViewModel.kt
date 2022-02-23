@@ -5,4 +5,5 @@ import javax.inject.Inject
 
 class AllTabsViewModel @Inject constructor()  : BaseViewModel() {
 
+
 }

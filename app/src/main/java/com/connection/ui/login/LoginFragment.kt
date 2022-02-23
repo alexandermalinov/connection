@@ -15,5 +15,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+    private fun observeUiLiveData() {
+
+    }
+
     override fun getLayoutId(): Int = R.layout.fragment_login
 }

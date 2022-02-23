@@ -27,19 +27,22 @@ class RegisterViewModel @Inject constructor() : BaseViewModel(), RegisterPresent
 
     private val _uiLiveData = MutableLiveData(RegisterUiModel())
 
-    override fun onRegisterClick() {
-        val user = User(_uiLiveData.value?.id.toString(), _uiLiveData.value?.username).also {
-            it.metadata = JSONObject(
-                mapOf(
-                    "email" to _uiLiveData.value?.email,
-                    "password" to _uiLiveData.value?.password
-                )
+    private fun getUser(): User = User(
+        _uiLiveData.value?.id.toString(),
+        _uiLiveData.value?.username
+    ).also {
+        it.metadata = JSONObject(
+            mapOf(
+                "email" to _uiLiveData.value?.email,
+                "password" to _uiLiveData.value?.password
             )
-        }
+        )
+    }
 
+    override fun onRegisterClick() {
         if (_uiLiveData.value?.email?.isEmailValid() == true) {
             CometChat.createUser(
-                user,
+                getUser(),
                 AUTH_KEY,
                 object : CometChat.CallbackListener<User>() {
                     override fun onSuccess(p0: User?) {
@@ -50,6 +53,7 @@ class RegisterViewModel @Inject constructor() : BaseViewModel(), RegisterPresent
                     }
 
                     override fun onError(p0: CometChatException?) {
+                        _uiLiveData.value?.loading = false
                         Timber.e("Error occurred on registering user: $p0")
                     }
 
