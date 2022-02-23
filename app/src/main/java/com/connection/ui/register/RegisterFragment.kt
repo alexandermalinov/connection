@@ -1,22 +1,28 @@
 package com.connection.ui.register
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.connection.R
+import com.connection.databinding.FragmentRegisterBinding
+import com.connection.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class RegisterFragment : Fragment() {
+@AndroidEntryPoint
+class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private val viewModel: RegisterViewModel by viewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dataBinding.presenter = viewModel
+        observeUiLiveData()
+        observeNavigation(viewModel.navigationLiveData)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_register, container, false)
+    private fun observeUiLiveData() {
+        viewModel.uiLiveData.observe(viewLifecycleOwner) {}
     }
+
+    override fun getLayoutId(): Int = R.layout.fragment_register
 }

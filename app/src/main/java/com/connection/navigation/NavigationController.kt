@@ -1,4 +1,4 @@
-package com.connection.utils.navigation
+package com.connection.navigation
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController

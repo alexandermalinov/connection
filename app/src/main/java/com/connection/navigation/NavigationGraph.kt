@@ -1,4 +1,4 @@
-package com.connection.utils.navigation
+package com.connection.navigation
 
 import android.os.Bundle
 import androidx.navigation.NavOptions

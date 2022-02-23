@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import com.connection.utils.navigation.Destination
-import com.connection.utils.navigation.navigate
+import com.connection.navigation.Destination
+import com.connection.navigation.navigate
 
 abstract class BaseFragment<T: ViewDataBinding> : Fragment() {
 

@@ -21,10 +21,22 @@
         android:id="@+id/registerFragment"
         android:name="com.connection.ui.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_allMessagesFragment"
+            app:destination="@id/allMessagesFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.connection.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_allMessagesFragment"
+            app:destination="@id/allMessagesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/allMessagesFragment"
+        android:name="com.connection.AllTabsFragment"
+        android:label="AllMessagesFragment" />
 </navigation>
