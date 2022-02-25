@@ -102,5 +102,5 @@ dependencies {
     kapt 'androidx.hilt:hilt-compiler:1.0.0'
 
     // CometChat SDK
-    implementation 'com.cometchat:pro-android-chat-sdk:2.4.1'
+    implementation 'com.sendbird.sdk:sendbird-android-sdk:3.1.7'
 }

@@ -1,16 +1,17 @@
 package com.connection.di
 
 import android.app.Application
+import android.provider.UserDictionary.Words.APP_ID
+import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
-import com.cometchat.pro.core.AppSettings
-import com.cometchat.pro.core.CometChat
-import com.cometchat.pro.exceptions.CometChatException
-import com.connection.utils.common.Constants.COMET_CHAT_APP_ID
-import com.connection.utils.common.Constants.COMET_CHAT_REGION
+import com.sendbird.android.SendBird
+import com.sendbird.android.SendBirdException
+import com.sendbird.android.handlers.InitResultHandler
 import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import javax.inject.Inject
+
 
 @HiltAndroidApp
 class ConnectionApplication : Application(), Configuration.Provider {
@@ -23,25 +24,23 @@ class ConnectionApplication : Application(), Configuration.Provider {
         .setWorkerFactory(workerFactory)
         .build()
 
-    private val appSettings = AppSettings
-        .AppSettingsBuilder()
-        .subscribePresenceForAllUsers()
-        .setRegion(COMET_CHAT_REGION)
-        .build()
-
     override fun onCreate() {
         super.onCreate()
-        CometChat.init(
-            this,
-            COMET_CHAT_APP_ID,
-            appSettings,
-            object : CometChat.CallbackListener<String>() {
-                override fun onSuccess(successMessage: String) {
-                    Timber.i("Initialization completed successfully")
+        SendBird.init(
+            APP_ID,
+            applicationContext,
+            false,
+            object : InitResultHandler {
+                override fun onMigrationStarted() {
+                    // This won't be called if useLocalCaching is set to false.
                 }
 
-                override fun onError(e: CometChatException) {
-                    Timber.i("Initialization failed with exception: $e.message")
+                override fun onInitFailed(e: SendBirdException) {
+                    // This won't be called if useLocalCaching is set to false.
+                }
+
+                override fun onInitSucceed() {
+                    Timber.i("Application", "Called when initialize is done.")
                 }
             })
     }

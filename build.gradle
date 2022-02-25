@@ -19,10 +19,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        maven {
-            url "https://dl.cloudsmith.io/public/cometchat/cometchat-pro-android/maven/"
-
-        }
+        maven { url "https://repo.sendbird.com/public/maven" }
         mavenCentral()
     }
 }
