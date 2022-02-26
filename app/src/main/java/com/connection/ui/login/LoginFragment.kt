@@ -6,7 +6,9 @@ import androidx.fragment.app.viewModels
 import com.connection.R
 import com.connection.databinding.FragmentLoginBinding
 import com.connection.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private val viewModel: LoginViewModel by viewModels()

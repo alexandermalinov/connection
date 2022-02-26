@@ -3,6 +3,8 @@ package com.connection.data.repository.user
 import com.connection.data.api.response.User
 import com.connection.utils.common.Constants.EMPTY
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserRemoteSource @Inject constructor(
@@ -19,6 +21,8 @@ class UserRemoteSource @Inject constructor(
         ).addOnCompleteListener { task ->
             if (task.isSuccessful)
                 onSuccess(user)
+            else
+                Timber.e("error occurred: ${task.exception?.message}")
         }
     }
 
@@ -32,6 +36,8 @@ class UserRemoteSource @Inject constructor(
         ).addOnCompleteListener { task ->
             if (task.isSuccessful)
                 onSuccess(user)
+            else
+                Timber.e("error occurred: ${task.exception?.message}")
         }
     }
 

@@ -5,6 +5,8 @@ import android.content.Context
 import com.connection.data.repository.user.UserRemoteSource
 import com.connection.data.repository.user.UserRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,13 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RepositoryModule {
-
-    @Provides
-    fun providesContext(application: Application): Context = application
-
-    @Singleton
-    @Provides
-    fun provideFirebaseAuth(auth: FirebaseAuth): FirebaseAuth = auth
 
     @Singleton
     @Provides

@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import com.connection.R
 import com.connection.databinding.FragmentSplashBinding
 import com.connection.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     private val viewModel: SplashViewModel by viewModels()

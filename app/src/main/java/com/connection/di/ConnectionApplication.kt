@@ -1,8 +1,6 @@
 package com.connection.di
 
 import android.app.Application
-import android.provider.UserDictionary.Words.APP_ID
-import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.sendbird.android.SendBird
@@ -27,7 +25,7 @@ class ConnectionApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         SendBird.init(
-            APP_ID,
+            "com.connection",
             applicationContext,
             false,
             object : InitResultHandler {

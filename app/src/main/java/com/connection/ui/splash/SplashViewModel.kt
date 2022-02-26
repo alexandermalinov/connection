@@ -7,10 +7,12 @@ import com.connection.ui.base.BaseViewModel
 import com.connection.utils.common.Constants.SPLASH_SCREEN_DELAY
 import com.connection.navigation.NavigationGraph
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class SplashViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel() {
