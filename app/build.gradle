@@ -4,6 +4,7 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.5.21'
     id 'androidx.navigation.safeargs'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
     id 'dagger.hilt.android.plugin'
 }
 
@@ -103,4 +104,13 @@ dependencies {
 
     // CometChat SDK
     implementation 'com.sendbird.sdk:sendbird-android-sdk:3.1.7'
+
+    // Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    // Firebase authentication
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    // Add the dependency for the Firebase SDK for Google Analytics
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics-ktx'
 }

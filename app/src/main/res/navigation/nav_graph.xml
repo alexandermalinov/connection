@@ -37,6 +37,6 @@
     </fragment>
     <fragment
         android:id="@+id/allMessagesFragment"
-        android:name="com.connection.AllTabsFragment"
+        android:name="com.connection.ui.alltabs.AllTabsFragment"
         android:label="AllMessagesFragment" />
 </navigation>

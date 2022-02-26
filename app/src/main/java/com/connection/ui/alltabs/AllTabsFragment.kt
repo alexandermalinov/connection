@@ -1,10 +1,10 @@
-package com.connection
+package com.connection.ui.alltabs
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import com.connection.R
 import com.connection.databinding.FragmentAllTabsBinding
-import com.connection.ui.alltabs.AllTabsViewModel
 import com.connection.ui.base.BaseFragment
 
 class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
