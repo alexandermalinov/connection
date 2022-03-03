@@ -26,8 +26,8 @@ class SplashViewModel @Inject constructor(
 
     private fun navigateUser() {
         _navigationLiveData.value = if (userRepository.isUserLoggedIn())
-            NavigationGraph(R.id.action_splashFragment_to_loginFragment)
+            NavigationGraph(R.id.action_splashFragment_to_allMessagesFragment)
         else
-            NavigationGraph(R.id.action_splashFragment_to_registerFragment)
+            NavigationGraph(R.id.action_splashFragment_to_loginFragment)
     }
 }

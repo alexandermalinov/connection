@@ -1,10 +1,11 @@
 package com.connection.ui.register
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.response.User
+import com.connection.data.api.model.User
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
@@ -24,24 +25,39 @@ class RegisterViewModel @Inject constructor(
 
     private val _uiLiveData = MutableLiveData(RegisterUiModel())
 
-    private fun login(user: User?) {
-        viewModelScope.launch {
-            userRepository.logUser(user) {
-                _navigationLiveData.value = NavigationGraph(
-                    R.id.action_registerFragment_to_allMessagesFragment
-                )
+    private suspend fun register() {
+        _uiLiveData.value?.let { uiData ->
+            userRepository.registerAuth(uiData.email, uiData.password) {
+                viewModelScope.launch {
+                    initUser()?.let {
+                        userRepository.registerDB(it) { registeredUser ->
+                            onRegister(registeredUser)
+                        }
+                    }
+                }
             }
         }
     }
 
-    private suspend fun register() {
-        _uiLiveData.value?.apply {
-            userRepository.registerUser(
-                User(email, password, username, EMPTY)
-            ) { user ->
-                login(user)
-            }
-        }
+    private fun initUser() = _uiLiveData.value?.let {
+        User(
+            email = it.email,
+            username = it.username,
+            password = it.password,
+            profilePicture = EMPTY
+        )
+    }
+
+    private fun onRegister(user: User) {
+        _uiLiveData.value?.loading = true
+        _navigationLiveData.value = NavigationGraph(
+            R.id.action_registerFragment_to_allMessagesFragment,
+            bundleOf(
+                "id" to user.id,
+                "username" to user.username,
+                "user_password" to user.profilePicture
+            )
+        )
     }
 
     override fun onRegisterClick() {

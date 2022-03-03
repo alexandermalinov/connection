@@ -1,6 +1,6 @@
 package com.connection.data.repository.user
 
-import com.connection.data.api.response.User
+import com.connection.data.api.model.User
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -9,31 +9,47 @@ class UserRepository @Inject constructor(
 
     interface RemoteSource {
 
-        suspend fun logUser(
-            user: User?,
-            onSuccess: (User?) -> Unit
+        suspend fun loginAuth(
+            email: String,
+            password: String,
+            onSuccess: (String?) -> Unit
         )
 
-        suspend fun registerUser(
-            user: User?,
-            onSuccess: (User?) -> Unit
+        suspend fun registerAuth(
+            email: String,
+            password: String,
+            onSuccess: () -> Unit
         )
+
+        suspend fun registerDB(user: User, onSuccess: (User) -> Unit)
 
         fun isUserLoggedIn(): Boolean
+
+        fun connectSendBird(id: String)
     }
 
-    suspend fun logUser(
-        user: User?,
-        onSuccess: (User?) -> Unit
+    suspend fun login(
+        email: String,
+        password: String,
+        onSuccess: (String?) -> Unit
     ) {
-        remoteSource.logUser(user, onSuccess)
+        remoteSource.loginAuth(email, password, onSuccess)
     }
 
-    suspend fun registerUser(
-        user: User?,
-        onSuccess: (User?) -> Unit
+    suspend fun registerAuth(
+        email: String,
+        password: String,
+        onSuccess: () -> Unit
     ) {
-        remoteSource.registerUser(user, onSuccess)
+        remoteSource.registerAuth(email, password, onSuccess)
+    }
+
+    suspend fun registerDB(user: User, onSuccess: (User) -> Unit) {
+        remoteSource.registerDB(user, onSuccess)
+    }
+
+    fun connectSendBird(id: String) {
+        remoteSource.connectSendBird(id)
     }
 
     fun isUserLoggedIn() = remoteSource.isUserLoggedIn()

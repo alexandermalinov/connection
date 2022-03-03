@@ -6,7 +6,9 @@ import androidx.fragment.app.viewModels
 import com.connection.R
 import com.connection.databinding.FragmentAllTabsBinding
 import com.connection.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
 
     private val viewModel: AllTabsViewModel by viewModels()

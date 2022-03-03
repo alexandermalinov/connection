@@ -3,6 +3,7 @@ package com.connection.di
 import android.app.Application
 import android.content.Context
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
@@ -20,4 +21,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFirebaseAuth() = Firebase.auth
+
+    @Singleton
+    @Provides
+    fun provideFirebaseDatabase() = FirebaseDatabase.getInstance(
+        "https://connection-18947-default-rtdb.europe-west1.firebasedatabase.app"
+    )
 }

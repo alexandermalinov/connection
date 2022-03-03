@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.navigation.ui.setupWithNavController
 import com.connection.R
 import com.connection.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,8 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initDataBinding()
         initNavController()
-        // TODO When bottom navigation is added uncomment
         //dataBinding.bottomNavigationMenu.itemIconTintList = null
+        initBottomNavigation()
     }
 
     override fun onSupportNavigateUp(): Boolean = navigationController.navigateUp()
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initBottomNavigation() {
-        /*dataBinding
+        dataBinding
             .bottomNavigationMenu
             .setupWithNavController(navigationController)
 
@@ -50,6 +51,6 @@ class MainActivity : AppCompatActivity() {
             .setBottomNavigationVisibility(
                 navigationController,
                 dataBinding.bottomNavigationMenu
-            )*/
+            )
     }
 }

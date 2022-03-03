@@ -13,6 +13,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private val viewModel: RegisterViewModel by viewModels()
 
+    override fun getLayoutId(): Int = R.layout.fragment_register
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.presenter = viewModel
@@ -25,6 +27,4 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             dataBinding.model = uiLiveData
         }
     }
-
-    override fun getLayoutId(): Int = R.layout.fragment_register
 }

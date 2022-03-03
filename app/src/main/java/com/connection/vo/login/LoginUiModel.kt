@@ -1,18 +1,21 @@
-package com.connection.vo.register
+package com.connection.vo.login
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.connection.BR
 import com.connection.utils.common.Constants.EMPTY
-import java.util.*
 
-data class RegisterUiModel(
-    val id: String = EMPTY,
+data class LoginUiModel(
     var email: String = EMPTY,
-    var username: String = EMPTY,
-    var password: String = EMPTY,
-    val profilePicture: String = EMPTY
+    var password: String = EMPTY
 ) : BaseObservable() {
+
+    @get:Bindable
+    var loginButtonVisible = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.loginButtonVisible)
+        }
 
     @get:Bindable
     var loading: Boolean = false
