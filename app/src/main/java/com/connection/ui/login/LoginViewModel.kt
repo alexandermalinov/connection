@@ -8,6 +8,7 @@ import com.connection.R
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
+import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.login.LoginUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -35,7 +36,7 @@ class LoginViewModel @Inject constructor(
         _uiLiveData.value?.loading = true
         _navigationLiveData.value = NavigationGraph(
             R.id.action_loginFragment_to_allMessagesFragment,
-            bundleOf("id" to id)
+            bundleOf(USER_ID to id)
         )
     }
 

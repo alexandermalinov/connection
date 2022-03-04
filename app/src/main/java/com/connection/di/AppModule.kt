@@ -5,6 +5,7 @@ import android.content.Context
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +22,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFirebaseAuth() = Firebase.auth
+
+    @Singleton
+    @Provides
+    fun provideFirebaseStorage() = Firebase.storage
 
     @Singleton
     @Provides

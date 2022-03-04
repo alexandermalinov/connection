@@ -17,3 +17,4 @@ data class NavigationGraph(
 ) : Internal()
 
 object PopBackStack : Internal()
+object GalleryNavigation : External()

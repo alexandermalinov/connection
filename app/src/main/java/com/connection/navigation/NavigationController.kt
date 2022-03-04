@@ -2,6 +2,7 @@ package com.connection.navigation
 
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.connection.utils.ActivityResultHandler
 
 fun Fragment.navigate(destination: Destination) {
     when (destination) {
@@ -9,7 +10,7 @@ fun Fragment.navigate(destination: Destination) {
             handleInternalNavigation(destination)
         }
         is External -> {
-            // TODO
+            handleExternalNavigation(destination)
         }
     }
 }
@@ -26,6 +27,15 @@ private fun Fragment.handleInternalNavigation(destination: Internal) {
         }
         is PopBackStack -> {
             findNavController().popBackStack()
+        }
+    }
+}
+
+private fun Fragment.handleExternalNavigation(destination: External) {
+    when (destination) {
+        is GalleryNavigation -> {
+            if (this is ActivityResultHandler)
+                provideObserver(destination).launch()
         }
     }
 }

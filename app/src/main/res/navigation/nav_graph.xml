@@ -28,6 +28,12 @@
         <action
             android:id="@+id/action_registerFragment_to_allMessagesFragment"
             app:destination="@id/allMessagesFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_allMessagesFragment2"
+            app:destination="@id/allMessagesFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"

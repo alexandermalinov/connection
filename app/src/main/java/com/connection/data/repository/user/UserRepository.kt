@@ -1,5 +1,6 @@
 package com.connection.data.repository.user
 
+import android.net.Uri
 import com.connection.data.api.model.User
 import javax.inject.Inject
 
@@ -21,11 +22,26 @@ class UserRepository @Inject constructor(
             onSuccess: () -> Unit
         )
 
-        suspend fun registerDB(user: User, onSuccess: (User) -> Unit)
+        fun registerDB(
+            user: User,
+            onSuccess: (User) -> Unit
+        )
 
         fun isUserLoggedIn(): Boolean
 
         fun connectSendBird(id: String)
+
+        fun uploadImage(
+            uri: Uri?,
+            onSuccess: (Uri?) -> Unit
+        )
+
+        suspend fun getUser(
+            id: String,
+            onSuccess: (User?) -> Unit
+        )
+
+        fun getLoggedUserId(): String
     }
 
     suspend fun login(
@@ -44,7 +60,10 @@ class UserRepository @Inject constructor(
         remoteSource.registerAuth(email, password, onSuccess)
     }
 
-    suspend fun registerDB(user: User, onSuccess: (User) -> Unit) {
+    fun registerDB(
+        user: User,
+        onSuccess: (User) -> Unit
+    ) {
         remoteSource.registerDB(user, onSuccess)
     }
 
@@ -53,4 +72,21 @@ class UserRepository @Inject constructor(
     }
 
     fun isUserLoggedIn() = remoteSource.isUserLoggedIn()
+
+    fun uploadImage(
+        uri: Uri?,
+        onSuccess: (Uri?) -> Unit
+    ) {
+        remoteSource.uploadImage(uri, onSuccess)
+    }
+
+    suspend fun getUser(
+        id: String,
+        onSuccess: (User?) -> Unit
+    ) {
+        remoteSource.getUser(id, onSuccess)
+    }
+
+    fun getLoggedUserId(): String = remoteSource.getLoggedUserId()
+
 }

@@ -15,6 +15,19 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeLiveData()
+    }
+
+    private fun observeLiveData() {
+        dataBinding.presenter = viewModel
+        observeUiLiveData()
+        observeNavigation(viewModel.navigationLiveData)
+    }
+
+    private fun observeUiLiveData() {
+        viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
+            dataBinding.model = uiLiveData
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_all_tabs

@@ -10,7 +10,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_logo"
+            android:id="@+id/image_profile_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/antic_slab_regular"
@@ -34,10 +34,10 @@
             android:text="@string/connection_supporting_text"
             android:textSize="24sp"
             app:layout_constraintBottom_toTopOf="@+id/animation_loading"
-            app:layout_constraintEnd_toEndOf="@id/text_logo"
+            app:layout_constraintEnd_toEndOf="@id/image_profile_picture"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@id/text_logo"
-            app:layout_constraintTop_toBottomOf="@+id/text_logo" />
+            app:layout_constraintStart_toStartOf="@id/image_profile_picture"
+            app:layout_constraintTop_toBottomOf="@+id/image_profile_picture" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_loading"
