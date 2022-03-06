@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/chats"
+        android:id="@+id/allMessagesFragment"
         android:enabled="true"
         android:icon="@drawable/ic_chat"
         android:title="@string/chats" />
@@ -13,7 +13,7 @@
         android:title="@string/people" />
 
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment"
         android:enabled="true"
         android:icon="@drawable/ic_account"
         android:title="@string/profile" />

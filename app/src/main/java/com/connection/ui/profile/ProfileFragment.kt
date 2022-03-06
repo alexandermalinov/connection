@@ -6,7 +6,9 @@ import androidx.fragment.app.viewModels
 import com.connection.R
 import com.connection.databinding.FragmentProfileBinding
 import com.connection.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private val viewModel: ProfileViewModel by viewModels()

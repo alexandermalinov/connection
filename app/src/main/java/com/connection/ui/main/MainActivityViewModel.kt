@@ -12,20 +12,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MainActivityViewModel @Inject constructor() : BaseViewModel() {
 
-    fun handleBottomNavigation(item: MenuItem) = when (item.itemId) {
-        R.id.chats -> {
-            _navigationLiveData.value = NavigationGraph(R.id.allMessagesFragment)
-            true
-        }
-        R.id.profile -> {
-            _navigationLiveData.value = NavigationGraph(R.id.profileFragment)
-            true
-        }
-        else -> {
-            true
-        }
-    }
-
     fun setBottomNavigationVisibility(
         navController: NavController,
         view: View
@@ -33,6 +19,7 @@ class MainActivityViewModel @Inject constructor() : BaseViewModel() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.allMessagesFragment -> view.visibility = View.VISIBLE
+                R.id.profileFragment -> view.visibility = View.VISIBLE
                 else -> view.visibility = View.GONE
             }
         }
