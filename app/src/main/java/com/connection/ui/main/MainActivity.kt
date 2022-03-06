@@ -45,8 +45,12 @@ class MainActivity : AppCompatActivity() {
     private fun initBottomNavigation() {
         dataBinding
             .bottomNavigationMenu
-            .setupWithNavController(navigationController)
-
+            .apply {
+                setupWithNavController(navigationController)
+                setOnItemSelectedListener {
+                    viewModel.handleBottomNavigation(it)
+                }
+            }
         viewModel
             .setBottomNavigationVisibility(
                 navigationController,
