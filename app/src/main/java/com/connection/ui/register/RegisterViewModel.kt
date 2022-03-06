@@ -14,12 +14,10 @@ import com.connection.ui.base.BaseViewModel
 import com.connection.ui.isEmailValid
 import com.connection.ui.isPasswordValid
 import com.connection.ui.isUsernameValid
-import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.INVALID_RES
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.register.RegisterUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,10 +41,14 @@ class RegisterViewModel @Inject constructor(
         _uiLiveData.value?.let { uiData ->
             userRepository.apply {
                 registerAuth(uiData.email, uiData.password) {
-                    uploadImage(uiData.profilePicture) {
-                        initUser(it)?.let { user ->
-                            registerDB(user) { registeredUser ->
-                                onRegister(registeredUser)
+                    viewModelScope.launch {
+                        uploadImage(uiData.profilePicture) {
+                            initUser(it)?.let { user ->
+                                viewModelScope.launch {
+                                    registerDB(user) { registeredUser ->
+                                        onRegister(registeredUser)
+                                    }
+                                }
                             }
                         }
                     }
@@ -60,7 +62,7 @@ class RegisterViewModel @Inject constructor(
             email = it.email,
             username = it.username,
             password = it.password,
-            profilePicture = profileImage.toString()
+            picture = profileImage.toString()
         )
     }
 

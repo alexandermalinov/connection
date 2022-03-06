@@ -22,7 +22,7 @@ class UserRepository @Inject constructor(
             onSuccess: () -> Unit
         )
 
-        fun registerDB(
+        suspend fun registerDB(
             user: User,
             onSuccess: (User) -> Unit
         )
@@ -31,7 +31,7 @@ class UserRepository @Inject constructor(
 
         fun connectSendBird(id: String)
 
-        fun uploadImage(
+        suspend fun uploadImage(
             uri: Uri?,
             onSuccess: (Uri?) -> Unit
         )
@@ -60,7 +60,7 @@ class UserRepository @Inject constructor(
         remoteSource.registerAuth(email, password, onSuccess)
     }
 
-    fun registerDB(
+    suspend fun registerDB(
         user: User,
         onSuccess: (User) -> Unit
     ) {
@@ -73,7 +73,7 @@ class UserRepository @Inject constructor(
 
     fun isUserLoggedIn() = remoteSource.isUserLoggedIn()
 
-    fun uploadImage(
+    suspend fun uploadImage(
         uri: Uri?,
         onSuccess: (Uri?) -> Unit
     ) {

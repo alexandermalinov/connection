@@ -21,11 +21,11 @@ class UserRemoteSource @Inject constructor(
 ) : UserRepository.RemoteSource {
 
     private fun User.toMap(id: String) = mapOf(
-        "user_id" to id,
+        "id" to id,
         "email" to email,
         "password" to password,
         "username" to username,
-        "profile_picture" to profilePicture,
+        "picture" to picture,
         "description" to description
     )
 
@@ -50,13 +50,12 @@ class UserRemoteSource @Inject constructor(
         }
     }
 
-    override fun registerDB(user: User, onSuccess: (User) -> Unit) {
-        db.getReference("users/${auth.uid}")
-            .push()
+    override suspend fun registerDB(user: User, onSuccess: (User) -> Unit) {
+        db
+            .getReference("/users/${auth.uid}")
             .setValue(user.toMap(auth.uid ?: EMPTY))
-            .addOnCompleteListener { register ->
-                if (register.isSuccessful)
-                    onSuccess.invoke(user)
+            .addOnSuccessListener {
+                onSuccess.invoke(user)
             }
     }
 
@@ -66,18 +65,14 @@ class UserRemoteSource @Inject constructor(
         onSuccess: () -> Unit,
     ) {
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { register ->
-                if (register.isSuccessful) {
-                    onSuccess.invoke()
-                } else {
-                    Timber.e("error occurred: ${register.exception?.message}")
-                }
+            .addOnSuccessListener { register ->
+                onSuccess.invoke()
             }
     }
 
     override fun isUserLoggedIn(): Boolean = auth.currentUser != null
 
-    override fun uploadImage(uri: Uri?, onSuccess: (Uri?) -> Unit) {
+    override suspend fun uploadImage(uri: Uri?, onSuccess: (Uri?) -> Unit) {
         uri?.let {
             storage
                 .getReference("/profile_image/${UUID.randomUUID()}")

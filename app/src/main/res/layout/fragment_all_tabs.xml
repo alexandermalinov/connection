@@ -48,14 +48,37 @@
             app:layout_constraintTop_toTopOf="@+id/image_profile"
             tools:text="Chats" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editText"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:hint="Search for connection"
+            app:boxCornerRadiusBottomEnd="@dimen/radius_medium"
+            app:boxCornerRadiusBottomStart="@dimen/radius_medium"
+            app:boxCornerRadiusTopEnd="@dimen/radius_medium"
+            app:boxCornerRadiusTopStart="@dimen/radius_medium"
+            app:counterMaxLength="100"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_profile"
+            app:startIconDrawable="@drawable/ic_search">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/image_profile"
-            app:layout_constraintTop_toBottomOf="@+id/image_profile">
+            app:layout_constraintTop_toBottomOf="@+id/editText">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"

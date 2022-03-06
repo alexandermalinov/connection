@@ -1,6 +1,5 @@
 package com.connection.ui.alltabs
 
-import android.os.Build.ID
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -8,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.connection.data.repository.user.UserRepository
 import com.connection.ui.base.BaseViewModel
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.alltabs.AllTabsUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,9 +26,9 @@ class AllTabsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userRepository.getUser(loggedUserId) {
+            userRepository.getUser(loggedUserId) { user ->
                 _uiLiveData.value = AllTabsUiModel(
-                    it?.profilePicture ?: EMPTY,
+                    user?.picture ?: EMPTY,
                     emptyList()
                 )
             }
