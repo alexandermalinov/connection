@@ -3,6 +3,7 @@ package com.connection.vo.login
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.connection.BR
+import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.EMPTY
 
 data class LoginUiModel(
@@ -11,16 +12,23 @@ data class LoginUiModel(
 ) : BaseObservable() {
 
     @get:Bindable
-    var loginButtonVisible = false
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.loginButtonVisible)
-        }
-
-    @get:Bindable
     var loading: Boolean = false
         set(value) {
             field = value
             notifyPropertyChanged(BR.loading)
+        }
+
+    @get:Bindable
+    var emailError: Int = Constants.INVALID_RES
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.emailError)
+        }
+
+    @get:Bindable
+    var passwordError: Int = Constants.INVALID_RES
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.passwordError)
         }
 }

@@ -25,7 +25,7 @@
             android:id="@+id/image_profile"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            app:defaultGlideRes="@{R.drawable.ic_default_avatar}"
+            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.profilePicture}"
             android:layout_marginTop="@dimen/margin_huge"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-            tools:src="@drawable/ic_default_avatar" />
+            tools:src="@drawable/ic_profile_picture" />
 
         <ImageView
             android:layout_width="45dp"

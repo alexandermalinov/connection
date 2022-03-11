@@ -53,5 +53,5 @@ fun ShapeableImageView.setUriRes(uri: Uri?) {
     if (uri != null && uri.toString() != EMPTY)
         setImageURI(uri)
     else
-        setImageResource(R.drawable.ic_default_avatar)
+        setImageResource(R.drawable.ic_profile_picture)
 }

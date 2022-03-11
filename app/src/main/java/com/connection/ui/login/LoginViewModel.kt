@@ -26,14 +26,24 @@ class LoginViewModel @Inject constructor(
 
     private fun login(email: String, password: String) {
         viewModelScope.launch {
-            userRepository.login(email, password) { id ->
-                onLogin(id)
-            }
+            userRepository.login(
+                email = email,
+                password = password,
+                onSuccess = { id ->
+                    // TODO
+                    _uiLiveData.value?.loading = true
+                    onLoginNavigate(id)
+                },
+                onFailure = {
+                    // TODO
+                    _uiLiveData.value?.emailError = R.string.invalid_email
+                    _uiLiveData.value?.passwordError = R.string.invalid_password
+                    _uiLiveData.value?.loading = false
+                })
         }
     }
 
-    private fun onLogin(id: String?) {
-        _uiLiveData.value?.loading = true
+    private fun onLoginNavigate(id: String?) {
         _navigationLiveData.value = NavigationGraph(
             R.id.action_loginFragment_to_allMessagesFragment,
             bundleOf(USER_ID to id)
@@ -41,8 +51,8 @@ class LoginViewModel @Inject constructor(
     }
 
     override fun onLoginClick() {
-        _uiLiveData.value?.apply {
-            login(email, password)
+        _uiLiveData.value?.let {
+            login(it.email, it.password)
         }
     }
 

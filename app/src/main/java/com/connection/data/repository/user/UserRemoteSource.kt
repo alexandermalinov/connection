@@ -32,7 +32,8 @@ class UserRemoteSource @Inject constructor(
     override suspend fun loginAuth(
         email: String,
         password: String,
-        onSuccess: (String?) -> Unit
+        onSuccess: (String?) -> Unit,
+        onFailure: () -> Unit
     ) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { login ->
@@ -41,13 +42,6 @@ class UserRemoteSource @Inject constructor(
                 else
                     Timber.e("error occurred: ${login.exception?.message}")
             }
-    }
-
-    override fun connectSendBird(id: String) {
-        SendBird.connect(auth.currentUser?.uid) { sendbirdUser, error ->
-            if (error != null)
-                Timber.e("error occurred: ${error.message}")
-        }
     }
 
     override suspend fun registerDB(user: User, onSuccess: (User) -> Unit) {

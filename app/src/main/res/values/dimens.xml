@@ -20,10 +20,13 @@
     <dimen name="margin_pre_small">8dp</dimen>
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_pre_medium">20dp</dimen>
-    <dimen name="margin_pre_x_medium">20dp</dimen>
+    <dimen name="margin_pre_x_medium">24dp</dimen>
     <dimen name="margin_large">32dp</dimen>
     <dimen name="margin_huge">64dp</dimen>
 
     // Radius
     <dimen name="radius_medium">12dp</dimen>
+
+    // Elevation
+    <dimen name="button_elevation">8dp</dimen>
 </resources>
