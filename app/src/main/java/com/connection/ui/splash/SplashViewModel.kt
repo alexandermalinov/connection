@@ -26,11 +26,11 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private fun navigateUser() {
+    private suspend fun navigateUser() {
         _navigationLiveData.value = if (userRepository.isUserLoggedIn())
             NavigationGraph(
                 R.id.action_splashFragment_to_allMessagesFragment,
-                bundleOf(userRepository.getLoggedUserId() to USER_ID)
+                bundleOf(USER_ID to userRepository.getLoggedUserId())
             )
         else
             NavigationGraph(R.id.action_splashFragment_to_loginFragment)

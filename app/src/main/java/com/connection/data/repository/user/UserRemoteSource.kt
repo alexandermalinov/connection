@@ -1,7 +1,7 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.model.User
+import com.connection.data.api.model.UserData
 import com.connection.utils.common.Constants.EMPTY
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -9,7 +9,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.sendbird.android.SendBird
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -20,7 +19,7 @@ class UserRemoteSource @Inject constructor(
     private val storage: FirebaseStorage
 ) : UserRepository.RemoteSource {
 
-    private fun User.toMap(id: String) = mapOf(
+    private fun UserData.toMap(id: String) = mapOf(
         "id" to id,
         "email" to email,
         "password" to password,
@@ -44,7 +43,7 @@ class UserRemoteSource @Inject constructor(
             }
     }
 
-    override suspend fun registerDB(user: User, onSuccess: (User) -> Unit) {
+    override fun registerDB(user: UserData, onSuccess: (UserData) -> Unit) {
         db
             .getReference("/users/${auth.uid}")
             .setValue(user.toMap(auth.uid ?: EMPTY))
@@ -56,17 +55,17 @@ class UserRemoteSource @Inject constructor(
     override suspend fun registerAuth(
         email: String,
         password: String,
-        onSuccess: () -> Unit,
+        onSuccess: (String) -> Unit,
     ) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener { register ->
-                onSuccess.invoke()
+                onSuccess.invoke(register.user?.uid ?: EMPTY)
             }
     }
 
     override fun isUserLoggedIn(): Boolean = auth.currentUser != null
 
-    override suspend fun uploadImage(uri: Uri?, onSuccess: (Uri?) -> Unit) {
+    override fun uploadImage(uri: Uri?, onSuccess: (Uri?) -> Unit) {
         uri?.let {
             storage
                 .getReference("/profile_image/${UUID.randomUUID()}")
@@ -80,13 +79,13 @@ class UserRemoteSource @Inject constructor(
         }
     }
 
-    override suspend fun getUser(id: String, onSuccess: (User?) -> Unit) {
+    override suspend fun getUser(id: String, onSuccess: (UserData?) -> Unit) {
         db
             .getReference("users")
             .child(id)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    onSuccess.invoke(snapshot.getValue(User::class.java))
+                    onSuccess.invoke(snapshot.getValue(UserData::class.java))
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -95,5 +94,5 @@ class UserRemoteSource @Inject constructor(
             })
     }
 
-    override fun getLoggedUserId(): String = auth.currentUser?.uid ?: EMPTY
+    override suspend fun getLoggedUserId(): String = auth.currentUser?.uid ?: EMPTY
 }

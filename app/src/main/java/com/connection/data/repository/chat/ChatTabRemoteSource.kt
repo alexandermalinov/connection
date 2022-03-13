@@ -1,22 +1,84 @@
 package com.connection.data.repository.chat
 
+import com.connection.data.api.model.ChannelExtraData
+import com.connection.data.api.model.toExtraData
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.sendbird.android.SendBird
+import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.api.models.QueryChannelsRequest
+import io.getstream.chat.android.client.api.models.QuerySort
+import io.getstream.chat.android.client.models.Channel
+import io.getstream.chat.android.client.models.Filters
+import io.getstream.chat.android.client.models.User
 import timber.log.Timber
 import javax.inject.Inject
 
 class ChatTabRemoteSource @Inject constructor(
     private val auth: FirebaseAuth,
-    private val db: FirebaseDatabase,
-    private val storage: FirebaseStorage
+    private val client: ChatClient
 ) : ChatTabRepository.RemoteSource {
 
-    override fun connectSendBird(id: String) {
-        SendBird.connect(auth.currentUser?.uid) { sendbirdUser, error ->
-            if (error != null)
-                Timber.e("error occurred: ${error.message}")
-        }
+    private val request = QueryChannelsRequest(
+        filter = Filters.and(
+            Filters.eq("type", "messaging"),
+            Filters.`in`("members", listOf("${auth.uid}"))
+        ),
+        offset = 0,
+        limit = 10,
+        querySort = QuerySort.desc("last_message_at")
+    ).apply {
+        watch = true
+        state = true
+    }
+
+    override suspend fun fetchChannels(
+        onSuccess: (List<Channel>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        client.queryChannels(request)
+            .enqueue { result ->
+                if (result.isSuccess) {
+                    onSuccess(result.data())
+                } else {
+                    onFailure()
+                }
+            }
+    }
+
+    override fun connectUser(
+        user: User,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        client.connectUser(user = user, token = client.devToken(user.id))
+            .enqueue { result ->
+                if (result.isSuccess) {
+                    onSuccess()
+                } else {
+                    Timber.e("error occurred while trying to connect user: ${result.error().message}")
+                    onFailure()
+                }
+            }
+    }
+
+    override suspend fun createChannelByIds(
+        type: String,
+        membersIds: List<String>,
+        extraData: ChannelExtraData,
+        onSuccess: (Channel) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        client.createChannel(
+            channelType = type,
+            members = membersIds,
+            extraData = extraData.toExtraData()
+        )
+            .enqueue { result ->
+                if (result.isSuccess) {
+                    onSuccess(result.data())
+                } else {
+                    Timber.e("error occurred while trying to create channel: ${result.error().message}")
+                    onFailure()
+                }
+            }
     }
 }

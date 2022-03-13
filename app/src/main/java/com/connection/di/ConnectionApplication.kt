@@ -3,10 +3,15 @@ package com.connection.di
 import android.app.Application
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.connection.utils.common.Constants.GET_STREAM_API_KEY
 import com.sendbird.android.SendBird
 import com.sendbird.android.SendBirdException
 import com.sendbird.android.handlers.InitResultHandler
 import dagger.hilt.android.HiltAndroidApp
+import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.logger.ChatLogLevel
+import io.getstream.chat.android.client.models.User
+import io.getstream.chat.android.livedata.ChatDomain
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -24,22 +29,12 @@ class ConnectionApplication : Application(), Configuration.Provider {
 
     override fun onCreate() {
         super.onCreate()
-        SendBird.init(
-            "com.connection",
-            applicationContext,
-            false,
-            object : InitResultHandler {
-                override fun onMigrationStarted() {
-                    // This won't be called if useLocalCaching is set to false.
-                }
-
-                override fun onInitFailed(e: SendBirdException) {
-                    // This won't be called if useLocalCaching is set to false.
-                }
-
-                override fun onInitSucceed() {
-                    Timber.i("Application", "Called when initialize is done.")
-                }
-            })
+        ChatClient
+            .Builder(GET_STREAM_API_KEY, this)
+            .logLevel(ChatLogLevel.ALL)
+            .build()
+        /*ChatDomain
+            .Builder(ChatClient.instance(), this)
+            .build()*/
     }
 }

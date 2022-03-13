@@ -1,9 +1,9 @@
 package com.connection.data.api.model
 
 import com.connection.utils.common.Constants.EMPTY
-import com.sendbird.android.User
+import io.getstream.chat.android.client.models.User
 
-data class User(
+data class UserData(
     val id: String = EMPTY,
     val email: String = EMPTY,
     val password: String = EMPTY,
@@ -12,8 +12,12 @@ data class User(
     val description: String = EMPTY
 )
 
-fun User.toUiModel() = User(
-    id = userId,
-    username = nickname,
-    picture = profileUrl
+fun UserData.toUiModel() = User(
+    id = id,
+    online = true,
+    extraData = mutableMapOf(
+        "username" to username,
+        "picture" to picture,
+        "description" to description
+    )
 )

@@ -1,7 +1,7 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.model.User
+import com.connection.data.api.model.UserData
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -20,27 +20,27 @@ class UserRepository @Inject constructor(
         suspend fun registerAuth(
             email: String,
             password: String,
-            onSuccess: () -> Unit
+            onSuccess: (String) -> Unit
         )
 
-        suspend fun registerDB(
-            user: User,
-            onSuccess: (User) -> Unit
+        fun registerDB(
+            user: UserData,
+            onSuccess: (UserData) -> Unit
         )
 
         fun isUserLoggedIn(): Boolean
 
-        suspend fun uploadImage(
+        fun uploadImage(
             uri: Uri?,
             onSuccess: (Uri?) -> Unit
         )
 
         suspend fun getUser(
             id: String,
-            onSuccess: (User?) -> Unit
+            onSuccess: (UserData?) -> Unit
         )
 
-        fun getLoggedUserId(): String
+        suspend fun getLoggedUserId(): String
     }
 
     suspend fun login(
@@ -55,21 +55,21 @@ class UserRepository @Inject constructor(
     suspend fun registerAuth(
         email: String,
         password: String,
-        onSuccess: () -> Unit
+        onSuccess: (String) -> Unit
     ) {
         remoteSource.registerAuth(email, password, onSuccess)
     }
 
-    suspend fun registerDB(
-        user: User,
-        onSuccess: (User) -> Unit
+    fun registerDB(
+        user: UserData,
+        onSuccess: (UserData) -> Unit
     ) {
         remoteSource.registerDB(user, onSuccess)
     }
 
     fun isUserLoggedIn() = remoteSource.isUserLoggedIn()
 
-    suspend fun uploadImage(
+    fun uploadImage(
         uri: Uri?,
         onSuccess: (Uri?) -> Unit
     ) {
@@ -78,11 +78,11 @@ class UserRepository @Inject constructor(
 
     suspend fun getUser(
         id: String,
-        onSuccess: (User?) -> Unit
+        onSuccess: (UserData?) -> Unit
     ) {
         remoteSource.getUser(id, onSuccess)
     }
 
-    fun getLoggedUserId(): String = remoteSource.getLoggedUserId()
+    suspend fun getLoggedUserId(): String = remoteSource.getLoggedUserId()
 
 }

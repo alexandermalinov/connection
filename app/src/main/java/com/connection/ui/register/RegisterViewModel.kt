@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.User
+import com.connection.data.api.model.UserData
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.GalleryNavigation
 import com.connection.navigation.NavigationGraph
@@ -14,6 +14,7 @@ import com.connection.ui.base.BaseViewModel
 import com.connection.ui.isEmailValid
 import com.connection.ui.isPasswordValid
 import com.connection.ui.isUsernameValid
+import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.INVALID_RES
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.register.RegisterUiModel
@@ -39,17 +40,11 @@ class RegisterViewModel @Inject constructor(
 
     private suspend fun register() {
         _uiLiveData.value?.let { uiData ->
-            userRepository.apply {
-                registerAuth(uiData.email, uiData.password) {
-                    viewModelScope.launch {
-                        uploadImage(uiData.profilePicture) {
-                            initUser(it)?.let { user ->
-                                viewModelScope.launch {
-                                    registerDB(user) { registeredUser ->
-                                        onRegister(registeredUser)
-                                    }
-                                }
-                            }
+            userRepository.registerAuth(uiData.email, uiData.password) { id ->
+                userRepository.uploadImage(uiData.profilePicture) {
+                    getUser(id, it)?.let { user ->
+                        userRepository.registerDB(user) {
+                            navigate(id)
                         }
                     }
                 }
@@ -57,8 +52,12 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    private fun initUser(profileImage: Uri?) = _uiLiveData.value?.let {
-        User(
+    private fun getUser(
+        id: String?,
+        profileImage: Uri?
+    ) = _uiLiveData.value?.let {
+        UserData(
+            id = id ?: EMPTY,
             email = it.email,
             username = it.username,
             password = it.password,
@@ -66,10 +65,10 @@ class RegisterViewModel @Inject constructor(
         )
     }
 
-    private fun onRegister(user: User) {
+    private fun navigate(userId: String) {
         _navigationLiveData.value = NavigationGraph(
             R.id.action_registerFragment_to_allMessagesFragment,
-            bundleOf(USER_ID to user.id)
+            bundleOf(USER_ID to userId)
         )
     }
 

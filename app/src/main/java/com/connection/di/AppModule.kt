@@ -10,6 +10,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.getstream.chat.android.client.ChatClient
 import javax.inject.Singleton
 
 @Module
@@ -26,6 +27,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideFirebaseStorage() = Firebase.storage
+
+    @Singleton
+    @Provides
+    fun provideGetStream() = ChatClient.instance()
 
     @Singleton
     @Provides

@@ -39,7 +39,7 @@ class ConnectionsAdapter : DataBoundListAdapter<ConnectionChatUiModel, ListItemC
         binding: ListItemChatUserBinding,
         item: ConnectionChatUiModel
     ) {
-        //binding.model = item
+        binding.model = item
         //binding.presenter = bindingPresenter
     }
 }

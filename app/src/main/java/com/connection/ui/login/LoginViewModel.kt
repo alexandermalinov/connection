@@ -8,6 +8,10 @@ import com.connection.R
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
+import com.connection.ui.isEmailValid
+import com.connection.ui.isPasswordValid
+import com.connection.ui.isUsernameValid
+import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.login.LoginUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,18 +34,32 @@ class LoginViewModel @Inject constructor(
                 email = email,
                 password = password,
                 onSuccess = { id ->
-                    // TODO
                     _uiLiveData.value?.loading = true
                     onLoginNavigate(id)
                 },
                 onFailure = {
-                    // TODO
-                    _uiLiveData.value?.emailError = R.string.invalid_email
-                    _uiLiveData.value?.passwordError = R.string.invalid_password
-                    _uiLiveData.value?.loading = false
+                    onFailureValidation()
                 })
         }
     }
+
+    private fun onFailureValidation() {
+        _uiLiveData.value?.apply {
+            loading = false
+            emailError = if (email.isEmailValid().not())
+                R.string.invalid_email
+            else
+                Constants.INVALID_RES
+
+            passwordError = if (password.isPasswordValid().not())
+                R.string.invalid_password
+            else
+                Constants.INVALID_RES
+        }
+    }
+
+    private fun isDataValid() = _uiLiveData.value?.email?.isEmailValid() == true &&
+            _uiLiveData.value?.password?.isPasswordValid() == true
 
     private fun onLoginNavigate(id: String?) {
         _navigationLiveData.value = NavigationGraph(
@@ -52,7 +70,11 @@ class LoginViewModel @Inject constructor(
 
     override fun onLoginClick() {
         _uiLiveData.value?.let {
-            login(it.email, it.password)
+            if (isDataValid()) {
+                login(it.email, it.password)
+            } else {
+                onFailureValidation()
+            }
         }
     }
 

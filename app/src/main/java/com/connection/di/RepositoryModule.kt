@@ -11,6 +11,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import io.getstream.chat.android.client.ChatClient
 import javax.inject.Singleton
 
 @Module
@@ -29,9 +30,8 @@ class RepositoryModule {
     @Provides
     fun provideChatTabRemoteSource(
         auth: FirebaseAuth,
-        db: FirebaseDatabase,
-        storage: FirebaseStorage
-    ): ChatTabRepository.RemoteSource = ChatTabRemoteSource(auth, db, storage)
+        chat: ChatClient
+    ): ChatTabRepository.RemoteSource = ChatTabRemoteSource(auth, chat)
 
     /*
     TODO Add network checking

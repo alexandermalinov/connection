@@ -1,6 +1,6 @@
 package com.connection.vo.profile
 
-import com.connection.data.api.model.User
+import com.connection.data.api.model.UserData
 import com.connection.utils.common.Constants.EMPTY
 
 data class ProfileUiModel(
@@ -10,7 +10,7 @@ data class ProfileUiModel(
     val password: String = EMPTY
 )
 
-fun User.toUiModel() = ProfileUiModel(
+fun UserData.toUiModel() = ProfileUiModel(
     profilePicture = picture,
     username = username,
     email = email,
