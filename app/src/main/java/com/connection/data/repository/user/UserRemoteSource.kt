@@ -2,6 +2,7 @@ package com.connection.data.repository.user
 
 import android.net.Uri
 import com.connection.data.api.model.UserData
+import com.connection.data.api.model.UsersData
 import com.connection.utils.common.Constants.EMPTY
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -86,6 +87,23 @@ class UserRemoteSource @Inject constructor(
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     onSuccess.invoke(snapshot.getValue(UserData::class.java))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.e("Error occurred: ${error.message}")
+                }
+            })
+    }
+
+    override suspend fun getUsers(
+        onSuccess: (UsersData?) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        db
+            .getReference("users")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    onSuccess.invoke(snapshot.getValue(UsersData::class.java))
                 }
 
                 override fun onCancelled(error: DatabaseError) {

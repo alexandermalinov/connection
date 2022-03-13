@@ -59,4 +59,8 @@
         android:id="@+id/profileFragment"
         android:name="com.connection.ui.profile.ProfileFragment"
         android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/peopleFragment"
+        android:name="com.connection.ui.people.PeopleFragment"
+        android:label="PeopleFragment" />
 </navigation>

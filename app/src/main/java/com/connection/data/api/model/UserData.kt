@@ -3,6 +3,8 @@ package com.connection.data.api.model
 import com.connection.utils.common.Constants.EMPTY
 import io.getstream.chat.android.client.models.User
 
+data class UsersData(val users: List<UserData> = emptyList())
+
 data class UserData(
     val id: String = EMPTY,
     val email: String = EMPTY,

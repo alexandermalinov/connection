@@ -20,6 +20,7 @@ class MainActivityViewModel @Inject constructor() : BaseViewModel() {
             when (destination.id) {
                 R.id.allMessagesFragment -> view.visibility = View.VISIBLE
                 R.id.profileFragment -> view.visibility = View.VISIBLE
+                R.id.peopleFragment -> view.visibility = View.VISIBLE
                 else -> view.visibility = View.GONE
             }
         }

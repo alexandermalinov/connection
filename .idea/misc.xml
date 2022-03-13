@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/drawable/ic_circle.xml" value="0.2745" />
         <entry key="app/src/main/res/drawable/ic_default_avatar.xml" value="0.263" />
         <entry key="app/src/main/res/drawable/ic_human_moon.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black.xml" value="0.3175" />
         <entry key="app/src/main/res/drawable/ic_people.xml" value="0.263" />
         <entry key="app/src/main/res/drawable/ic_red_circle.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/ic_register_background.xml" value="0.2" />
@@ -17,11 +18,13 @@
         <entry key="app/src/main/res/layout/fragment_all_messages.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/layout/fragment_all_tabs.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_people.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.22083333333333333" />
         <entry key="app/src/main/res/layout/list_item_chat_favourite_connection.xml" value="0.5" />
         <entry key="app/src/main/res/layout/list_item_chat_user.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_user.xml" value="0.5" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3260416666666667" />
       </map>
     </option>

@@ -2,6 +2,7 @@ package com.connection.data.repository.user
 
 import android.net.Uri
 import com.connection.data.api.model.UserData
+import com.connection.data.api.model.UsersData
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -38,6 +39,11 @@ class UserRepository @Inject constructor(
         suspend fun getUser(
             id: String,
             onSuccess: (UserData?) -> Unit
+        )
+
+        suspend fun getUsers(
+            onSuccess: (UsersData?) -> Unit,
+            onFailure: () -> Unit
         )
 
         suspend fun getLoggedUserId(): String
@@ -82,6 +88,11 @@ class UserRepository @Inject constructor(
     ) {
         remoteSource.getUser(id, onSuccess)
     }
+
+    suspend fun getUsers(
+        onSuccess: (UsersData?) -> Unit,
+        onFailure: () -> Unit
+    ) = remoteSource.getUsers(onSuccess, onFailure)
 
     suspend fun getLoggedUserId(): String = remoteSource.getLoggedUserId()
 
