@@ -3,28 +3,38 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_background_gradient.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_camera.xml" value="0.2745" />
         <entry key="app/src/main/res/drawable/ic_circle.xml" value="0.2745" />
         <entry key="app/src/main/res/drawable/ic_default_avatar.xml" value="0.263" />
         <entry key="app/src/main/res/drawable/ic_human_moon.xml" value="0.263" />
         <entry key="app/src/main/res/drawable/ic_notifications_black.xml" value="0.3175" />
+        <entry key="app/src/main/res/drawable/ic_oval.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_people.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_profile_picture.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_red_circle.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/ic_register_background.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.2505" />
+        <entry key="app/src/main/res/drawable/ic_search_black.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_search_white.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_send_black.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_wave.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/ic_wave_bottom.xml" value="0.3285" />
+        <entry key="app/src/main/res/drawable/tab_layout_bg.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/tabs_selector.xml" value="0.198" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/layout/fragment_all_messages.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/layout/fragment_all_tabs.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_connection_chat.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_people.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/layout/fragment_people.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.22083333333333333" />
         <entry key="app/src/main/res/layout/list_item_chat_favourite_connection.xml" value="0.5" />
         <entry key="app/src/main/res/layout/list_item_chat_user.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/list_item_user.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/list_item_message.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_user.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3260416666666667" />
       </map>
     </option>

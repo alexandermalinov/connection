@@ -3,10 +3,10 @@ package com.connection.ui.people
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.connection.data.api.model.UserData
 import com.connection.data.repository.user.UserRepository
 import com.connection.ui.base.BaseViewModel
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.vo.people.PeopleListItemUiModel
 import com.connection.vo.people.PeopleUiModel
 import com.connection.vo.people.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,18 +23,25 @@ class PeopleViewModel @Inject constructor(
         get() = _uiLiveData
 
     private val _uiLiveData = MutableLiveData(PeopleUiModel())
-    private var loggedUserId = EMPTY
+    private var loggedUser: UserData? = null
 
     init {
         viewModelScope.launch {
-            loggedUserId = userRepository.getLoggedUserId()
-            initUserUiData()
+            initUserData()
+            initUiData()
         }
     }
 
-    private suspend fun initUserUiData() {
+    private suspend fun initUserData() {
+        userRepository.getLoggedUser() {
+            loggedUser = it
+        }
+    }
+
+    private suspend fun initUiData() {
         userRepository.getUsers({ users ->
             _uiLiveData.value = PeopleUiModel(
+                loggedUser?.picture ?: EMPTY,
                 users?.users
                     ?.map { it.toUiModel() }
                     ?: emptyList()

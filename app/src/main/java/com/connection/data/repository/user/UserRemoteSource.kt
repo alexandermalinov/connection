@@ -99,11 +99,15 @@ class UserRemoteSource @Inject constructor(
         onSuccess: (UsersData?) -> Unit,
         onFailure: () -> Unit
     ) {
+        val users: MutableList<UserData> = mutableListOf()
         db
             .getReference("users")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    onSuccess.invoke(snapshot.getValue(UsersData::class.java))
+                    for (user in snapshot.children) {
+                        user.getValue(UserData::class.java)?.let { users.add(it) }
+                    }
+                    onSuccess.invoke(UsersData(users))
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -113,4 +117,10 @@ class UserRemoteSource @Inject constructor(
     }
 
     override suspend fun getLoggedUserId(): String = auth.currentUser?.uid ?: EMPTY
+
+    override suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
+        getUser(auth.currentUser?.uid ?: EMPTY) {
+            onSuccess.invoke(it)
+        }
+    }
 }

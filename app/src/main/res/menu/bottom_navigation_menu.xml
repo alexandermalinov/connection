@@ -9,7 +9,7 @@
     <item
         android:id="@+id/peopleFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_people"
+        android:icon="@drawable/ic_people_black"
         android:title="@string/people" />
 
     <item

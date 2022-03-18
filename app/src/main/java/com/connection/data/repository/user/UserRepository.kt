@@ -6,7 +6,7 @@ import com.connection.data.api.model.UsersData
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
-    private val remoteSource: UserRemoteSource
+    private val remote: UserRemoteSource
 ) {
 
     interface RemoteSource {
@@ -47,6 +47,8 @@ class UserRepository @Inject constructor(
         )
 
         suspend fun getLoggedUserId(): String
+
+        suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit)
     }
 
     suspend fun login(
@@ -55,7 +57,7 @@ class UserRepository @Inject constructor(
         onSuccess: (String?) -> Unit,
         onFailure: () -> Unit
     ) {
-        remoteSource.loginAuth(email, password, onSuccess, onFailure)
+        remote.loginAuth(email, password, onSuccess, onFailure)
     }
 
     suspend fun registerAuth(
@@ -63,37 +65,40 @@ class UserRepository @Inject constructor(
         password: String,
         onSuccess: (String) -> Unit
     ) {
-        remoteSource.registerAuth(email, password, onSuccess)
+        remote.registerAuth(email, password, onSuccess)
     }
 
     fun registerDB(
         user: UserData,
         onSuccess: (UserData) -> Unit
     ) {
-        remoteSource.registerDB(user, onSuccess)
+        remote.registerDB(user, onSuccess)
     }
 
-    fun isUserLoggedIn() = remoteSource.isUserLoggedIn()
+    fun isUserLoggedIn() = remote.isUserLoggedIn()
 
     fun uploadImage(
         uri: Uri?,
         onSuccess: (Uri?) -> Unit
     ) {
-        remoteSource.uploadImage(uri, onSuccess)
+        remote.uploadImage(uri, onSuccess)
     }
 
     suspend fun getUser(
         id: String,
         onSuccess: (UserData?) -> Unit
     ) {
-        remoteSource.getUser(id, onSuccess)
+        remote.getUser(id, onSuccess)
     }
 
     suspend fun getUsers(
         onSuccess: (UsersData?) -> Unit,
         onFailure: () -> Unit
-    ) = remoteSource.getUsers(onSuccess, onFailure)
+    ) = remote.getUsers(onSuccess, onFailure)
 
-    suspend fun getLoggedUserId(): String = remoteSource.getLoggedUserId()
+    suspend fun getLoggedUserId(): String = remote.getLoggedUserId()
 
+    suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
+        remote.getLoggedUser(onSuccess)
+    }
 }

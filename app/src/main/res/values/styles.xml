@@ -5,4 +5,12 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="RoundedTabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabBackground">@drawable/tabs_selector</item>
+        <item name="tabIndicator">@null</item>
+        <item name="android:background">@drawable/ic_rounded_rectangle</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabTextColor">@color/black</item>
+    </style>
+
 </resources>

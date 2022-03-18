@@ -4,6 +4,7 @@
     <dimen name="text_tiny">4sp</dimen>
     <dimen name="text_small">8sp</dimen>
     <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_x_medium">24sp</dimen>
     <dimen name="text_large">32sp</dimen>
     <dimen name="text_huge">64sp</dimen>
 
@@ -26,6 +27,7 @@
 
     // Radius
     <dimen name="radius_medium">12dp</dimen>
+    <dimen name="radius_large">24dp</dimen>
 
     // Elevation
     <dimen name="button_elevation">8dp</dimen>

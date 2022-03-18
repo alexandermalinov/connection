@@ -30,7 +30,7 @@ class PeopleAdapter : DataBoundListAdapter<PeopleListItemUiModel, ListItemUserBi
     ): ListItemUserBinding =
         DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.list_item_chat_user,
+            R.layout.list_item_user,
             parent,
             false
         )

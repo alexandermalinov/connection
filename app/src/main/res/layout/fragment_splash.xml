@@ -13,45 +13,17 @@
             android:id="@+id/image_profile_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/antic_slab_regular"
+            android:fontFamily="@font/san_serif"
+            android:textStyle="bold"
             android:text="@string/connection"
             android:textColor="@color/black"
             android:textSize="48sp"
-            app:layout_constraintBottom_toTopOf="@+id/text_logo_supporting_text"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/text_logo_supporting_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/antic_slab_regular"
-            android:gravity="center_horizontal"
-            android:text="@string/connection_supporting_text"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/animation_loading"
-            app:layout_constraintEnd_toEndOf="@id/image_profile_picture"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@id/image_profile_picture"
-            app:layout_constraintTop_toBottomOf="@+id/image_profile_picture" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/animation_loading"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/text_logo_supporting_text"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@id/text_logo_supporting_text"
-            app:layout_constraintTop_toBottomOf="@+id/text_logo_supporting_text"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/animation_loading" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

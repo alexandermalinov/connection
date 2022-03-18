@@ -44,16 +44,23 @@
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
             tools:text="Alice Henry" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="connected"
+            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_name"
+            tools:text="connected" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/container_other_people"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/view2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/text_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_name">
+            app:layout_constraintTop_toBottomOf="@+id/image_avatar">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_other_user_one"
@@ -65,8 +72,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                app:strokeWidth="2dp"
                 app:strokeColor="@color/white"
+                app:strokeWidth="2dp"
                 tools:src="@drawable/ic_profile_picture" />
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -80,8 +87,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                app:strokeWidth="2dp"
                 app:strokeColor="@color/white"
+                app:strokeWidth="2dp"
                 tools:src="@drawable/ic_profile_picture" />
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -95,8 +102,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                app:strokeWidth="2dp"
                 app:strokeColor="@color/white"
+                app:strokeWidth="2dp"
                 tools:src="@drawable/ic_profile_picture" />
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -110,8 +117,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                app:strokeWidth="2dp"
                 app:strokeColor="@color/white"
+                app:strokeWidth="2dp"
                 tools:src="@drawable/ic_profile_picture" />
 
             <TextView
@@ -119,18 +126,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_tiny"
                 android:padding="1dp"
-                tools:text="connected with and 4 others"/>
+                android:text="mutual connected and 4 others"
+                tools:text="mutual connected and 4 others" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="10dp"
-            android:background="#27000000"
-            app:layout_constraintStart_toStartOf="@+id/text_name"
-            app:layout_constraintTop_toBottomOf="@id/image_avatar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
