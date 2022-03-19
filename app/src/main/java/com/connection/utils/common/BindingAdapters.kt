@@ -3,6 +3,7 @@ package com.connection.utils.common
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.widget.ContentLoadingProgressBar
@@ -54,4 +55,9 @@ fun ShapeableImageView.setUriRes(uri: Uri?) {
         setImageURI(uri)
     else
         setImageResource(R.drawable.ic_profile_picture)
+}
+
+@BindingAdapter("safeText")
+fun TextView.setSafeText(value: Int) {
+    text = value.toString()
 }

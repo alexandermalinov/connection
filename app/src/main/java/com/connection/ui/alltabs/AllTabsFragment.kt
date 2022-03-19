@@ -23,7 +23,7 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
 
     private fun initConnectionsRecyclerView() {
         dataBinding.recyclerViewConnections.apply {
-            adapter = ConnectionsAdapter()
+            adapter = ConnectionsAdapter(viewModel)
             layoutManager = LinearLayoutManager(context)
         }
     }

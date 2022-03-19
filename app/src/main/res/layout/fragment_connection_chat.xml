@@ -7,7 +7,11 @@
 
         <variable
             name="model"
-            type="com.connection.vo.people.PeopleUiModel" />
+            type="com.connection.vo.connectionchat.ConnectionChatUiModel" />
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.connectionchat.ConnectionChatPresenter" />
 
         <import type="com.connection.R" />
     </data>
@@ -27,13 +31,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_arrow_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_medium"
+                android:background="?attr/selectableItemBackground"
+                android:onClick="@{() -> presenter.onBackClick()}"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
                 tools:src="@drawable/ic_arrow_back" />
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -42,7 +50,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="@dimen/margin_medium"
                 app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
-                app:glideRes="@{model.profilePicture}"
+                app:glideRes="@{model.header.profilePicture}"
                 app:layout_constraintBottom_toBottomOf="@+id/image_arrow_back"
                 app:layout_constraintStart_toEndOf="@id/image_arrow_back"
                 app:layout_constraintTop_toTopOf="@+id/image_arrow_back"
@@ -62,14 +70,16 @@
                 app:layout_constraintTop_toTopOf="@+id/image_profile"
                 app:layout_constraintVertical_bias="1.0"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                app:strokeColor="@color/white"
-                app:strokeWidth="2dp" />
+                app:strokeColor="#F6F6F6"
+                app:strokeWidth="2dp"
+                app:visibleGone="@{model.header.online}" />
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_medium"
+                android:text="@{model.header.username}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold"
@@ -83,6 +93,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Online"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -113,6 +124,7 @@
             app:layout_constraintTop_toBottomOf="@+id/header"
             tools:listitem="@layout/list_item_message" />
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_message_box"
             android:layout_width="match_parent"
@@ -128,6 +140,7 @@
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/ic_attach_file"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -137,7 +150,7 @@
                 android:id="@+id/divider_message"
                 android:layout_width="1dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_small"
                 android:background="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -146,21 +159,21 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:background="@android:color/transparent"
-                android:hint="Type Something ..."
+                android:hint="@string/type_something"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_send"
                 app:layout_constraintStart_toEndOf="@+id/divider_message"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.imageview.ShapeableImageView
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/button_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_send"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+                android:clickable="@{model.sendClickable}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

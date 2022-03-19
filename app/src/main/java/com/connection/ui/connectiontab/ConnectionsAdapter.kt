@@ -7,22 +7,23 @@ import androidx.recyclerview.widget.DiffUtil
 import com.connection.R
 import com.connection.databinding.ListItemChatUserBinding
 import com.connection.utils.DataBoundListAdapter
-import com.connection.vo.connectiontab.ConnectionChatUiModel
+import com.connection.vo.connectiontab.ConnectionTabUiModel
 
-class ConnectionsAdapter : DataBoundListAdapter<ConnectionChatUiModel, ListItemChatUserBinding>(
-    object : DiffUtil.ItemCallback<ConnectionChatUiModel>() {
+class ConnectionsAdapter(val presenter: ConnectionsPresenter) :
+    DataBoundListAdapter<ConnectionTabUiModel, ListItemChatUserBinding>(
+        object : DiffUtil.ItemCallback<ConnectionTabUiModel>() {
 
-        override fun areItemsTheSame(
-            oldItem: ConnectionChatUiModel,
-            newItem: ConnectionChatUiModel
-        ) = oldItem === newItem
+            override fun areItemsTheSame(
+                oldItem: ConnectionTabUiModel,
+                newItem: ConnectionTabUiModel
+            ) = oldItem === newItem
 
-        override fun areContentsTheSame(
-            oldItem: ConnectionChatUiModel,
-            newItem: ConnectionChatUiModel
-        ) = oldItem == newItem
-    }
-) {
+            override fun areContentsTheSame(
+                oldItem: ConnectionTabUiModel,
+                newItem: ConnectionTabUiModel
+            ) = oldItem == newItem
+        }
+    ) {
 
     override fun createBinding(
         parent: ViewGroup,
@@ -37,9 +38,9 @@ class ConnectionsAdapter : DataBoundListAdapter<ConnectionChatUiModel, ListItemC
 
     override fun bind(
         binding: ListItemChatUserBinding,
-        item: ConnectionChatUiModel
+        item: ConnectionTabUiModel
     ) {
         binding.model = item
-        //binding.presenter = bindingPresenter
+        binding.presenter = presenter
     }
 }

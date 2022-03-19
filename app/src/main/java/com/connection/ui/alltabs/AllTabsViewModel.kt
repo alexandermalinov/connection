@@ -1,19 +1,26 @@
 package com.connection.ui.alltabs
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.connection.R
 import com.connection.data.api.model.ChannelExtraData
 import com.connection.data.api.model.UserData
 import com.connection.data.api.model.toUiModel
 import com.connection.data.repository.chat.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
+import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
+import com.connection.ui.connectiontab.ConnectionsPresenter
 import com.connection.utils.common.Constants.CHANNEL_TYPE_MESSAGING
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.alltabs.AllTabsUiModel
+import com.connection.vo.connectionchat.HeaderUiModel
+import com.connection.vo.connectiontab.toUiModel
 import com.connection.vo.connectiontab.toUiModels
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,7 +32,7 @@ class AllTabsViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val chatTabRepository: ChatTabRepository,
     savedStateHandle: SavedStateHandle
-) : BaseViewModel(), AllTabsPresenter {
+) : BaseViewModel(), AllTabsPresenter, ConnectionsPresenter {
 
     val uiLiveData: LiveData<AllTabsUiModel>
         get() = _uiLiveData
@@ -69,7 +76,7 @@ class AllTabsViewModel @Inject constructor(
         chatTabRepository.fetchChannels({ channels ->
             _uiLiveData.value = AllTabsUiModel(
                 profileImage = _uiLiveData.value?.profileImage ?: EMPTY,
-                connections = channels.toUiModels()
+                connections = channels.toUiModels(loggedUserId)
             )
         }, {
             Timber.e("Failed to fetch channels")
@@ -94,9 +101,22 @@ class AllTabsViewModel @Inject constructor(
         )
     }
 
+    private fun getConnectionById(id: String) = _uiLiveData.value
+        ?.connections
+        ?.first { it.id == id }
+
     override fun onSearchClick() {
         viewModelScope.launch {
             createChannel()
         }
+    }
+
+    override fun onConnectionClick(id: String) {
+        _navigationLiveData.value = NavigationGraph(
+            R.id.action_allMessagesFragment_to_connectionChatFragment,
+            bundleOf(
+                HEADER_MODEL to getConnectionById(id)?.toUiModel()
+            )
+        )
     }
 }

@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_allMessagesFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_allMessagesFragment_to_connectionChatFragment"
+            app:destination="@id/connectionChatFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -63,4 +66,8 @@
         android:id="@+id/peopleFragment"
         android:name="com.connection.ui.people.PeopleFragment"
         android:label="PeopleFragment" />
+    <fragment
+        android:id="@+id/connectionChatFragment"
+        android:name="com.connection.ui.connectionchat.ConnectionChatFragment"
+        android:label="ConnectionChatFragment" />
 </navigation>

@@ -23,4 +23,7 @@ object Constants {
 
     // Channel Types
     const val CHANNEL_TYPE_MESSAGING = "messaging"
+
+    // Navigation Models
+    const val HEADER_MODEL = "header_model"
 }

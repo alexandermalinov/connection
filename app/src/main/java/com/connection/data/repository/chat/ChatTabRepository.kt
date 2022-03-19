@@ -2,6 +2,7 @@ package com.connection.data.repository.chat
 
 import com.connection.data.api.model.ChannelExtraData
 import io.getstream.chat.android.client.models.Channel
+import io.getstream.chat.android.client.models.Message
 import io.getstream.chat.android.client.models.User
 import javax.inject.Inject
 
@@ -30,6 +31,13 @@ class ChatTabRepository @Inject constructor(
             onSuccess: (Channel) -> Unit,
             onFailure: () -> Unit
         )
+
+        suspend fun sendMessage(
+            channelId: String,
+            message: String,
+            onSuccess: (Message) -> Unit,
+            onFailure: () -> Unit
+        )
     }
 
     suspend fun fetchChannels(
@@ -55,5 +63,14 @@ class ChatTabRepository @Inject constructor(
         onFailure: () -> Unit
     ) {
         remote.createChannelByIds(type, membersIds, extraData, onSuccess, onFailure)
+    }
+
+    suspend fun sendMessage(
+        channelId: String,
+        message: String,
+        onSuccess: (Message) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.sendMessage(channelId, message, onSuccess, onFailure)
     }
 }

@@ -6,8 +6,12 @@
     <data>
 
         <variable
+            name="presenter"
+            type="com.connection.ui.connectiontab.ConnectionsPresenter" />
+
+        <variable
             name="model"
-            type="com.connection.vo.connectiontab.ConnectionChatUiModel" />
+            type="com.connection.vo.connectiontab.ConnectionTabUiModel" />
 
         <import type="com.connection.R" />
     </data>
@@ -16,7 +20,9 @@
         android:id="@+id/container_connection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/margin_medium">
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{() -> presenter.onConnectionClick(model.id)}"
+        android:paddingVertical="@dimen/margin_medium">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_avatar"
@@ -42,16 +48,17 @@
             app:layout_constraintVertical_bias="1.0"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
             app:strokeColor="@color/white"
-            app:strokeWidth="2dp" />
+            app:strokeWidth="2dp"
+            app:visibleGone="@{model.online}" />
 
         <TextView
             android:id="@+id/text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="@{model.username}"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="@{model.username}"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"
             android:textStyle="bold"
@@ -63,9 +70,9 @@
             android:id="@+id/text_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.lastMessage}"
             android:ellipsize="end"
             android:maxLines="1"
+            android:text="@{model.lastMessage}"
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/text_name"
@@ -75,7 +82,7 @@
             android:id="@+id/text_last_message_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12:34 AM"
+            android:text="@{model.lastMessageAt}"
             app:layout_constraintBottom_toBottomOf="@+id/text_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_name"
@@ -86,13 +93,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/ic_circle"
-            android:text="9+"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_message"
             app:layout_constraintEnd_toEndOf="@+id/text_last_message_date"
             app:layout_constraintTop_toTopOf="@+id/text_message"
+            app:safeText="@{model.unreadMessagesCount}"
+            app:visibleGone="@{model.unreadMessagesCount >= 1}"
             tools:text="9+" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
