@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/ic_red_circle.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/ic_register_background.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/ic_rounded_rectangle.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_rounded_rectangle_colored.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.2505" />
         <entry key="app/src/main/res/drawable/ic_search_black.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_search_white.xml" value="0.198" />
@@ -36,6 +37,7 @@
         <entry key="app/src/main/res/layout/list_item_chat_favourite_connection.xml" value="0.5" />
         <entry key="app/src/main/res/layout/list_item_chat_user.xml" value="0.33" />
         <entry key="app/src/main/res/layout/list_item_message.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_message_logged_used.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/layout/list_item_user.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3260416666666667" />
       </map>

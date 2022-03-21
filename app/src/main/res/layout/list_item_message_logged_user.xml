@@ -7,7 +7,7 @@
 
         <variable
             name="model"
-            type="com.connection.vo.message.MessageUiModel" />
+            type="com.connection.vo.message.LoggedUserMessageUiModel" />
 
         <import type="com.connection.R" />
     </data>
@@ -24,7 +24,7 @@
             android:layout_height="48dp"
             app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.senderPicture}"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
             tools:src="@drawable/ic_profile_picture" />
@@ -50,30 +50,30 @@
             android:id="@+id/text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginEnd="@dimen/margin_medium"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{model.senderUsername}"
             android:textColor="@color/black"
             android:textSize="@dimen/text_medium"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/image_profile"
+            app:layout_constraintEnd_toStartOf="@+id/image_profile"
             app:layout_constraintTop_toTopOf="@+id/image_profile"
             tools:text="Alice Henry" />
 
         <TextView
             android:id="@+id/text_message"
+            android:layout_marginTop="@dimen/margin_small"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:background="@drawable/ic_rounded_rectangle"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:background="@drawable/ic_rounded_rectangle_colored"
             android:ellipsize="end"
-            android:paddingVertical="8dp"
-            android:paddingHorizontal="16dp"
+            android:padding="@dimen/padding_medium"
+            android:textColor="@color/white"
             android:text="@{model.senderMessage}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintEnd_toEndOf="@+id/text_name"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_name"
             tools:text="There are many variations of passages of Lorem Ipsum available." />
 
