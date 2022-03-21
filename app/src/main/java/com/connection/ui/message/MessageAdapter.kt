@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.connection.R
 import com.connection.databinding.ListItemMessageLoggedUserBinding
 import com.connection.databinding.ListItemMessageSenderUserBinding
+import com.connection.ui.connectionchat.ConnectionChatPresenter
 import com.connection.ui.connectiontab.ConnectionsPresenter
 import com.connection.utils.DataBoundListAdapter
 import com.connection.vo.message.LoggedUserMessageUiModel
@@ -17,7 +18,7 @@ import com.connection.vo.message.SenderUserMessageUiModel
 private const val MESSAGE_BY_LOGGED_USER = 1
 private const val MESSAGE_BY_SENDER_USER = 2
 
-class MessageAdapter(val presenter: ConnectionsPresenter) :
+class MessageAdapter(val presenter: ConnectionChatPresenter) :
     DataBoundListAdapter<MessageUiModel, ViewDataBinding>(
         object : DiffUtil.ItemCallback<MessageUiModel>() {
 

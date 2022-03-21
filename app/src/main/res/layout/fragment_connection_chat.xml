@@ -112,7 +112,7 @@
             app:layout_constraintTop_toBottomOf="@+id/header" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_connections"
+            android:id="@+id/recycler_view_chat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/margin_medium"
@@ -132,9 +132,9 @@
             android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_medium"
             android:background="@drawable/ic_rounded_rectangle_grey"
-            android:padding="@dimen/padding_medium"
+            android:padding="@dimen/padding_small"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_view_connections">
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view_chat">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -168,12 +168,12 @@
                 app:layout_constraintStart_toEndOf="@+id/divider_message"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
+            <ImageView
                 android:id="@+id/button_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_send"
-                android:clickable="@{model.sendClickable}"
+                android:onClick="@{() -> presenter.onSendClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

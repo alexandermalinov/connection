@@ -40,7 +40,7 @@ fun List<Channel>.toUiModels(loggedUserId: String) = map {
 }
 
 fun ConnectionTabUiModel.toUiModel() = HeaderUiModel(
-    id = id,
+    channelId = id,
     profilePicture = profileImage,
     username = username,
     isOnline = isOnline
