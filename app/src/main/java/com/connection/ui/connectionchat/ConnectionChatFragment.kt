@@ -13,6 +13,7 @@ import com.connection.databinding.FragmentLoginBinding
 import com.connection.ui.base.BaseFragment
 import com.connection.ui.login.LoginViewModel
 import com.connection.ui.message.MessageAdapter
+import com.connection.utils.common.Constants.POSITION_START
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,6 +37,7 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
                 reverseLayout = true
                 stackFromEnd = true
             }
+            scrollToPosition(POSITION_START)
         }
     }
 
@@ -45,6 +47,7 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
                 model = uiModel
                 (recyclerViewChat.adapter as MessageAdapter)
                     .submitList(uiModel.messages)
+                recyclerViewChat.smoothScrollToPosition(POSITION_START)
             }
         }
     }

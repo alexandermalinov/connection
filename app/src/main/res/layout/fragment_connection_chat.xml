@@ -24,9 +24,9 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F6F6F6"
+            android:background="@color/grey"
             android:paddingHorizontal="@dimen/padding_medium"
-            android:paddingVertical="@dimen/padding_large"
+            android:paddingVertical="@dimen/padding_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -101,21 +101,11 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginHorizontal="@dimen/margin_large"
-            android:background="@drawable/ic_background_gradient"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_chat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginVertical="@dimen/margin_medium"
             app:layout_constraintBottom_toTopOf="@+id/container_message_box"
             app:layout_constraintEnd_toEndOf="parent"
@@ -124,16 +114,17 @@
             app:layout_constraintTop_toBottomOf="@+id/header"
             tools:listitem="@layout/list_item_message_sender_user" />
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_message_box"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_medium"
             android:background="@drawable/ic_rounded_rectangle_grey"
             android:padding="@dimen/padding_small"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/button_send"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recycler_view_chat">
 
             <ImageView
@@ -146,38 +137,35 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_attach_file" />
 
-            <View
-                android:id="@+id/divider_message"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/margin_small"
-                android:background="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small"
-                android:layout_marginEnd="@dimen/margin_medium"
+                android:layout_marginHorizontal="@dimen/margin_medium"
                 android:background="@android:color/transparent"
-                android:hint="@string/type_something"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_send"
-                app:layout_constraintStart_toEndOf="@+id/divider_message"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/button_send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_send"
-                android:onClick="@{() -> presenter.onSendClick()}"
+                android:hint="@string/message"
+                android:text="@={model.message}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:contentDescription="@string/send_button_description"
+            android:onClick="@{() -> presenter.onSendClick()}"
+            app:backgroundTint="@color/dark_grey"
+            app:elevation="0dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="@+id/container_message_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/container_message_box"
+            app:srcCompat="@drawable/ic_send" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

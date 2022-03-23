@@ -8,15 +8,9 @@ import com.connection.vo.message.MessageUiModel
 
 data class ConnectionChatUiModel(
     val header: HeaderUiModel = HeaderUiModel(),
-    val messages: List<MessageUiModel> = emptyList()
-) : BaseObservable() {
-
-    @get:Bindable
+    val messages: List<MessageUiModel> = emptyList(),
     var message: String = EMPTY
-        set(value) {
-            field = value
-            notifyPropertyChanged(BR.message)
-        }
+) : BaseObservable() {
 
     @get:Bindable
     var sendClickable: Boolean = false

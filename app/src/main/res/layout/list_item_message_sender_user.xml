@@ -16,7 +16,7 @@
         android:id="@+id/container_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="@dimen/padding_medium">
+        android:layout_margin="@dimen/margin_small">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_profile"
@@ -24,57 +24,30 @@
             android:layout_height="48dp"
             app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.senderPicture}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_message"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
             tools:src="@drawable/ic_profile_picture" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image_online_indicator"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:padding="1dp"
-            android:src="@color/green"
-            app:visibleGone="@{model.senderOnline}"
-            app:layout_constraintBottom_toBottomOf="@+id/image_profile"
-            app:layout_constraintEnd_toEndOf="@+id/image_profile"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/image_profile"
-            app:layout_constraintTop_toTopOf="@+id/image_profile"
-            app:layout_constraintVertical_bias="1.0"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-            app:strokeColor="@color/white"
-            app:strokeWidth="2dp" />
-
-        <TextView
-            android:id="@+id/text_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="@{model.senderUsername}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/image_profile"
-            app:layout_constraintTop_toTopOf="@+id/image_profile"
-            tools:text="Alice Henry" />
-
         <TextView
             android:id="@+id/text_message"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginHorizontal="@dimen/margin_small"
             android:background="@drawable/ic_rounded_rectangle_grey"
-            android:ellipsize="end"
-            android:padding="@dimen/padding_medium"
+            android:paddingHorizontal="@dimen/padding_medium"
+            android:paddingVertical="@dimen/padding_small"
             android:text="@={model.senderMessage}"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/text_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_name"
-            tools:text="There are many variations of passages of Lorem Ipsum available." />
+            app:layout_constraintStart_toEndOf="@+id/image_profile"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="There are many variations v" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

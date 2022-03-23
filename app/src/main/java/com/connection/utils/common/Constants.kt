@@ -10,6 +10,7 @@ object Constants {
     const val EMPTY = ""
     const val INVALID_ID = 0L
     const val INVALID_RES = 0
+    const val POSITION_START = 0
 
     // Delays
     const val SPLASH_SCREEN_DELAY = 2 * 1000L
@@ -26,4 +27,7 @@ object Constants {
 
     // Navigation Models
     const val HEADER_MODEL = "header_model"
+
+    // Extra data
+    const val EXTRA_DATA_PICTURE = "picture"
 }

@@ -19,11 +19,15 @@ fun Channel.toUiModel(loggedUserId: String) = ConnectionTabUiModel(
     id = id,
     profileImage = extraData["channel_picture"].toString(),
     username = extraData["channel_name"].toString(),
-    lastMessage = messages.lastOrNull()?.text ?: EMPTY,
+    lastMessage = messages.firstOrNull()?.text ?: EMPTY,
     lastMessageAt = lastMessageAt?.getLastMessageAt() ?: EMPTY,
     unreadMessagesCount = unreadCount ?: 0,
     isOnline = getUserOnlineStatus(loggedUserId)
 )
+
+fun List<Channel>.toUiModels(loggedUserId: String) = map {
+    it.toUiModel(loggedUserId)
+}
 
 private fun Date.getLastMessageAt() = if (toString().isBlank().not())
     toString()
@@ -34,10 +38,6 @@ private fun Int.getUnreadCount() = if (toString().isBlank().not())
     toString()
 else
     EMPTY
-
-fun List<Channel>.toUiModels(loggedUserId: String) = map {
-    it.toUiModel(loggedUserId)
-}
 
 fun ConnectionTabUiModel.toUiModel() = HeaderUiModel(
     channelId = id,

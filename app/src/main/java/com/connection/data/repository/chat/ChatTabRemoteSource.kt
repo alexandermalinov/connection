@@ -6,6 +6,7 @@ import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.CHANNEL_TYPE_MESSAGING
 import com.google.firebase.auth.FirebaseAuth
 import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.api.models.QueryChannelRequest
 import io.getstream.chat.android.client.api.models.QueryChannelsRequest
 import io.getstream.chat.android.client.api.models.QuerySort
 import io.getstream.chat.android.client.models.Channel
@@ -88,14 +89,14 @@ class ChatTabRemoteSource @Inject constructor(
 
     override suspend fun sendMessage(
         channelId: String,
-        message: String,
+        message: Message,
         onSuccess: (Message) -> Unit,
         onFailure: () -> Unit
     ) {
         client.sendMessage(
             CHANNEL_TYPE_MESSAGING,
             channelId,
-            Message(text = message)
+            message
         ).enqueue { result ->
             if (result.isSuccess) {
                 onSuccess(result.data())
@@ -103,6 +104,19 @@ class ChatTabRemoteSource @Inject constructor(
                 Timber.e("error occurred while sending message: ${result.error().message}")
                 onFailure()
             }
+        }
+    }
+
+    override suspend fun getChannel(
+        channelId: String,
+        getChannel: (Channel) -> Unit
+    ) {
+        client.queryChannel(
+            CHANNEL_TYPE_MESSAGING,
+            channelId,
+            QueryChannelRequest().withState()
+        ).enqueue { result ->
+            getChannel.invoke(result.data())
         }
     }
 }

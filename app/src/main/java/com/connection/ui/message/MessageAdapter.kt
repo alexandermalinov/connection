@@ -66,6 +66,6 @@ class MessageAdapter(val presenter: ConnectionChatPresenter) :
 
     override fun getItemViewType(position: Int) = when (this.currentList[position]) {
         is LoggedUserMessageUiModel -> MESSAGE_BY_LOGGED_USER
-        is SenderUserMessageUiModel -> MESSAGE_BY_SENDER_USER
+        else -> MESSAGE_BY_SENDER_USER
     }
 }

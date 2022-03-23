@@ -34,9 +34,14 @@ class ChatTabRepository @Inject constructor(
 
         suspend fun sendMessage(
             channelId: String,
-            message: String,
+            message: Message,
             onSuccess: (Message) -> Unit,
             onFailure: () -> Unit
+        )
+
+        suspend fun getChannel(
+            channelId: String,
+            getChannel: (Channel) -> Unit
         )
     }
 
@@ -67,10 +72,17 @@ class ChatTabRepository @Inject constructor(
 
     suspend fun sendMessage(
         channelId: String,
-        message: String,
+        message: Message,
         onSuccess: (Message) -> Unit,
         onFailure: () -> Unit
     ) {
         remote.sendMessage(channelId, message, onSuccess, onFailure)
+    }
+
+    suspend fun getChannel(
+        channelId: String,
+        getChannel: (Channel) -> Unit
+    ) {
+        remote.getChannel(channelId, getChannel)
     }
 }
