@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.data.api.model.UserData
+import com.connection.data.repository.chat.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.ui.base.BaseViewModel
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.people.PeopleUiModel
 import com.connection.vo.people.toUiModel
+import com.connection.vo.people.toUiModels
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PeopleViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val chatTabRepository: ChatTabRepository
 ) : BaseViewModel() {
 
     val uiLiveData: LiveData<PeopleUiModel>
@@ -39,12 +42,10 @@ class PeopleViewModel @Inject constructor(
     }
 
     private suspend fun initUiData() {
-        userRepository.getUsers({ users ->
+        chatTabRepository.fetchMembers({ users ->
             _uiLiveData.value = PeopleUiModel(
-                loggedUser?.picture ?: EMPTY,
-                users?.users
-                    ?.map { it.toUiModel() }
-                    ?: emptyList()
+                profilePicture = loggedUser?.picture ?: EMPTY,
+                peoples = users.toUiModels()
             )
         }, {
             Timber.e("error occurred while settings peoples data")

@@ -6,6 +6,7 @@ import com.connection.utils.common.Constants.EMPTY
 data class PeopleListItemUiModel(
     val profilePicture: String = EMPTY,
     val name: String = EMPTY,
+    val online: Boolean = false,
     val connectionStatus: ConnectionStatus = ConnectionStatus.NOT_CONNECTED,
     val otherPeoplePictures: List<String> = emptyList()
 )

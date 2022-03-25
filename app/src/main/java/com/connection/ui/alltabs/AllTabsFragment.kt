@@ -18,6 +18,7 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initConnectionsRecyclerView()
+        initFavouriteConnectionsRecyclerView()
         observeLiveData()
     }
 
@@ -28,9 +29,19 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
         }
     }
 
+    private fun initFavouriteConnectionsRecyclerView() {
+        dataBinding.listFavouriteConnections.apply {
+            adapter = FavouritesConnectionsAdapter()
+            layoutManager = LinearLayoutManager(context).apply {
+                orientation = LinearLayoutManager.HORIZONTAL
+            }
+        }
+    }
+
     private fun observeLiveData() {
         dataBinding.presenter = viewModel
         observeUiLiveData()
+        observeFavouriteConnectionsUiLiveData()
         observeNavigation(viewModel.navigationLiveData)
     }
 
@@ -39,6 +50,13 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
             dataBinding.model = uiLiveData
             (dataBinding.recyclerViewConnections.adapter as ConnectionsAdapter)
                 .submitList(uiLiveData.connections)
+        }
+    }
+
+    private fun observeFavouriteConnectionsUiLiveData() {
+        viewModel.favouriteConnectionsUiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
+            (dataBinding.listFavouriteConnections.adapter as FavouritesConnectionsAdapter)
+                .submitList(uiLiveData.favouriteConnections)
         }
     }
 

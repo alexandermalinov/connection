@@ -9,27 +9,26 @@ import com.connection.R
 import com.connection.databinding.ListItemMessageLoggedUserBinding
 import com.connection.databinding.ListItemMessageSenderUserBinding
 import com.connection.ui.connectionchat.ConnectionChatPresenter
-import com.connection.ui.connectiontab.ConnectionsPresenter
 import com.connection.utils.DataBoundListAdapter
 import com.connection.vo.message.LoggedUserMessageUiModel
-import com.connection.vo.message.MessageUiModel
+import com.connection.vo.message.MessageListUiModel
 import com.connection.vo.message.SenderUserMessageUiModel
 
 private const val MESSAGE_BY_LOGGED_USER = 1
 private const val MESSAGE_BY_SENDER_USER = 2
 
 class MessageAdapter(val presenter: ConnectionChatPresenter) :
-    DataBoundListAdapter<MessageUiModel, ViewDataBinding>(
-        object : DiffUtil.ItemCallback<MessageUiModel>() {
+    DataBoundListAdapter<MessageListUiModel, ViewDataBinding>(
+        object : DiffUtil.ItemCallback<MessageListUiModel>() {
 
             override fun areItemsTheSame(
-                oldItem: MessageUiModel,
-                newItem: MessageUiModel
+                oldItem: MessageListUiModel,
+                newItem: MessageListUiModel
             ) = oldItem === newItem
 
             override fun areContentsTheSame(
-                oldItem: MessageUiModel,
-                newItem: MessageUiModel
+                oldItem: MessageListUiModel,
+                newItem: MessageListUiModel
             ) = oldItem == newItem
         }
     ) {
@@ -52,7 +51,7 @@ class MessageAdapter(val presenter: ConnectionChatPresenter) :
 
     override fun bind(
         binding: ViewDataBinding,
-        item: MessageUiModel
+        item: MessageListUiModel
     ) {
         when {
             binding is ListItemMessageLoggedUserBinding && item is LoggedUserMessageUiModel -> {

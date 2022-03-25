@@ -33,5 +33,11 @@
     <string name="connect">Connect</string>
     <string name="message">Message</string>
     <string name="send_button_description">Send Button</string>
+    <string name="online">Online</string>
+    <string name="options_menu">options menu</string>
+    <string name="favourites">Favourites</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="wishes_to_connect_with_you">sent you connection request</string>
 
 </resources>

@@ -43,6 +43,11 @@ class ChatTabRepository @Inject constructor(
             channelId: String,
             getChannel: (Channel) -> Unit
         )
+
+        suspend fun fetchMembers(
+            onSuccess: (List<User>) -> Unit,
+            onFailure: () -> Unit
+        )
     }
 
     suspend fun fetchChannels(
@@ -84,5 +89,12 @@ class ChatTabRepository @Inject constructor(
         getChannel: (Channel) -> Unit
     ) {
         remote.getChannel(channelId, getChannel)
+    }
+
+    suspend fun fetchMembers(
+        onSuccess: (List<User>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.fetchMembers(onSuccess, onFailure)
     }
 }

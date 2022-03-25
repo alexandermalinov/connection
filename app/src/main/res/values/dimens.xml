@@ -3,8 +3,12 @@
     // Text Size
     <dimen name="text_tiny">4sp</dimen>
     <dimen name="text_small">8sp</dimen>
+    <dimen name="text_pre_small">10sp</dimen>
+    <dimen name="text_pre_x_small">12sp</dimen>
+    <dimen name="text_pre_xx_small">14sp</dimen>
     <dimen name="text_medium">16sp</dimen>
-    <dimen name="text_x_medium">24sp</dimen>
+    <dimen name="text_x_medium">20sp</dimen>
+    <dimen name="text_xx_medium">24sp</dimen>
     <dimen name="text_large">32sp</dimen>
     <dimen name="text_huge">64sp</dimen>
 
@@ -12,6 +16,8 @@
     <dimen name="padding_tiny">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_pre_medium">16dp</dimen>
+    <dimen name="padding_pre_x_medium">24dp</dimen>
     <dimen name="padding_large">32dp</dimen>
     <dimen name="padding_huge">64dp</dimen>
 

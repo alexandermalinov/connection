@@ -33,8 +33,5 @@ class ConnectionApplication : Application(), Configuration.Provider {
             .Builder(GET_STREAM_API_KEY, this)
             .logLevel(ChatLogLevel.ALL)
             .build()
-        /*ChatDomain
-            .Builder(ChatClient.instance(), this)
-            .build()*/
     }
 }

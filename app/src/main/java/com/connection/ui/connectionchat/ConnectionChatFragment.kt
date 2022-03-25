@@ -1,17 +1,12 @@
 package com.connection.ui.connectionchat
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.connection.R
 import com.connection.databinding.FragmentConnectionChatBinding
-import com.connection.databinding.FragmentLoginBinding
 import com.connection.ui.base.BaseFragment
-import com.connection.ui.login.LoginViewModel
 import com.connection.ui.message.MessageAdapter
 import com.connection.utils.common.Constants.POSITION_START
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +21,7 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.presenter = viewModel
         initChatRecyclerView()
-        observeUiLiveData()
+        observeLiveData()
         observeNavigation(viewModel.navigationLiveData)
     }
 
@@ -41,12 +36,22 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
         }
     }
 
+    private fun observeLiveData() {
+        observeUiLiveData()
+        observeMessagesLiveData()
+    }
+
     private fun observeUiLiveData() {
-        viewModel.uiLiveData.observe(viewLifecycleOwner) { uiModel ->
+        viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
+            dataBinding.model = uiLiveData
+        }
+    }
+
+    private fun observeMessagesLiveData() {
+        viewModel.messagesLiveData.observe(viewLifecycleOwner) { uiLiveData ->
             dataBinding.apply {
-                model = uiModel
                 (recyclerViewChat.adapter as MessageAdapter)
-                    .submitList(uiModel.messages)
+                    .submitList(uiLiveData.messages)
                 recyclerViewChat.smoothScrollToPosition(POSITION_START)
             }
         }

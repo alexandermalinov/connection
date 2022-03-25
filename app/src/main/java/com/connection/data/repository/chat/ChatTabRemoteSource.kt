@@ -2,17 +2,14 @@ package com.connection.data.repository.chat
 
 import com.connection.data.api.model.ChannelExtraData
 import com.connection.data.api.model.toExtraData
-import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.CHANNEL_TYPE_MESSAGING
 import com.google.firebase.auth.FirebaseAuth
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.api.models.QueryChannelRequest
 import io.getstream.chat.android.client.api.models.QueryChannelsRequest
 import io.getstream.chat.android.client.api.models.QuerySort
-import io.getstream.chat.android.client.models.Channel
-import io.getstream.chat.android.client.models.Filters
-import io.getstream.chat.android.client.models.Message
-import io.getstream.chat.android.client.models.User
+import io.getstream.chat.android.client.api.models.QueryUsersRequest
+import io.getstream.chat.android.client.models.*
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,31 +18,51 @@ class ChatTabRemoteSource @Inject constructor(
     private val client: ChatClient
 ) : ChatTabRepository.RemoteSource {
 
-    private val request = QueryChannelsRequest(
+    private val channelsRequest = QueryChannelsRequest(
         filter = Filters.and(
             Filters.eq("type", "messaging"),
             Filters.`in`("members", listOf("${auth.uid}"))
         ),
         offset = 0,
-        limit = 10,
+        limit = 15,
         querySort = QuerySort.desc("last_message_at")
     ).apply {
         watch = true
         state = true
     }
 
+    private val usersRequest = QueryUsersRequest(
+        filter = Filters.eq("banned", false),
+        offset = 0,
+        limit = 15,
+    )
+
     override suspend fun fetchChannels(
         onSuccess: (List<Channel>) -> Unit,
         onFailure: () -> Unit
     ) {
         client
-            .queryChannels(request)
+            .queryChannels(channelsRequest)
             .enqueue { result ->
                 if (result.isSuccess) {
                     onSuccess(result.data())
                 } else {
                     onFailure()
                 }
+            }
+    }
+
+    override suspend fun fetchMembers(
+        onSuccess: (List<User>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        client
+            .queryUsers(usersRequest)
+            .enqueue() {
+                if (it.isSuccess)
+                    onSuccess(it.data())
+                else
+                    onFailure()
             }
     }
 
@@ -116,7 +133,10 @@ class ChatTabRemoteSource @Inject constructor(
             channelId,
             QueryChannelRequest().withState()
         ).enqueue { result ->
-            getChannel.invoke(result.data())
+            if (result.isSuccess)
+                getChannel.invoke(result.data())
+            else
+                Timber.e("Error fetching channel: ${result.isError}")
         }
     }
 }

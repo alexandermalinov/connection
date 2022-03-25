@@ -18,10 +18,10 @@ import com.connection.utils.common.Constants.CHANNEL_TYPE_MESSAGING
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.utils.common.Constants.USER_ID
-import com.connection.vo.alltabs.AllTabsUiModel
-import com.connection.vo.connectionchat.HeaderUiModel
+import com.connection.vo.alltabs.*
 import com.connection.vo.connectiontab.toUiModel
 import com.connection.vo.connectiontab.toUiModels
+import com.connection.vo.people.toUiModels
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -37,7 +37,12 @@ class AllTabsViewModel @Inject constructor(
     val uiLiveData: LiveData<AllTabsUiModel>
         get() = _uiLiveData
 
+    val favouriteConnectionsUiLiveData: LiveData<FavouriteConnectionUiModel>
+        get() = _favouriteConnectionsUiLiveData
+
     private val _uiLiveData = MutableLiveData(AllTabsUiModel())
+    private val _favouriteConnectionsUiLiveData = MutableLiveData(FavouriteConnectionUiModel())
+
     private val loggedUserId = savedStateHandle.get<String>(USER_ID) ?: EMPTY
     private var loggedUser: UserData? = null
 
@@ -52,6 +57,7 @@ class AllTabsViewModel @Inject constructor(
             viewModelScope.launch {
                 loggedUser = user
                 initUserData()
+                fetchFavouriteConnections()
                 fetchChannels()
             }
         }
@@ -72,6 +78,16 @@ class AllTabsViewModel @Inject constructor(
         }
     }
 
+    private suspend fun fetchFavouriteConnections() {
+        chatTabRepository.fetchMembers({ users ->
+            _favouriteConnectionsUiLiveData.value = FavouriteConnectionUiModel(
+                users.map { it.toUiModel() }
+            )
+        }, {
+            Timber.e("error occurred while settings peoples data")
+        })
+    }
+
     private suspend fun fetchChannels() {
         chatTabRepository.fetchChannels({ channels ->
             _uiLiveData.value = AllTabsUiModel(
@@ -83,32 +99,12 @@ class AllTabsViewModel @Inject constructor(
         })
     }
 
-    private suspend fun createChannel() {
-        chatTabRepository.createChannelByIds(
-            CHANNEL_TYPE_MESSAGING,
-            listOf(
-                loggedUserId,
-                "cQPglspnyYOJuFsCy0HF8qyijvm1"
-            ),
-            ChannelExtraData(
-                "victoria",
-                "https://firebasestorage.googleapis.com/v0/b/connection-18947.appspot.com/o/profile_image%2F7b5807c7-35a1-42d7-b475-3102540845f9?alt=media&token=0531dfee-25aa-4968-a126-e5ca72adec11"
-            ), {
-                Timber.e("Successfully created channel")
-            }, {
-                Timber.e("Failed to create channel")
-            }
-        )
-    }
-
     private fun getConnectionById(id: String) = _uiLiveData.value
         ?.connections
         ?.first { it.id == id }
 
     override fun onSearchClick() {
-        viewModelScope.launch {
-            createChannel()
-        }
+        // TODO ("Not yet implemented")
     }
 
     override fun onConnectionClick(id: String) {

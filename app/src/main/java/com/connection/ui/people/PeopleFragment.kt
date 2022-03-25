@@ -27,10 +27,6 @@ class PeopleFragment : BaseFragment<FragmentPeopleBinding>() {
             adapter = PeopleAdapter()
             layoutManager = LinearLayoutManager(context)
         }
-        dataBinding.recyclerViewOtherPeoples.apply {
-            adapter = PeopleAdapter()
-            layoutManager = LinearLayoutManager(context)
-        }
     }
 
     private fun observeLiveData() {
@@ -42,8 +38,6 @@ class PeopleFragment : BaseFragment<FragmentPeopleBinding>() {
         viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
             dataBinding.model = uiLiveData
             (dataBinding.recyclerViewPeoples.adapter as PeopleAdapter)
-                .submitList(uiLiveData.peoples)
-            (dataBinding.recyclerViewOtherPeoples.adapter as PeopleAdapter)
                 .submitList(uiLiveData.peoples)
         }
     }
