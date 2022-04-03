@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HeaderUiModel(
+    val senderId: String = EMPTY,
     val channelId: String = EMPTY,
     val profilePicture: String = EMPTY,
     val username: String = EMPTY,

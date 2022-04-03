@@ -43,4 +43,18 @@ object Constants {
     const val CONNECTION_STATUS_CONNECTED = "connected"
     const val CONNECTION_STATUS_NOT_CONNECTED = "not connected"
     const val CONNECTION_STATUS_PENDING = "pending"
+
+    // Creating channel data
+    const val CHANNEL_MEMBERS = "members"
+    const val CHANNEL_INVITES = "invites"
+    const val CHANNEL_MESSAGE = "message"
+
+    // Nested Fragments Navigation
+    const val FRAGMENT_CONNECTED_PEOPLE = "fragment_connected_people"
+    const val FRAGMENT_NOT_CONNECTED_PEOPLE = "fragment_not_connected_people"
+    const val USER = "user"
+
+    // People Screen Tabs Positions
+    const val CONNECTED_PEOPLE_TAB_POSITION = 0
+    const val NOT_CONNECTED_PEOPLE_TAB_POSITION = 1
 }

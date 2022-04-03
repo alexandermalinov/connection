@@ -55,6 +55,14 @@ data class ConnectionChatUiModel(
             notifyPropertyChanged(BR.chatBoxVisible)
         }
 
+    @get:Bindable
+    var loadingChatHistory: Boolean = false
+        set(value) {
+            field = value
+            field = value
+            notifyPropertyChanged(BR.loadingChatHistory)
+        }
+
     private fun handleConnectionStatus(status: ConnectionStatus) {
         when (status) {
             ConnectionStatus.CONNECTED -> {
@@ -68,7 +76,7 @@ data class ConnectionChatUiModel(
                 isRequestButtonVisible = false
             }
             ConnectionStatus.NOT_CONNECTED -> {
-                isChatBoxVisible = false
+                isChatBoxVisible = true
                 isRequestTextVisible = true
                 isRequestButtonVisible = true
             }

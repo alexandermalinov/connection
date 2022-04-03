@@ -39,5 +39,7 @@
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="wishes_to_connect_with_you">sent you connection request</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -115,7 +115,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/text_request_sender_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -181,7 +181,17 @@
             app:layout_constraintStart_toEndOf="@+id/button_accept"
             app:layout_constraintTop_toTopOf="@+id/button_accept"
             app:strokeColor="@color/teal_700"
-            app:visibleGone="@{model.requestButtonVisible}" />
+            app:visibleGone="@{model.requestButtonVisible}" />-->
+
+        <ProgressBar
+            android:id="@+id/loading_favourites_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            app:visibleGone="@{model.loadingChatHistory}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_chat"
@@ -194,7 +204,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header"
-            app:visibleGone="@{model.chatBoxVisible}"
             tools:listitem="@layout/list_item_message_sender_user" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -207,8 +216,7 @@
             android:padding="@dimen/padding_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_send"
-            app:layout_constraintStart_toStartOf="parent"
-            app:visibleGone="@{model.chatBoxVisible}">
+            app:layout_constraintStart_toStartOf="parent" >
 
             <ImageView
                 android:id="@+id/imageView"
@@ -248,8 +256,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/container_message_box"
             app:srcCompat="@drawable/ic_send_black"
-            app:tint="@color/white"
-            app:visibleGone="@{model.chatBoxVisible}" />
+            app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

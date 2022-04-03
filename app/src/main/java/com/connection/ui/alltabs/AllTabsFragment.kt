@@ -41,6 +41,7 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
     private fun observeLiveData() {
         dataBinding.presenter = viewModel
         observeUiLiveData()
+        observeConnectionsLiveData()
         observeFavouriteConnectionsUiLiveData()
         observeNavigation(viewModel.navigationLiveData)
     }
@@ -48,8 +49,13 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
     private fun observeUiLiveData() {
         viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
             dataBinding.model = uiLiveData
+        }
+    }
+
+    private fun observeConnectionsLiveData() {
+        viewModel.connectionUiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
             (dataBinding.recyclerViewConnections.adapter as ConnectionsAdapter)
-                .submitList(uiLiveData.connections)
+                .submitList(uiLiveData)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.connection.data.repository.chat
+package com.connection.data.repository.chattab
 
 import com.connection.data.api.model.ChannelExtraData
 import io.getstream.chat.android.client.models.Channel
@@ -20,7 +20,7 @@ class ChatTabRepository @Inject constructor(
 
         fun connectUser(
             user: User,
-            onSuccess: () -> Unit,
+            onSuccess: (User) -> Unit,
             onFailure: () -> Unit
         )
 
@@ -41,11 +41,33 @@ class ChatTabRepository @Inject constructor(
 
         suspend fun getChannel(
             channelId: String,
-            getChannel: (Channel) -> Unit
+            getChannel: (Channel) -> Unit,
+            onFailure: () -> Unit
         )
 
         suspend fun fetchMembers(
+            isMemberPartOf: Boolean,
             onSuccess: (List<User>) -> Unit,
+            onFailure: () -> Unit
+        )
+
+        suspend fun createChannel(
+            members: List<String>,
+            extraData: Map<String, String>,
+            onSuccess: (Channel) -> Unit,
+            onFailure: () -> Unit
+        )
+
+        suspend fun acceptInvite(
+            channelId: String,
+            message: String,
+            onSuccess: () -> Unit,
+            onFailure: () -> Unit
+        )
+
+        suspend fun declineInvite(
+            channelId: String,
+            onSuccess: (Channel) -> Unit,
             onFailure: () -> Unit
         )
     }
@@ -59,7 +81,7 @@ class ChatTabRepository @Inject constructor(
 
     fun connectUser(
         user: User,
-        onSuccess: () -> Unit,
+        onSuccess: (User) -> Unit,
         onFailure: () -> Unit
     ) {
         remote.connectUser(user, onSuccess, onFailure)
@@ -86,15 +108,43 @@ class ChatTabRepository @Inject constructor(
 
     suspend fun getChannel(
         channelId: String,
-        getChannel: (Channel) -> Unit
+        getChannel: (Channel) -> Unit,
+        onFailure: () -> Unit
     ) {
-        remote.getChannel(channelId, getChannel)
+        remote.getChannel(channelId, getChannel, onFailure)
     }
 
     suspend fun fetchMembers(
+        isMemberPartOf: Boolean,
         onSuccess: (List<User>) -> Unit,
         onFailure: () -> Unit
     ) {
-        remote.fetchMembers(onSuccess, onFailure)
+        remote.fetchMembers(isMemberPartOf, onSuccess, onFailure)
+    }
+
+    suspend fun createChannel(
+        members: List<String>,
+        extraData: Map<String, String>,
+        onSuccess: (Channel) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.createChannel(members, extraData, onSuccess, onFailure)
+    }
+
+    suspend fun acceptInvite(
+        channelId: String,
+        message: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.acceptInvite(channelId, message, onSuccess, onFailure)
+    }
+
+    suspend fun declineInvite(
+        channelId: String,
+        onSuccess: (Channel) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.declineInvite(channelId, onSuccess, onFailure)
     }
 }

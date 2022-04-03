@@ -87,6 +87,7 @@
             android:id="@+id/button_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_marginTop="@dimen/margin_medium"
             android:elevation="@dimen/button_elevation"
             android:onClick="@{() -> presenter.onLoginClick()}"

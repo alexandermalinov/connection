@@ -4,18 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.connection.data.api.model.ChannelExtraData
 import com.connection.data.api.model.UserData
-import com.connection.data.repository.chat.ChatTabRepository
+import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.PopBackStack
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.base.ConnectionStatus
-import com.connection.utils.common.Constants.CHANNEL_TYPE_MESSAGING
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.utils.common.Constants.USER_EXTRA_DATA_PICTURE
 import com.connection.utils.common.Constants.HEADER_MODEL
-import com.connection.utils.common.Constants.INVALID_ID
+import com.connection.utils.common.Constants.USER_EXTRA_DATA_PICTURE
 import com.connection.vo.connectionchat.ConnectionChatUiModel
 import com.connection.vo.connectionchat.HeaderUiModel
 import com.connection.vo.message.*
@@ -65,18 +62,21 @@ class ConnectionChatViewModel @Inject constructor(
 
     private suspend fun initChatData() {
         savedStateHandle.get<HeaderUiModel>(HEADER_MODEL)?.let { headerModel ->
-            chatRepository.getChannel(headerModel.channelId) { channel ->
+            chatRepository.getChannel(headerModel.channelId, { channel ->
                 currentChannel = channel
                 senderUser = channel.getSenderUser()
                 _uiLiveData.value = ConnectionChatUiModel(headerModel)
                 initChatHistory(channel)
                 addOnReceiveEvent()
-            }
+            }, {
+            })
         }
     }
 
     private fun initChatHistory(channel: Channel?) {
+        _uiLiveData.value?.loadingChatHistory = true
         _messagesLiveData.value = MessageUiModel(getChatHistory(channel?.messages ?: emptyList()))
+        _uiLiveData.value?.loadingChatHistory = false
     }
 
     private fun Channel.getSenderUser() = members.first { it.user.id != loggedUser?.id }
@@ -140,8 +140,17 @@ class ConnectionChatViewModel @Inject constructor(
     }
 
     private suspend fun sendInitialMessage() {
-        sendMessage()
-        _uiLiveData.value?.connectionStatus = ConnectionStatus.CONNECTED
+        /*chatRepository.createChannel(
+            listOf(loggedUser?.id ?: EMPTY),
+            mapOf(CHANNEL_INVITES to senderId), { channel ->
+                viewModelScope.launch {
+                    currentChannel = channel
+                    _uiLiveData.value?.connectionStatus = ConnectionStatus.PENDING
+                }
+            }, {
+                Timber.e("error occurred inviting member")
+            }
+        )*/
     }
 
     private fun isInitialMessage() =
@@ -154,7 +163,10 @@ class ConnectionChatViewModel @Inject constructor(
     override fun onSendClick() {
         viewModelScope.launch {
             _uiLiveData.value?.let { model ->
-                if (isInitialMessage()) sendInitialMessage() else sendMessage()
+                /* if (isInitialMessage())
+                     sendInitialMessage()
+                 else*/
+                sendMessage()
                 model.message = EMPTY
             }
         }
@@ -162,22 +174,27 @@ class ConnectionChatViewModel @Inject constructor(
 
     override fun onAcceptClick() {
         viewModelScope.launch {
-            chatRepository.createChannelByIds(
-                CHANNEL_TYPE_MESSAGING,
-                listOf(loggedUser?.id ?: EMPTY, senderUser?.user?.id ?: EMPTY),
-                ChannelExtraData(
-                    loggedUser?.username ?: EMPTY,
-                    loggedUser?.picture ?: EMPTY
-                ), {
+            chatRepository.acceptInvite(
+                currentChannel?.id ?: EMPTY,
+                _uiLiveData.value?.message ?: EMPTY, {
                     _uiLiveData.value?.connectionStatus = ConnectionStatus.CONNECTED
                 }, {
-                    _uiLiveData.value?.connectionStatus = ConnectionStatus.NOT_CONNECTED
+                    _uiLiveData.value?.connectionStatus = ConnectionStatus.PENDING
                 }
             )
         }
     }
 
     override fun onDeclineClick() {
-        _uiLiveData.value?.connectionStatus = ConnectionStatus.NOT_CONNECTED
+        viewModelScope.launch {
+            chatRepository.declineInvite(
+                currentChannel?.id ?: EMPTY, { channel ->
+                    currentChannel = channel
+                    _uiLiveData.value?.connectionStatus = ConnectionStatus.NOT_CONNECTED
+                }, {
+                    Timber.e("error declining invitation")
+                }
+            )
+        }
     }
 }

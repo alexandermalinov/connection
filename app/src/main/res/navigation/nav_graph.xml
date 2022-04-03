@@ -15,10 +15,16 @@
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashFragment_to_allMessagesFragment"
-            app:destination="@id/allMessagesFragment" />
+            app:destination="@id/allMessagesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_registerFragment2"
+            app:destination="@id/registerFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -64,10 +70,28 @@
         android:label="ProfileFragment" />
     <fragment
         android:id="@+id/peopleFragment"
-        android:name="com.connection.ui.people.PeopleFragment"
-        android:label="PeopleFragment" />
+        android:name="com.connection.ui.people.base.PeopleFragment"
+        android:label="PeopleFragment" >
+        <action
+            android:id="@+id/action_peopleFragment_to_connectionChatFragment"
+            app:destination="@id/connectionChatFragment" />
+        <action
+            android:id="@+id/action_peopleFragment_to_connectedPeopleFragment"
+            app:destination="@id/connectedPeopleFragment" />
+        <action
+            android:id="@+id/action_peopleFragment_to_notConnectedPeople"
+            app:destination="@id/notConnectedPeople" />
+    </fragment>
     <fragment
         android:id="@+id/connectionChatFragment"
         android:name="com.connection.ui.connectionchat.ConnectionChatFragment"
         android:label="ConnectionChatFragment" />
+    <fragment
+        android:id="@+id/connectedPeopleFragment"
+        android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
+        android:label="ConnectedPeopleFragment" />
+    <fragment
+        android:id="@+id/notConnectedPeople"
+        android:name="com.connection.ui.people.notconnected.NotConnectedPeopleFragment"
+        android:label="NotConnectedPeople" />
 </navigation>

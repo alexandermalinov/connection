@@ -1,7 +1,7 @@
 package com.connection.di
 
-import com.connection.data.repository.chat.ChatTabRemoteSource
-import com.connection.data.repository.chat.ChatTabRepository
+import com.connection.data.repository.chattab.ChatTabRemoteSource
+import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRemoteSource
 import com.connection.data.repository.user.UserRepository
 import com.google.firebase.auth.FirebaseAuth

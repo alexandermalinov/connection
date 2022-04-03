@@ -15,7 +15,7 @@ data class UserData(
     val username: String = EMPTY,
     val picture: String = EMPTY,
     val description: String = EMPTY
-)
+): java.io.Serializable
 
 fun UserData.toUiModel() = User(
     id = id,

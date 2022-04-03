@@ -1,4 +1,4 @@
-package com.connection.ui.people
+package com.connection.ui.people.base
 
 import android.os.Bundle
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.connection.R
 import com.connection.databinding.FragmentPeopleBinding
 import com.connection.ui.base.BaseFragment
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,29 +17,30 @@ class PeopleFragment : BaseFragment<FragmentPeopleBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initPeopleRecyclerView()
         observeLiveData()
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_people
 
-    private fun initPeopleRecyclerView() {
-        dataBinding.recyclerViewPeoples.apply {
-            adapter = PeopleAdapter()
-            layoutManager = LinearLayoutManager(context)
-        }
+    private fun observeTabs() {
+        dataBinding.tabs.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewModel.onTabClick(tab.position)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                // TODO("Not yet implemented")
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                // TODO("Not yet implemented")
+            }
+
+        })
     }
 
     private fun observeLiveData() {
-        observeUiLiveData()
+        observeTabs()
         observeNavigation(viewModel.navigationLiveData)
-    }
-
-    private fun observeUiLiveData() {
-        viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
-            dataBinding.model = uiLiveData
-            (dataBinding.recyclerViewPeoples.adapter as PeopleAdapter)
-                .submitList(uiLiveData.peoples)
-        }
     }
 }

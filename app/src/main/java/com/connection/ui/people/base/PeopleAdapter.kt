@@ -1,4 +1,4 @@
-package com.connection.ui.people
+package com.connection.ui.people.base
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,20 +9,21 @@ import com.connection.databinding.ListItemUserBinding
 import com.connection.utils.DataBoundListAdapter
 import com.connection.vo.people.PeopleListItemUiModel
 
-class PeopleAdapter : DataBoundListAdapter<PeopleListItemUiModel, ListItemUserBinding>(
-    object : DiffUtil.ItemCallback<PeopleListItemUiModel>() {
+class PeopleAdapter(val presenter: PeoplesPresenter) :
+    DataBoundListAdapter<PeopleListItemUiModel, ListItemUserBinding>(
+        object : DiffUtil.ItemCallback<PeopleListItemUiModel>() {
 
-        override fun areItemsTheSame(
-            oldItem: PeopleListItemUiModel,
-            newItem: PeopleListItemUiModel
-        ) = oldItem === newItem
+            override fun areItemsTheSame(
+                oldItem: PeopleListItemUiModel,
+                newItem: PeopleListItemUiModel
+            ) = oldItem === newItem
 
-        override fun areContentsTheSame(
-            oldItem: PeopleListItemUiModel,
-            newItem: PeopleListItemUiModel
-        ) = oldItem == newItem
-    }
-) {
+            override fun areContentsTheSame(
+                oldItem: PeopleListItemUiModel,
+                newItem: PeopleListItemUiModel
+            ) = oldItem == newItem
+        }
+    ) {
 
     override fun createBinding(
         parent: ViewGroup,
@@ -40,6 +41,6 @@ class PeopleAdapter : DataBoundListAdapter<PeopleListItemUiModel, ListItemUserBi
         item: PeopleListItemUiModel
     ) {
         binding.model = item
-        //binding.presenter = bindingPresenter
+        binding.presenter = presenter
     }
 }

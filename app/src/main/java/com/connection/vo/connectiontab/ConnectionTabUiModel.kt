@@ -11,6 +11,7 @@ import com.connection.utils.common.Constants.EXTRA_DATA_CHANNEL_PICTURE
 import com.connection.utils.common.Constants.EXTRA_DATA_CHANNEL_STATUS
 import com.connection.vo.connectionchat.HeaderUiModel
 import io.getstream.chat.android.client.models.Channel
+import io.getstream.chat.android.client.models.image
 import io.getstream.chat.android.client.models.name
 import java.util.*
 
@@ -55,9 +56,16 @@ private fun String.toConnectionStatus() = when (this) {
 }
 
 private fun Channel.getSenderName(senderId: String) = members
-    .first { it.user.id == senderId }
-    .user
-    .name
+    .firstOrNull { it.user.id == senderId }
+    ?.user
+    ?.name
+    ?: EMPTY
+
+private fun Channel.getSenderImage(senderId: String) = members
+    .firstOrNull { it.user.id == senderId }
+    ?.user
+    ?.image
+    ?: EMPTY
 
 fun Channel.getUserOnlineStatus(senderId: String) = members
     .firstOrNull { it.user.id == senderId }

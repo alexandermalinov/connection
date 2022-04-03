@@ -112,6 +112,7 @@
             android:onClick="@{() -> presenter.onRegisterClick()}"
             android:paddingHorizontal="@dimen/padding_large"
             android:text="@string/register"
+            android:textColor="@color/white"
             app:cornerRadius="@dimen/radius_medium"
             app:visibleGone="@{!model.loading}" />
 

@@ -1,4 +1,4 @@
-package com.connection.data.repository.chat
+package com.connection.data.repository.chattab
 
 import com.connection.data.api.model.ChannelExtraData
 import com.connection.data.api.model.toExtraData
@@ -31,8 +31,14 @@ class ChatTabRemoteSource @Inject constructor(
         state = true
     }
 
-    private val usersRequest = QueryUsersRequest(
-        filter = Filters.eq("banned", false),
+    private val connectedUsersQuery = QueryUsersRequest(
+        filter = Filters.`in`("members", listOf("${auth.uid}")),
+        offset = 0,
+        limit = 15,
+    )
+
+    private val notConnectedUsersQuery = QueryUsersRequest(
+        filter = Filters.`nin`("members", listOf("${auth.uid}")),
         offset = 0,
         limit = 15,
     )
@@ -53,11 +59,12 @@ class ChatTabRemoteSource @Inject constructor(
     }
 
     override suspend fun fetchMembers(
+        isMemberPartOf: Boolean,
         onSuccess: (List<User>) -> Unit,
         onFailure: () -> Unit
     ) {
         client
-            .queryUsers(usersRequest)
+            .queryUsers(if (isMemberPartOf) connectedUsersQuery else notConnectedUsersQuery)
             .enqueue() {
                 if (it.isSuccess)
                     onSuccess(it.data())
@@ -68,14 +75,14 @@ class ChatTabRemoteSource @Inject constructor(
 
     override fun connectUser(
         user: User,
-        onSuccess: () -> Unit,
+        onSuccess: (User) -> Unit,
         onFailure: () -> Unit
     ) {
         client
             .connectUser(user = user, token = client.devToken(user.id))
             .enqueue { result ->
                 if (result.isSuccess) {
-                    onSuccess()
+                    onSuccess(result.data().user)
                 } else {
                     Timber.e("error occurred while trying to connect user: ${result.error().message}")
                     onFailure()
@@ -126,7 +133,8 @@ class ChatTabRemoteSource @Inject constructor(
 
     override suspend fun getChannel(
         channelId: String,
-        getChannel: (Channel) -> Unit
+        getChannel: (Channel) -> Unit,
+        onFailure: () -> Unit
     ) {
         client.queryChannel(
             CHANNEL_TYPE_MESSAGING,
@@ -135,8 +143,64 @@ class ChatTabRemoteSource @Inject constructor(
         ).enqueue { result ->
             if (result.isSuccess)
                 getChannel.invoke(result.data())
-            else
+            else {
+                onFailure()
                 Timber.e("Error fetching channel: ${result.isError}")
+            }
+        }
+    }
+
+    override suspend fun createChannel(
+        members: List<String>,
+        extraData: Map<String, String>,
+        onSuccess: (Channel) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        client
+            .createChannel(CHANNEL_TYPE_MESSAGING, members, extraData)
+            .enqueue() { result ->
+                if (result.isSuccess) {
+                    onSuccess(result.data())
+                } else {
+                    Timber.e("error occurred creating channel: ${result.error().message}")
+                    onFailure()
+                }
+            }
+    }
+
+    override suspend fun acceptInvite(
+        channelId: String,
+        message: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        client.acceptInvite(
+            channelType = CHANNEL_TYPE_MESSAGING,
+            channelId = channelId,
+            message = message
+        ).enqueue { result ->
+            if (result.isSuccess) {
+                onSuccess()
+            } else {
+                onFailure()
+            }
+        }
+    }
+
+    override suspend fun declineInvite(
+        channelId: String,
+        onSuccess: (Channel) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        client.rejectInvite(
+            channelType = CHANNEL_TYPE_MESSAGING,
+            channelId = channelId
+        ).enqueue { result ->
+            if (result.isSuccess) {
+                onSuccess(result.data())
+            } else {
+                onFailure()
+            }
         }
     }
 }

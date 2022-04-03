@@ -1,6 +1,7 @@
 package com.connection.navigation
 
 import android.os.Bundle
+import androidx.annotation.IdRes
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.FragmentNavigator
 
@@ -17,4 +18,10 @@ data class NavigationGraph(
 ) : Internal()
 
 object PopBackStack : Internal()
+class NestedFragmentGraph(
+    val fragmentId: String,
+    @IdRes
+    val containerViewId: Int
+) : Internal()
+
 object GalleryNavigation : External()
