@@ -15,7 +15,7 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:paddingHorizontal="@dimen/margin_medium"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_medium">
 
@@ -30,9 +30,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/san_serif"
                 android:text="@string/people"
-                android:textColor="@color/black"
                 android:textSize="@dimen/text_large"
                 android:textStyle="bold"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -54,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabIndicatorFullWidth="false"
+            app:tabIndicatorColor="@color/white"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/TabLayoutStyle"
             android:layout_marginTop="@dimen/margin_medium">
@@ -61,13 +62,13 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Connections" />
+                android:text="@string/connections" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_small"
-                android:text="Discover" />
+                android:text="@string/discover" />
 
         </com.google.android.material.tabs.TabLayout>
 

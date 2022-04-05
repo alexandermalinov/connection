@@ -1,6 +1,7 @@
 package com.connection.data.api.model
 
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.common.Constants.USER_EXTRA_DATA_CONNECTIONS
 import com.connection.utils.common.Constants.USER_EXTRA_DATA_DESCRIPTION
 import com.connection.utils.common.Constants.USER_EXTRA_DATA_PICTURE
 import com.connection.utils.common.Constants.USER_EXTRA_DATA_USERNAME
@@ -14,14 +15,18 @@ data class UserData(
     val password: String = EMPTY,
     val username: String = EMPTY,
     val picture: String = EMPTY,
-    val description: String = EMPTY
+    val description: String = EMPTY,
+    var connections: List<String> = emptyList(),
+    var invitations: List<String> = emptyList()
 ): java.io.Serializable
 
-fun UserData.toUiModel() = User(
-    id = id,
-    extraData = mutableMapOf(
-        USER_EXTRA_DATA_USERNAME to username,
-        USER_EXTRA_DATA_PICTURE to picture,
-        USER_EXTRA_DATA_DESCRIPTION to description
-    )
+fun UserData.toMap(id: String) = mapOf(
+    "id" to id,
+    "email" to email,
+    "password" to password,
+    "username" to username,
+    "picture" to picture,
+    "description" to description,
+    "connections" to connections,
+    "invitations" to invitations
 )

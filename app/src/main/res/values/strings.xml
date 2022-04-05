@@ -39,7 +39,9 @@
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
     <string name="wishes_to_connect_with_you">sent you connection request</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="request_to_connect">request to connect by sending message</string>
+    <string name="no_connections">Oops…looks like you don\'t have connections yet</string>
+    <string name="discover">Discover</string>
+    <string name="discover_connections">Make new connections and start communicating with other users</string>
 
 </resources>

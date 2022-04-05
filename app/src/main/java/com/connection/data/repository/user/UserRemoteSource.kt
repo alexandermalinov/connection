@@ -3,6 +3,7 @@ package com.connection.data.repository.user
 import android.net.Uri
 import com.connection.data.api.model.UserData
 import com.connection.data.api.model.UsersData
+import com.connection.data.api.model.toMap
 import com.connection.utils.common.Constants.EMPTY
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -20,15 +21,6 @@ class UserRemoteSource @Inject constructor(
     private val storage: FirebaseStorage
 ) : UserRepository.RemoteSource {
 
-    private fun UserData.toMap(id: String) = mapOf(
-        "id" to id,
-        "email" to email,
-        "password" to password,
-        "username" to username,
-        "picture" to picture,
-        "description" to description
-    )
-
     override suspend fun loginAuth(
         email: String,
         password: String,
@@ -45,8 +37,7 @@ class UserRemoteSource @Inject constructor(
     }
 
     override fun registerDB(user: UserData, onSuccess: (UserData) -> Unit) {
-        db
-            .getReference("/users/${auth.uid}")
+        db.getReference("/users/${auth.uid}")
             .setValue(user.toMap(auth.uid ?: EMPTY))
             .addOnSuccessListener {
                 onSuccess.invoke(user)
@@ -80,9 +71,11 @@ class UserRemoteSource @Inject constructor(
         }
     }
 
-    override suspend fun getUser(id: String, onSuccess: (UserData?) -> Unit) {
-        db
-            .getReference("users")
+    override suspend fun getUser(
+        id: String,
+        onSuccess: (UserData?) -> Unit
+    ) {
+        db.getReference("users")
             .child(id)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -96,16 +89,17 @@ class UserRemoteSource @Inject constructor(
     }
 
     override suspend fun getUsers(
-        onSuccess: (UsersData?) -> Unit,
+        onSuccess: (UsersData) -> Unit,
         onFailure: () -> Unit
     ) {
         val users: MutableList<UserData> = mutableListOf()
-        db
-            .getReference("users")
+        db.getReference("users")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (user in snapshot.children) {
-                        user.getValue(UserData::class.java)?.let { users.add(it) }
+                        user.getValue(UserData::class.java)?.let {
+                            users.add(it)
+                        }
                     }
                     onSuccess.invoke(UsersData(users))
                 }
@@ -118,9 +112,20 @@ class UserRemoteSource @Inject constructor(
 
     override suspend fun getLoggedUserId(): String = auth.currentUser?.uid ?: EMPTY
 
+    // TODO ("optimize with auth.currentUser")
     override suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
         getUser(auth.currentUser?.uid ?: EMPTY) {
             onSuccess.invoke(it)
         }
+    }
+
+    // TODO ("fix this shit")
+    override suspend fun updateUser(user: UserData) {
+        db.getReference("users")
+            .child(user.id)
+            .updateChildren(mapOf("invitations" to user.invitations))
+            .addOnSuccessListener {
+                Timber.e("successfully updated user")
+            }
     }
 }

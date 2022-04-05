@@ -1,35 +1,33 @@
 package com.connection.data.repository.chattab
 
 import com.connection.data.api.model.ChannelExtraData
+import com.connection.data.api.model.UserData
 import com.connection.data.api.model.toExtraData
 import com.connection.utils.common.Constants.CHANNEL_TYPE_MESSAGING
+import com.connection.utils.common.Constants.PAGING_LIMIT
+import com.connection.utils.common.Constants.USER_EXTRA_DATA_PICTURE
+import com.connection.utils.common.Constants.USER_EXTRA_DATA_USERNAME
 import com.google.firebase.auth.FirebaseAuth
+import com.sendbird.android.GroupChannel
+import com.sendbird.android.GroupChannelListQuery
+import com.sendbird.android.SendBird
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.api.models.QueryChannelRequest
 import io.getstream.chat.android.client.api.models.QueryChannelsRequest
 import io.getstream.chat.android.client.api.models.QuerySort
 import io.getstream.chat.android.client.api.models.QueryUsersRequest
-import io.getstream.chat.android.client.models.*
+import io.getstream.chat.android.client.models.Channel
+import io.getstream.chat.android.client.models.Filters
+import io.getstream.chat.android.client.models.Message
+import io.getstream.chat.android.client.models.User
 import timber.log.Timber
 import javax.inject.Inject
 
+
 class ChatTabRemoteSource @Inject constructor(
-    private val auth: FirebaseAuth,
+    auth: FirebaseAuth,
     private val client: ChatClient
 ) : ChatTabRepository.RemoteSource {
-
-    private val channelsRequest = QueryChannelsRequest(
-        filter = Filters.and(
-            Filters.eq("type", "messaging"),
-            Filters.`in`("members", listOf("${auth.uid}"))
-        ),
-        offset = 0,
-        limit = 15,
-        querySort = QuerySort.desc("last_message_at")
-    ).apply {
-        watch = true
-        state = true
-    }
 
     private val connectedUsersQuery = QueryUsersRequest(
         filter = Filters.`in`("members", listOf("${auth.uid}")),
@@ -43,19 +41,28 @@ class ChatTabRemoteSource @Inject constructor(
         limit = 15,
     )
 
+    val listQuery = GroupChannel.createMyGroupChannelListQuery().apply {
+        setUserIdsIncludeFilter(listOf(auth.uid), GroupChannelListQuery.QueryType.AND)
+        isIncludeEmpty = true
+        isIncludeMetadata = true
+        memberStateFilter = GroupChannelListQuery.MemberStateFilter.JOINED
+        order = GroupChannelListQuery.Order.LATEST_LAST_MESSAGE
+        limit = PAGING_LIMIT
+    }
+
     override suspend fun fetchChannels(
-        onSuccess: (List<Channel>) -> Unit,
+        onSuccess: (List<GroupChannel>) -> Unit,
         onFailure: () -> Unit
     ) {
-        client
-            .queryChannels(channelsRequest)
-            .enqueue { result ->
-                if (result.isSuccess) {
-                    onSuccess(result.data())
-                } else {
-                    onFailure()
-                }
+        listQuery.next { channels, error ->
+            if (channels != null) {
+                onSuccess(channels)
             }
+            else {
+                Timber.e("error occurred fetching channels: ${error.message}")
+                onFailure()
+            }
+        }
     }
 
     override suspend fun fetchMembers(
@@ -74,31 +81,32 @@ class ChatTabRemoteSource @Inject constructor(
     }
 
     override fun connectUser(
-        user: User,
-        onSuccess: (User) -> Unit,
+        user: UserData,
+        onSuccess: (com.sendbird.android.User) -> Unit,
         onFailure: () -> Unit
     ) {
-        client
-            .connectUser(user = user, token = client.devToken(user.id))
-            .enqueue { result ->
-                if (result.isSuccess) {
-                    onSuccess(result.data().user)
-                } else {
-                    Timber.e("error occurred while trying to connect user: ${result.error().message}")
-                    onFailure()
-                }
-            }
+        SendBird.connect(user.id) { connectedUser, error ->
+            if (error == null) {
+                connectedUser?.let { onSuccess(it) }
+                connectedUser.createMetaData(
+                    mapOf(
+                        USER_EXTRA_DATA_USERNAME to user.username,
+                        USER_EXTRA_DATA_PICTURE to user.picture
+                    )
+                ) { _, _ -> }
+            } else
+                onFailure()
+        }
     }
 
     override suspend fun createChannelByIds(
-        type: String,
         membersIds: List<String>,
         extraData: ChannelExtraData,
         onSuccess: (Channel) -> Unit,
         onFailure: () -> Unit
     ) {
         client.createChannel(
-            channelType = type,
+            channelType = CHANNEL_TYPE_MESSAGING,
             members = membersIds,
             extraData = extraData.toExtraData()
         ).enqueue { result ->
@@ -202,5 +210,9 @@ class ChatTabRemoteSource @Inject constructor(
                 onFailure()
             }
         }
+    }
+
+    override suspend fun updateUser(user: User) {
+        client.updateUser(user).enqueue()
     }
 }

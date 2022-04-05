@@ -7,7 +7,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.connection.R
 import com.connection.data.api.model.UserData
-import com.connection.data.api.model.toUiModel
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
@@ -16,10 +15,13 @@ import com.connection.ui.connectiontab.ConnectionsPresenter
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.utils.common.Constants.USER_ID
-import com.connection.vo.alltabs.*
+import com.connection.vo.alltabs.AllTabsUiModel
+import com.connection.vo.alltabs.FavouriteConnectionUiModel
+import com.connection.vo.alltabs.toUiModel
 import com.connection.vo.connectiontab.ConnectionTabUiModel
 import com.connection.vo.connectiontab.toUiModel
 import com.connection.vo.connectiontab.toUiModels
+import com.sendbird.android.GroupChannel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -58,23 +60,10 @@ class AllTabsViewModel @Inject constructor(
         userRepository.getUser(loggedUserId) { user ->
             viewModelScope.launch {
                 loggedUser = user
-                initUserData()
+                _uiLiveData.value = AllTabsUiModel(user?.picture ?: EMPTY)
                 fetchFavouriteConnections()
                 fetchChannels()
             }
-        }
-    }
-
-    private fun initUserData() {
-        loggedUser?.toUiModel()?.let {
-            chatTabRepository.connectUser(
-                it, { user ->
-                    loggedUser
-                    _uiLiveData.value = AllTabsUiModel(loggedUser?.picture ?: EMPTY)
-                }, {
-                    Timber.e("error occurred while trying to connect user")
-                }
-            )
         }
     }
 
@@ -94,12 +83,20 @@ class AllTabsViewModel @Inject constructor(
     private suspend fun fetchChannels() {
         _uiLiveData.value?.loadingConnections = true
         chatTabRepository.fetchChannels({ channels ->
-            _connectionsUiLiveDate.value = channels.toUiModels(loggedUserId)
+            setupChannelsUiData(channels)
             _uiLiveData.value?.loadingConnections = false
         }, {
             Timber.e("Failed to fetch channels")
             _uiLiveData.value?.loadingConnections = false
         })
+    }
+
+    private fun setupChannelsUiData(channels: List<GroupChannel>) {
+        if (channels.isNullOrEmpty().not()) {
+            _connectionsUiLiveDate.value = channels.toUiModels(loggedUserId)
+        } else {
+            _uiLiveData.value?.emptyChannelList = true
+        }
     }
 
     private fun getConnectionById(id: String) = _connectionsUiLiveDate.value?.first { it.id == id }

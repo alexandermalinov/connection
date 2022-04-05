@@ -20,4 +20,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Widget.MyTheme.BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="elevation">0dp</item>
+        <item name="backgroundColor">@color/black_700</item>
+    </style>
+
 </resources>

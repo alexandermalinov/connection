@@ -62,14 +62,17 @@ class ConnectionChatViewModel @Inject constructor(
 
     private suspend fun initChatData() {
         savedStateHandle.get<HeaderUiModel>(HEADER_MODEL)?.let { headerModel ->
-            chatRepository.getChannel(headerModel.channelId, { channel ->
-                currentChannel = channel
-                senderUser = channel.getSenderUser()
-                _uiLiveData.value = ConnectionChatUiModel(headerModel)
-                initChatHistory(channel)
-                addOnReceiveEvent()
-            }, {
-            })
+            _uiLiveData.value = ConnectionChatUiModel(headerModel)
+            if (headerModel.channelId.isBlank().not()) {
+                chatRepository.getChannel(headerModel.channelId, { channel ->
+                    currentChannel = channel
+                    senderUser = channel.getSenderUser()
+                    initChatHistory(channel)
+                    addOnReceiveEvent()
+                }, {})
+            } else {
+                _uiLiveData.value?.connectionStatus = ConnectionStatus.NOT_CONNECTED
+            }
         }
     }
 

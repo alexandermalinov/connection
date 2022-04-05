@@ -5,16 +5,15 @@ import androidx.databinding.Bindable
 import com.connection.BR
 import com.connection.data.api.model.UserData
 import com.connection.ui.base.ConnectionStatus
-import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.connectionchat.HeaderUiModel
-import io.getstream.chat.android.client.models.User
 
 data class PeopleListItemUiModel(
     val id: String = EMPTY,
     val profilePicture: String = EMPTY,
     val name: String = EMPTY,
     val online: Boolean = false,
+    val isConnection: Boolean = false,
     val connectionStatus: ConnectionStatus = ConnectionStatus.NOT_CONNECTED
 ) : BaseObservable() {
 
@@ -35,17 +34,12 @@ fun PeopleListItemUiModel.toUiModel(channelId: String) = HeaderUiModel(
     connectionStatus = ConnectionStatus.NOT_CONNECTED
 )
 
-fun UserData.toUiModel() = PeopleListItemUiModel(
+fun UserData.toUiModel(isConnection: Boolean) = PeopleListItemUiModel(
+    id = id,
     profilePicture = picture,
     name = username,
+    isConnection = isConnection,
     connectionStatus = ConnectionStatus.NOT_CONNECTED
 )
 
-fun User.toUiModel() = PeopleListItemUiModel(
-    id = id,
-    profilePicture = extraData[Constants.USER_EXTRA_DATA_PICTURE].toString(),
-    name = extraData[Constants.USER_EXTRA_DATA_USERNAME].toString(),
-    online = online
-)
-
-fun List<User>.toUiModels() = map { it.toUiModel() }
+fun List<UserData>.toUiModels(isConnection: Boolean) = map { it.toUiModel(isConnection) }

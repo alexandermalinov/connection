@@ -31,6 +31,7 @@ class ConnectedPeopleFragment : BaseFragment<FragmentConnectedPeopleBinding>() {
     }
 
     private fun observeLiveData() {
+        dataBinding.presenter = viewModel
         observeUiLiveData()
         observeNavigation(viewModel.navigationLiveData)
     }

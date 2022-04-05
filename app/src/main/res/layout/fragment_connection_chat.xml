@@ -18,15 +18,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/teal_700"
             android:paddingHorizontal="@dimen/padding_medium"
-            android:paddingVertical="@dimen/padding_medium"
+            android:paddingVertical="@dimen/padding_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -47,8 +47,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_profile"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:layout_marginStart="@dimen/margin_small"
                 app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                 app:glideRes="@{model.header.profilePicture}"
@@ -60,8 +60,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_online_indicator"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:padding="1dp"
                 android:src="@color/green"
                 app:layout_constraintBottom_toBottomOf="@+id/image_profile"
@@ -71,7 +71,7 @@
                 app:layout_constraintTop_toTopOf="@+id/image_profile"
                 app:layout_constraintVertical_bias="1.0"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                app:strokeColor="@color/teal_700"
+                app:strokeColor="@color/black_700"
                 app:strokeWidth="2dp"
                 app:visibleGone="@{model.header.online}" />
 
@@ -115,7 +115,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-       <!-- <TextView
+        <TextView
             android:id="@+id/text_request_sender_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -146,6 +146,19 @@
             app:layout_constraintStart_toEndOf="@+id/text_request_sender_name"
             app:layout_constraintTop_toTopOf="@+id/text_request_sender_name"
             app:visibleGone="@{model.requestTextVisible}" />
+
+        <TextView
+            android:id="@+id/text_send_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@string/request_to_connect"
+            app:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:visibleGone="@{model.requestToConnectTextVisible}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_accept"
@@ -181,7 +194,16 @@
             app:layout_constraintStart_toEndOf="@+id/button_accept"
             app:layout_constraintTop_toTopOf="@+id/button_accept"
             app:strokeColor="@color/teal_700"
-            app:visibleGone="@{model.requestButtonVisible}" />-->
+            app:visibleGone="@{model.requestButtonVisible}" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:src="@drawable/ic_no_messages"
+            app:layout_constraintBottom_toTopOf="@+id/text_send_request"
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            app:visibleGone="@{model.requestToConnectTextVisible}" />
 
         <ProgressBar
             android:id="@+id/loading_favourites_bar"
@@ -216,12 +238,13 @@
             android:padding="@dimen/padding_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_send"
-            app:layout_constraintStart_toStartOf="parent" >
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
                 android:src="@drawable/ic_attach_file"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -247,9 +270,11 @@
             android:id="@+id/button_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/teal_700"
             android:contentDescription="@string/send_button_description"
             android:enabled="@{model.sendClickable}"
             android:onClick="@{() -> presenter.onSendClick()}"
+            app:backgroundTint="@color/teal_700"
             app:elevation="0dp"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="@+id/container_message_box"

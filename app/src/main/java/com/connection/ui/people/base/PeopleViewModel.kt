@@ -3,14 +3,12 @@ package com.connection.ui.people.base
 import androidx.core.os.bundleOf
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.ChannelExtraData
 import com.connection.data.api.model.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.navigation.NestedFragmentGraph
 import com.connection.ui.base.BaseViewModel
-import com.connection.utils.common.Constants.CHANNEL_TYPE_MESSAGING
 import com.connection.utils.common.Constants.CONNECTED_PEOPLE_TAB_POSITION
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.FRAGMENT_CONNECTED_PEOPLE
@@ -20,7 +18,6 @@ import com.connection.vo.people.PeopleListItemUiModel
 import com.connection.vo.people.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +26,7 @@ open class PeopleViewModel @Inject constructor(
     private val chatTabRepository: ChatTabRepository
 ) : BaseViewModel(), PeoplesPresenter {
 
-    private var loggedUser: UserData? = null
+    protected var loggedUser: UserData? = null
 
     init {
         viewModelScope.launch {
@@ -56,37 +53,29 @@ open class PeopleViewModel @Inject constructor(
         _navigationLiveData.value = NestedFragmentGraph(tab, R.id.container_view_people)
     }
 
-    private fun navigateToChat(
-        senderUser: PeopleListItemUiModel,
-        channelId: String
-    ) {
+    private fun navigateToChat(senderUser: PeopleListItemUiModel) {
         _navigationLiveData.value = NavigationGraph(
             R.id.action_peopleFragment_to_connectionChatFragment,
-            bundleOf(HEADER_MODEL to senderUser.toUiModel(channelId))
+            bundleOf(HEADER_MODEL to senderUser.toUiModel(EMPTY))
         )
     }
 
     override fun onUserClick(user: PeopleListItemUiModel) {
-        _navigationLiveData.value = NavigationGraph(
-            R.id.action_peopleFragment_to_connectionChatFragment,
-            bundleOf(HEADER_MODEL to user.toUiModel(EMPTY))
-        )
+        navigateToChat(user)
     }
 
     override fun onConnectClick(senderUser: PeopleListItemUiModel) {
         viewModelScope.launch {
-            chatTabRepository.createChannelByIds(
-                CHANNEL_TYPE_MESSAGING,
-                listOf(loggedUser?.id ?: EMPTY, senderUser.id),
-                ChannelExtraData(
-                    channelName = senderUser.name,
-                    channelPicture = senderUser.profilePicture
-                ), { channel ->
-                    navigateToChat(senderUser, channel.id)
-                }, {
-                    Timber.e("Failed to create channel")
-                }
-            )
+            loggedUser?.let {
+                //it.invitations += listOf(senderUser.id)
+                //userRepository.updateUser(it)
+                navigateToChat(senderUser)
+            }
         }
+    }
+
+    override fun onDiscoverClick() {
+        _navigationLiveData.value =
+            NavigationGraph(R.id.action_connectedPeopleFragment_to_notConnectedPeople)
     }
 }

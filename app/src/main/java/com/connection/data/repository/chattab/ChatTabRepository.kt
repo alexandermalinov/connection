@@ -1,6 +1,8 @@
 package com.connection.data.repository.chattab
 
 import com.connection.data.api.model.ChannelExtraData
+import com.connection.data.api.model.UserData
+import com.sendbird.android.GroupChannel
 import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.Message
 import io.getstream.chat.android.client.models.User
@@ -14,18 +16,17 @@ class ChatTabRepository @Inject constructor(
     interface RemoteSource {
 
         suspend fun fetchChannels(
-            onSuccess: (List<Channel>) -> Unit,
+            onSuccess: (List<GroupChannel>) -> Unit,
             onFailure: () -> Unit
         )
 
         fun connectUser(
-            user: User,
-            onSuccess: (User) -> Unit,
+            user: UserData,
+            onSuccess: (com.sendbird.android.User) -> Unit,
             onFailure: () -> Unit
         )
 
         suspend fun createChannelByIds(
-            type: String,
             membersIds: List<String>,
             extraData: ChannelExtraData,
             onSuccess: (Channel) -> Unit,
@@ -70,31 +71,32 @@ class ChatTabRepository @Inject constructor(
             onSuccess: (Channel) -> Unit,
             onFailure: () -> Unit
         )
+
+        suspend fun updateUser(user: User)
     }
 
     suspend fun fetchChannels(
-        onSuccess: (List<Channel>) -> Unit,
+        onSuccess: (List<GroupChannel>) -> Unit,
         onFailure: () -> Unit
     ) {
         remote.fetchChannels(onSuccess, onFailure)
     }
 
     fun connectUser(
-        user: User,
-        onSuccess: (User) -> Unit,
+        user: UserData,
+        onSuccess: (com.sendbird.android.User) -> Unit,
         onFailure: () -> Unit
     ) {
         remote.connectUser(user, onSuccess, onFailure)
     }
 
     suspend fun createChannelByIds(
-        type: String,
         membersIds: List<String>,
         extraData: ChannelExtraData,
         onSuccess: (Channel) -> Unit,
         onFailure: () -> Unit
     ) {
-        remote.createChannelByIds(type, membersIds, extraData, onSuccess, onFailure)
+        remote.createChannelByIds(membersIds, extraData, onSuccess, onFailure)
     }
 
     suspend fun sendMessage(
@@ -146,5 +148,9 @@ class ChatTabRepository @Inject constructor(
         onFailure: () -> Unit
     ) {
         remote.declineInvite(channelId, onSuccess, onFailure)
+    }
+
+    suspend fun updateUser(user: User) {
+        remote.updateUser(user)
     }
 }

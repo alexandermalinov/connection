@@ -89,7 +89,11 @@
     <fragment
         android:id="@+id/connectedPeopleFragment"
         android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
-        android:label="ConnectedPeopleFragment" />
+        android:label="ConnectedPeopleFragment" >
+        <action
+            android:id="@+id/action_connectedPeopleFragment_to_notConnectedPeople"
+            app:destination="@id/notConnectedPeople" />
+    </fragment>
     <fragment
         android:id="@+id/notConnectedPeople"
         android:name="com.connection.ui.people.notconnected.NotConnectedPeopleFragment"

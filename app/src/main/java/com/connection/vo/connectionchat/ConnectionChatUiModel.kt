@@ -42,6 +42,13 @@ data class ConnectionChatUiModel(
         }
 
     @get:Bindable
+    var isRequestToConnectTextVisible: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.requestToConnectTextVisible)
+        }
+
+    @get:Bindable
     var isRequestButtonVisible: Boolean = false
         set(value) {
             field = value
@@ -69,16 +76,19 @@ data class ConnectionChatUiModel(
                 isChatBoxVisible = true
                 isRequestTextVisible = false
                 isRequestButtonVisible = false
+                isRequestToConnectTextVisible = false
             }
             ConnectionStatus.PENDING -> {
                 isChatBoxVisible = false
                 isRequestTextVisible = true
                 isRequestButtonVisible = false
+                isRequestToConnectTextVisible = false
             }
             ConnectionStatus.NOT_CONNECTED -> {
                 isChatBoxVisible = true
-                isRequestTextVisible = true
-                isRequestButtonVisible = true
+                isRequestTextVisible = false
+                isRequestButtonVisible = false
+                isRequestToConnectTextVisible = true
             }
         }
     }

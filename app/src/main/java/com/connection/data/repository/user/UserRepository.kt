@@ -42,13 +42,15 @@ class UserRepository @Inject constructor(
         )
 
         suspend fun getUsers(
-            onSuccess: (UsersData?) -> Unit,
+            onSuccess: (UsersData) -> Unit,
             onFailure: () -> Unit
         )
 
         suspend fun getLoggedUserId(): String
 
         suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit)
+
+        suspend fun updateUser(user: UserData)
     }
 
     suspend fun login(
@@ -92,7 +94,7 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun getUsers(
-        onSuccess: (UsersData?) -> Unit,
+        onSuccess: (UsersData) -> Unit,
         onFailure: () -> Unit
     ) = remote.getUsers(onSuccess, onFailure)
 
@@ -100,5 +102,9 @@ class UserRepository @Inject constructor(
 
     suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
         remote.getLoggedUser(onSuccess)
+    }
+
+    suspend fun updateUser(user: UserData) {
+        remote.updateUser(user)
     }
 }

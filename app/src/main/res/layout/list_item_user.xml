@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
             app:layout_constraintVertical_bias="1.0"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-            app:strokeColor="@color/white"
+            app:strokeColor="@color/black"
             app:strokeWidth="2dp"
             app:visibleGone="@{model.online}" />
 
@@ -60,7 +60,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{model.name}"
-            android:textColor="@color/black"
             android:textSize="@dimen/text_medium"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
@@ -169,7 +168,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
-            app:visibleGone="@{model.connectionStatus == ConnectionStatus.CONNECTED ? true : false}"/>
+            app:visibleGone="@{model.connection}"/>
 
         <ImageView
             android:id="@+id/button_connect"
@@ -181,7 +180,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
-            app:visibleGone="@{model.connectionStatus == ConnectionStatus.NOT_CONNECTED ? true : false}"/>
+            app:visibleGone="@{!model.connection}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -7,4 +7,6 @@ interface PeoplesPresenter {
     fun onUserClick(user: PeopleListItemUiModel)
 
     fun onConnectClick(senderUser: PeopleListItemUiModel)
+
+    fun onDiscoverClick()
 }

@@ -7,6 +7,8 @@ object Constants {
     const val GET_STREAM_TOKEN =
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoic3F1YXJlLWNlbGwtOCJ9.F6q7JMOahzFNs4iAMJ6ysfkfZijdxYPIZ7wrISdEbN8"
 
+    const val SENDBIRD_APP_ID = "E9E2372B-20B3-42CF-9B0A-0622BE89A901"
+
     // Common Constants
     const val EMPTY = ""
     const val INVALID_ID = 0L
@@ -33,6 +35,7 @@ object Constants {
     const val USER_EXTRA_DATA_USERNAME = "username"
     const val USER_EXTRA_DATA_PICTURE = "picture"
     const val USER_EXTRA_DATA_DESCRIPTION = "description"
+    const val USER_EXTRA_DATA_CONNECTIONS = "connections"
 
     // Channel Extra data
     const val EXTRA_DATA_CHANNEL_PICTURE = "channel_picture"
@@ -57,4 +60,7 @@ object Constants {
     // People Screen Tabs Positions
     const val CONNECTED_PEOPLE_TAB_POSITION = 0
     const val NOT_CONNECTED_PEOPLE_TAB_POSITION = 1
+
+    // API paging
+    const val PAGING_LIMIT = 15
 }

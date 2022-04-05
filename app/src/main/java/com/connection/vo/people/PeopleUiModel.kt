@@ -14,4 +14,11 @@ data class PeopleUiModel(
             field = value
             notifyPropertyChanged(BR.loading)
         }
+
+    @get:Bindable
+    var emptyState = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.emptyState)
+        }
 }

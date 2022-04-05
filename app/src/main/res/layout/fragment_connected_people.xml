@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="presenter"
+            type="com.connection.ui.people.base.PeoplesPresenter" />
+
+        <variable
             name="model"
             type="com.connection.vo.people.PeopleUiModel" />
 
@@ -14,27 +18,34 @@
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.google.android.material.button.MaterialButton
+            android:id="@+id/text_discover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:text="@string/discover_connections"
+            app:visibleGone="@{model.emptyState}" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_discover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:onClick="@{() -> presenter.onDiscoverClick()}"
+            android:text="@string/discover"
+            app:visibleGone="@{model.emptyState}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_peoples"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/list_item_user" />
+            android:layout_height="match_parent"
+            tools:listitem="@layout/list_item_user"
+            app:visibleGone="@{!model.emptyState}"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

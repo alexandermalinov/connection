@@ -6,6 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -16,7 +17,7 @@
             android:fontFamily="@font/san_serif"
             android:textStyle="bold"
             android:text="@string/connection"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="48sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

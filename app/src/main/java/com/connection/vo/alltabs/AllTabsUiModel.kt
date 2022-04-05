@@ -23,4 +23,11 @@ data class AllTabsUiModel(
             field = value
             notifyPropertyChanged(BR.loadingConnections)
         }
+
+    @get:Bindable
+    var emptyChannelList = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.emptyChannelList)
+        }
 }

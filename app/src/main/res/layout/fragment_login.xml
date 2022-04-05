@@ -35,7 +35,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/san_serif"
             android:text="@string/connection"
-            android:textColor="@color/black"
             android:textSize="48sp"
             android:textStyle="bold" />
 
@@ -129,7 +128,6 @@
                 android:elevation="@dimen/button_elevation"
                 android:onClick="@{() -> presenter.onRegisterClick()}"
                 android:text="@string/sign_up"
-                android:textColor="@color/navy"
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

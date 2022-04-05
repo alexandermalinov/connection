@@ -10,6 +10,7 @@ import com.connection.utils.common.Constants.EXTRA_DATA_CHANNEL_NAME
 import com.connection.utils.common.Constants.EXTRA_DATA_CHANNEL_PICTURE
 import com.connection.utils.common.Constants.EXTRA_DATA_CHANNEL_STATUS
 import com.connection.vo.connectionchat.HeaderUiModel
+import com.sendbird.android.GroupChannel
 import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.client.models.image
 import io.getstream.chat.android.client.models.name
@@ -17,27 +18,27 @@ import java.util.*
 
 data class ConnectionTabUiModel(
     val id: String = EMPTY,
+    val channelUrl: String = EMPTY,
     val profileImage: String = EMPTY,
     val username: String = EMPTY,
     val lastMessage: String = EMPTY,
     val lastMessageAt: String = EMPTY,
     val unreadMessagesCount: Int = 0,
     val isOnline: Boolean = false,
-    val connectionStatus: ConnectionStatus = ConnectionStatus.NOT_CONNECTED
+    val connectionStatus: ConnectionStatus = ConnectionStatus.CONNECTED
 )
 
-fun Channel.toUiModel(senderId: String) = ConnectionTabUiModel(
-    id = id,
-    profileImage = extraData[EXTRA_DATA_CHANNEL_PICTURE].toString(),
-    username = extraData[EXTRA_DATA_CHANNEL_NAME].toString(),
-    lastMessage = messages.firstOrNull()?.text ?: EMPTY,
-    lastMessageAt = DateTimeFormatter.formatWeekDay(lastMessageAt?.time ?: 0L),
-    unreadMessagesCount = unreadCount ?: 0,
-    isOnline = getUserOnlineStatus(senderId),
-    connectionStatus = extraData[EXTRA_DATA_CHANNEL_STATUS].toString().toConnectionStatus()
+fun GroupChannel.toUiModel(senderId: String) = ConnectionTabUiModel(
+    channelUrl = url,
+    profileImage = members.find { it.userId == senderId }?.profileUrl ?: EMPTY,
+    username = members.find { it.userId == senderId }?.nickname ?: EMPTY,
+    lastMessage = lastMessage.message,
+    lastMessageAt = DateTimeFormatter.formatWeekDay(lastMessage.createdAt),
+    unreadMessagesCount = unreadMessageCount,
+    isOnline = members.find { it.userId == senderId }?.isActive ?: false,
 )
 
-fun List<Channel>.toUiModels(loggedUserId: String) = map {
+fun List<GroupChannel>.toUiModels(loggedUserId: String) = map {
     it.toUiModel(loggedUserId)
 }
 
