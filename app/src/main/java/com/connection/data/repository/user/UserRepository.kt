@@ -9,6 +9,9 @@ class UserRepository @Inject constructor(
     private val remote: UserRemoteSource
 ) {
 
+    /* --------------------------------------------------------------------------------------------
+     * Sources
+     ---------------------------------------------------------------------------------------------*/
     interface RemoteSource {
 
         suspend fun loginAuth(
@@ -50,9 +53,15 @@ class UserRepository @Inject constructor(
 
         suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit)
 
-        suspend fun updateUser(user: UserData)
+        suspend fun updateUser(
+            userId: String,
+            update: Map<String, List<String>>
+        )
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Exposed
+     ---------------------------------------------------------------------------------------------*/
     suspend fun login(
         email: String,
         password: String,
@@ -104,7 +113,10 @@ class UserRepository @Inject constructor(
         remote.getLoggedUser(onSuccess)
     }
 
-    suspend fun updateUser(user: UserData) {
-        remote.updateUser(user)
+    suspend fun updateUser(
+        userId: String,
+        update: Map<String, List<String>>
+    ) {
+        remote.updateUser(userId, update)
     }
 }

@@ -13,8 +13,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     private val viewModel: AllTabsViewModel by viewModels()
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initConnectionsRecyclerView()
@@ -22,6 +28,11 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
         observeLiveData()
     }
 
+    override fun getLayoutId(): Int = R.layout.fragment_all_tabs
+
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private fun initConnectionsRecyclerView() {
         dataBinding.recyclerViewConnections.apply {
             adapter = ConnectionsAdapter(viewModel)
@@ -65,6 +76,4 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
                 .submitList(uiLiveData.favouriteConnections)
         }
     }
-
-    override fun getLayoutId(): Int = R.layout.fragment_all_tabs
 }

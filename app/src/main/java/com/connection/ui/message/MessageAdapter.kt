@@ -33,11 +33,17 @@ class MessageAdapter(val presenter: ConnectionChatPresenter) :
         }
     ) {
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private fun getLayout(viewType: Int) = when (viewType) {
         MESSAGE_BY_LOGGED_USER -> R.layout.list_item_message_logged_user
         else -> R.layout.list_item_message_sender_user
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun createBinding(
         parent: ViewGroup,
         viewType: Int

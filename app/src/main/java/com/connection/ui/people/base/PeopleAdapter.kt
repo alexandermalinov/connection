@@ -25,6 +25,9 @@ class PeopleAdapter(val presenter: PeoplesPresenter) :
         }
     ) {
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+     ---------------------------------------------------------------------------------------------*/
     override fun createBinding(
         parent: ViewGroup,
         viewType: Int

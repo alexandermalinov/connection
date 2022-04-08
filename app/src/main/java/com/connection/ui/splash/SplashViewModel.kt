@@ -6,9 +6,9 @@ import com.connection.R
 import com.connection.data.api.model.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
+import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
 import com.connection.utils.common.Constants.SPLASH_SCREEN_DELAY
-import com.connection.navigation.NavigationGraph
 import com.connection.utils.common.Constants.USER_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -22,37 +22,35 @@ class SplashViewModel @Inject constructor(
     private val chatTabRepository: ChatTabRepository
 ) : BaseViewModel() {
 
-    private var loggedUser: UserData? = null
-
     init {
         viewModelScope.launch {
             navigateUser()
         }
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private suspend fun navigateUser() {
-        _navigationLiveData.value = if (userRepository.isUserLoggedIn()) {
-            initData()
-            delay(SPLASH_SCREEN_DELAY)
-            createNavigationToAllTabs()
+        if (userRepository.isUserLoggedIn()) {
+            onLoggedUser()
         } else {
             delay(SPLASH_SCREEN_DELAY)
-            NavigationGraph(R.id.action_splashFragment_to_loginFragment)
+            navigateToLogin()
         }
     }
 
-    private suspend fun initData() {
+    private suspend fun onLoggedUser() {
         userRepository.getLoggedUser { user ->
-            loggedUser = user
-            connectUser()
+            connectUser(user)
         }
     }
 
-    private fun connectUser() {
-        loggedUser?.let {
+    private fun connectUser(user: UserData?) {
+        user?.let {
             chatTabRepository.connectUser(
                 it, {
-                    Timber.e("logged user is connected")
+                    navigateToAllTabs(user)
                 }, {
                     Timber.e("error occurred while trying to connect user")
                 }
@@ -60,8 +58,14 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private suspend fun createNavigationToAllTabs() = NavigationGraph(
-        R.id.action_splashFragment_to_allMessagesFragment,
-        bundleOf(USER_ID to userRepository.getLoggedUserId())
-    )
+    private fun navigateToAllTabs(user: UserData?) {
+        _navigationLiveData.value = NavigationGraph(
+            R.id.action_splashFragment_to_allMessagesFragment,
+            bundleOf(USER_ID to user?.id)
+        )
+    }
+
+    private fun navigateToLogin() {
+        _navigationLiveData.value = NavigationGraph(R.id.action_splashFragment_to_loginFragment)
+    }
 }

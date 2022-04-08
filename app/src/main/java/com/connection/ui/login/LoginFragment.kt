@@ -11,8 +11,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     private val viewModel: LoginViewModel by viewModels()
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.presenter = viewModel
@@ -20,11 +26,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         observeNavigation(viewModel.navigationLiveData)
     }
 
+    override fun getLayoutId(): Int = R.layout.fragment_login
+
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private fun observeUiLiveData() {
         viewModel.uiLiveData.observe(viewLifecycleOwner) { uiModel ->
             dataBinding.model = uiModel
         }
     }
-
-    override fun getLayoutId(): Int = R.layout.fragment_login
 }

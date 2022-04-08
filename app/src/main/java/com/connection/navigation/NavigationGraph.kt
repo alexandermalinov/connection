@@ -10,6 +10,9 @@ sealed class Destination
 open class Internal : Destination()
 open class External : Destination()
 
+/* --------------------------------------------------------------------------------------------
+ * Internal
+---------------------------------------------------------------------------------------------*/
 data class NavigationGraph(
     val actionId: Int,
     val args: Bundle? = null,
@@ -24,4 +27,7 @@ class NestedFragmentGraph(
     val containerViewId: Int
 ) : Internal()
 
+/* --------------------------------------------------------------------------------------------
+ * External
+---------------------------------------------------------------------------------------------*/
 object GalleryNavigation : External()

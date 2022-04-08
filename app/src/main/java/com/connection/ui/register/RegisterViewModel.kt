@@ -27,17 +27,26 @@ class RegisterViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel(), RegisterPresenter {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     val uiLiveData: LiveData<RegisterUiModel>
         get() = _uiLiveData
 
     private val _uiLiveData = MutableLiveData(RegisterUiModel())
 
+    /* --------------------------------------------------------------------------------------------
+     * Exposed
+    ---------------------------------------------------------------------------------------------*/
     fun setProfilePicture(uri: Uri) {
         viewModelScope.launch {
             _uiLiveData.value?.profilePicture = uri
         }
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private suspend fun register() {
         _uiLiveData.value?.let { uiData ->
             userRepository.registerAuth(uiData.email, uiData.password) { id ->
@@ -101,6 +110,9 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onRegisterClick() {
         viewModelScope.launch {
             if (isDataValid())

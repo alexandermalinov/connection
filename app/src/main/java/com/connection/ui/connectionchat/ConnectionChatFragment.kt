@@ -15,8 +15,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     private val viewModel: ConnectionChatViewModel by viewModels()
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataBinding.presenter = viewModel
@@ -25,6 +31,11 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
         observeNavigation(viewModel.navigationLiveData)
     }
 
+    override fun getLayoutId(): Int = R.layout.fragment_connection_chat
+
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private fun initChatRecyclerView() {
         dataBinding.recyclerViewChat.apply {
             adapter = MessageAdapter(viewModel)
@@ -56,6 +67,4 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
             }
         }
     }
-
-    override fun getLayoutId(): Int = R.layout.fragment_connection_chat
 }

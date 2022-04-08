@@ -24,6 +24,9 @@ class ConnectedPeopleViewModel @Inject constructor(
     chatTabRepository: ChatTabRepository
 ) : PeopleViewModel(userRepository, chatTabRepository) {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     val uiLiveData: LiveData<PeopleUiModel>
         get() = _uiLiveData
 
@@ -35,6 +38,9 @@ class ConnectedPeopleViewModel @Inject constructor(
         }
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private suspend fun setupPeople() {
         _uiLiveData.value?.apply {
             loading = true

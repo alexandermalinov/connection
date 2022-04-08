@@ -14,8 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     private val viewModel: SplashViewModel by viewModels()
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeNavigation(viewModel.navigationLiveData)

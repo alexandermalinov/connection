@@ -1,5 +1,7 @@
 package com.connection.di
 
+import com.connection.data.repository.chatmessage.ChatMessageRemoteSource
+import com.connection.data.repository.chatmessage.ChatMessageRepository
 import com.connection.data.repository.chattab.ChatTabRemoteSource
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRemoteSource
@@ -32,6 +34,11 @@ class RepositoryModule {
         auth: FirebaseAuth,
         chat: ChatClient
     ): ChatTabRepository.RemoteSource = ChatTabRemoteSource(auth, chat)
+
+    @Singleton
+    @Provides
+    fun provideChatMessagesRemoteSource(): ChatMessageRepository.RemoteSource =
+        ChatMessageRemoteSource()
 
     /*
     TODO Add network checking

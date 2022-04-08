@@ -1,4 +1,4 @@
-package com.connection.utils
+package com.connection.utils.image
 
 import android.net.Uri
 import androidx.activity.result.ActivityResultLauncher
@@ -8,7 +8,6 @@ import androidx.lifecycle.LifecycleOwner
 import com.connection.navigation.External
 import com.connection.utils.common.Constants.IMAGE_TYPE
 import com.connection.utils.common.Constants.SELECT_IMAGE_KEY
-import com.connection.utils.image.GetImage
 
 interface ActivityResultHandler {
 
@@ -22,10 +21,10 @@ interface ActivityResultObserver {
 
 class SelectImageObserver(
     private val registry: ActivityResultRegistry,
-    val onSelect: (Uri?) -> Unit
-) : DefaultLifecycleObserver, ActivityResultObserver{
+    private val onSelect: (Uri?) -> Unit
+) : DefaultLifecycleObserver, ActivityResultObserver {
 
-    lateinit var selectImageFromGalleryResult: ActivityResultLauncher<Array<String>>
+    private lateinit var selectImageFromGalleryResult: ActivityResultLauncher<Array<String>>
 
     override fun onCreate(owner: LifecycleOwner) {
         selectImageFromGalleryResult = registry.register(

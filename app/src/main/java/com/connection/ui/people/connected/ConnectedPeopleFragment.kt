@@ -13,8 +13,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ConnectedPeopleFragment : BaseFragment<FragmentConnectedPeopleBinding>() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     private val viewModel: ConnectedPeopleViewModel by viewModels()
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initPeopleRecyclerView()
@@ -23,6 +29,9 @@ class ConnectedPeopleFragment : BaseFragment<FragmentConnectedPeopleBinding>() {
 
     override fun getLayoutId(): Int = R.layout.fragment_connected_people
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private fun initPeopleRecyclerView() {
         dataBinding.recyclerViewPeoples.apply {
             adapter = PeopleAdapter(viewModel)

@@ -7,13 +7,13 @@ import com.connection.data.api.model.UserData
 import com.connection.ui.base.ConnectionStatus
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.connectionchat.HeaderUiModel
+import com.sendbird.android.GroupChannel
 
 data class PeopleListItemUiModel(
     val id: String = EMPTY,
     val profilePicture: String = EMPTY,
     val name: String = EMPTY,
     val online: Boolean = false,
-    val isConnection: Boolean = false,
     val connectionStatus: ConnectionStatus = ConnectionStatus.NOT_CONNECTED
 ) : BaseObservable() {
 
@@ -27,7 +27,7 @@ data class PeopleListItemUiModel(
 
 fun PeopleListItemUiModel.toUiModel(channelId: String) = HeaderUiModel(
     senderId = id,
-    channelId = channelId,
+    channelUrl = channelId,
     profilePicture = profilePicture,
     username = name,
     isOnline = online,
@@ -38,8 +38,16 @@ fun UserData.toUiModel(isConnection: Boolean) = PeopleListItemUiModel(
     id = id,
     profilePicture = picture,
     name = username,
-    isConnection = isConnection,
     connectionStatus = ConnectionStatus.NOT_CONNECTED
 )
 
 fun List<UserData>.toUiModels(isConnection: Boolean) = map { it.toUiModel(isConnection) }
+
+fun GroupChannel.toUiModel(loggedUserId: String) = PeopleListItemUiModel(
+    id = url,
+    profilePicture = members.find { it.userId != loggedUserId }?.profileUrl ?: EMPTY,
+    name = members.find { it.userId != loggedUserId }?.profileUrl ?: EMPTY,
+    connectionStatus = ConnectionStatus.REQUEST_SENT
+)
+
+fun List<GroupChannel>.toUiModels(loggedUserId: String) = map { it.toUiModel(loggedUserId) }

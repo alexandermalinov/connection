@@ -47,7 +47,7 @@
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
             app:layout_constraintVertical_bias="1.0"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-            app:strokeColor="@color/white"
+            app:strokeColor="@color/black"
             app:strokeWidth="2dp"
             app:visibleGone="@{model.online}" />
 

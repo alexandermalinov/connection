@@ -11,8 +11,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     private val viewModel: ProfileViewModel by viewModels()
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeLiveData()
@@ -20,6 +26,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun getLayoutId() = R.layout.fragment_profile
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private fun observeLiveData() {
         dataBinding.presenter = viewModel
         observeUiLiveData()

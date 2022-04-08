@@ -17,6 +17,7 @@ data class UserData(
     val picture: String = EMPTY,
     val description: String = EMPTY,
     var connections: List<String> = emptyList(),
+    var requests: List<String> = emptyList(),
     var invitations: List<String> = emptyList()
 ): java.io.Serializable
 
@@ -28,5 +29,6 @@ fun UserData.toMap(id: String) = mapOf(
     "picture" to picture,
     "description" to description,
     "connections" to connections,
+    "requests" to requests,
     "invitations" to invitations
 )

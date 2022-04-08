@@ -55,12 +55,17 @@ object Constants {
     // Nested Fragments Navigation
     const val FRAGMENT_CONNECTED_PEOPLE = "fragment_connected_people"
     const val FRAGMENT_NOT_CONNECTED_PEOPLE = "fragment_not_connected_people"
+    const val FRAGMENT_REQUESTS_PEOPLE = "fragment_invitations"
     const val USER = "user"
 
     // People Screen Tabs Positions
     const val CONNECTED_PEOPLE_TAB_POSITION = 0
     const val NOT_CONNECTED_PEOPLE_TAB_POSITION = 1
+    const val INVITED_PEOPLE_TAB_POSITION = 2
 
     // API paging
     const val PAGING_LIMIT = 15
+
+    // Sendbird channel on receive listener
+    const val CONNECTION_CHANNEL_LISTENER = "connection_channel_listener"
 }

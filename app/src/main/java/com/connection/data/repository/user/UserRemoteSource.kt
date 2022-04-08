@@ -21,6 +21,9 @@ class UserRemoteSource @Inject constructor(
     private val storage: FirebaseStorage
 ) : UserRepository.RemoteSource {
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+     ---------------------------------------------------------------------------------------------*/
     override suspend fun loginAuth(
         email: String,
         password: String,
@@ -120,10 +123,13 @@ class UserRemoteSource @Inject constructor(
     }
 
     // TODO ("fix this shit")
-    override suspend fun updateUser(user: UserData) {
+    override suspend fun updateUser(
+        userId: String,
+        update: Map<String, List<String>>
+    ) {
         db.getReference("users")
-            .child(user.id)
-            .updateChildren(mapOf("invitations" to user.invitations))
+            .child(userId)
+            .updateChildren(update)
             .addOnSuccessListener {
                 Timber.e("successfully updated user")
             }

@@ -13,8 +13,14 @@ import com.connection.navigation.navigate
 
 abstract class BaseFragment<T: ViewDataBinding> : Fragment() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     protected lateinit var dataBinding: T
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,8 +35,14 @@ abstract class BaseFragment<T: ViewDataBinding> : Fragment() {
         return dataBinding.root
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Exposed
+    ---------------------------------------------------------------------------------------------*/
     abstract fun getLayoutId(): Int
 
+    /* --------------------------------------------------------------------------------------------
+     * Protected
+    ---------------------------------------------------------------------------------------------*/
     protected fun observeNavigation(navigationLiveData: LiveData<Destination>) {
         navigationLiveData.observe(viewLifecycleOwner) { destination ->
             navigate(destination)

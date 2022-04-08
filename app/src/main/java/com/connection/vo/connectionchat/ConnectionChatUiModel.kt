@@ -5,14 +5,13 @@ import androidx.databinding.Bindable
 import com.connection.BR
 import com.connection.ui.base.ConnectionStatus
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.vo.message.MessageListUiModel
 
 data class ConnectionChatUiModel(
     val header: HeaderUiModel = HeaderUiModel()
 ) : BaseObservable() {
 
     @get:Bindable
-    var message: String = EMPTY
+    var message = EMPTY
         set(value) {
             field = value
             sendClickable = field.isNotBlank()
@@ -20,14 +19,14 @@ data class ConnectionChatUiModel(
         }
 
     @get:Bindable
-    var sendClickable: Boolean = false
+    var sendClickable = false
         set(value) {
             field = value
             notifyPropertyChanged(BR.sendClickable)
         }
 
     @get:Bindable
-    var connectionStatus: ConnectionStatus = ConnectionStatus.NOT_CONNECTED
+    var connectionStatus = ConnectionStatus.NOT_CONNECTED
         set(value) {
             field = value
             handleConnectionStatus(value)
@@ -35,35 +34,35 @@ data class ConnectionChatUiModel(
         }
 
     @get:Bindable
-    var isRequestTextVisible: Boolean = false
+    var isRequestTextVisible = false
         set(value) {
             field = value
             notifyPropertyChanged(BR.requestTextVisible)
         }
 
     @get:Bindable
-    var isRequestToConnectTextVisible: Boolean = false
+    var isRequestToConnectTextVisible = false
         set(value) {
             field = value
             notifyPropertyChanged(BR.requestToConnectTextVisible)
         }
 
     @get:Bindable
-    var isRequestButtonVisible: Boolean = false
+    var isRequestButtonVisible = false
         set(value) {
             field = value
             notifyPropertyChanged(BR.requestButtonVisible)
         }
 
     @get:Bindable
-    var isChatBoxVisible: Boolean = false
+    var isChatBoxVisible = false
         set(value) {
             field = value
             notifyPropertyChanged(BR.chatBoxVisible)
         }
 
     @get:Bindable
-    var loadingChatHistory: Boolean = false
+    var loadingChatHistory = false
         set(value) {
             field = value
             field = value
@@ -78,7 +77,7 @@ data class ConnectionChatUiModel(
                 isRequestButtonVisible = false
                 isRequestToConnectTextVisible = false
             }
-            ConnectionStatus.PENDING -> {
+            ConnectionStatus.REQUEST_SENT -> {
                 isChatBoxVisible = false
                 isRequestTextVisible = true
                 isRequestButtonVisible = false

@@ -14,6 +14,7 @@
             type="com.connection.vo.people.PeopleListItemUiModel" />
 
         <import type="com.connection.R" />
+
         <import type="com.connection.ui.base.ConnectionStatus" />
     </data>
 
@@ -152,10 +153,10 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginTop="@dimen/margin_medium"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
-            android:visibility="gone"
             app:visibleGone="@{model.loading}" />
 
         <ImageView
@@ -168,7 +169,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
-            app:visibleGone="@{model.connection}"/>
+            app:visibleGone="@{model.connectionStatus == ConnectionStatus.CONNECTED ? true : false}" />
 
         <ImageView
             android:id="@+id/button_connect"
@@ -180,7 +181,19 @@
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
-            app:visibleGone="@{!model.connection}"/>
+            app:visibleGone="@{model.connectionStatus == ConnectionStatus.NOT_CONNECTED ? true : false}" />
+
+        <ImageView
+            android:id="@+id/button_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/send_button_description"
+            android:onClick="@{() -> presenter.onConnectClick(model)}"
+            android:src="@drawable/ic_clock"
+            app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image_avatar"
+            app:visibleGone="@{model.connectionStatus == ConnectionStatus.REQUEST_SENT ? true : false}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

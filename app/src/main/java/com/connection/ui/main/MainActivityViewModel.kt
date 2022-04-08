@@ -12,6 +12,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainActivityViewModel @Inject constructor() : BaseViewModel() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Exposed
+    ---------------------------------------------------------------------------------------------*/
     fun setBottomNavigationVisibility(
         navController: NavController,
         view: View

@@ -4,12 +4,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import com.connection.ui.people.connected.ConnectedPeopleFragment
+import com.connection.ui.people.invitation.InvitationsFragment
 import com.connection.ui.people.notconnected.NotConnectedPeopleFragment
-import com.connection.utils.ActivityResultHandler
+import com.connection.utils.image.ActivityResultHandler
 import com.connection.utils.common.Constants.FRAGMENT_CONNECTED_PEOPLE
 import com.connection.utils.common.Constants.FRAGMENT_NOT_CONNECTED_PEOPLE
+import com.connection.utils.common.Constants.FRAGMENT_REQUESTS_PEOPLE
 import java.lang.IllegalArgumentException
 
+/* --------------------------------------------------------------------------------------------
+ * Override
+---------------------------------------------------------------------------------------------*/
 fun Fragment.navigate(destination: Destination) {
     when (destination) {
         is Internal -> {
@@ -21,6 +26,9 @@ fun Fragment.navigate(destination: Destination) {
     }
 }
 
+/* --------------------------------------------------------------------------------------------
+ * Private
+---------------------------------------------------------------------------------------------*/
 private fun Fragment.handleInternalNavigation(destination: Internal) {
     when (destination) {
         is NavigationGraph -> {
@@ -53,6 +61,7 @@ private fun Fragment.navigateToFragment(destination: NestedFragmentGraph) {
     fun selectFragment(id: String) = when (id) {
         FRAGMENT_CONNECTED_PEOPLE -> ConnectedPeopleFragment()
         FRAGMENT_NOT_CONNECTED_PEOPLE -> NotConnectedPeopleFragment()
+        FRAGMENT_REQUESTS_PEOPLE -> InvitationsFragment()
         else -> throw IllegalArgumentException()
     }
     childFragmentManager.commit {

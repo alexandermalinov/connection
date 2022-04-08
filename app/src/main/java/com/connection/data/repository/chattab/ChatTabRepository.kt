@@ -12,7 +12,9 @@ class ChatTabRepository @Inject constructor(
     private val remote: RemoteSource
 ) {
 
-
+    /* --------------------------------------------------------------------------------------------
+     * Sources
+     ---------------------------------------------------------------------------------------------*/
     interface RemoteSource {
 
         suspend fun fetchChannels(
@@ -75,6 +77,9 @@ class ChatTabRepository @Inject constructor(
         suspend fun updateUser(user: User)
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Exposed
+     ---------------------------------------------------------------------------------------------*/
     suspend fun fetchChannels(
         onSuccess: (List<GroupChannel>) -> Unit,
         onFailure: () -> Unit

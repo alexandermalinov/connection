@@ -7,18 +7,23 @@ import com.connection.R
 import com.connection.databinding.FragmentRegisterBinding
 import com.connection.navigation.External
 import com.connection.ui.base.BaseFragment
-import com.connection.utils.ActivityResultHandler
-import com.connection.utils.ActivityResultObserver
-import com.connection.utils.SelectImageObserver
+import com.connection.utils.image.ActivityResultHandler
+import com.connection.utils.image.SelectImageObserver
 import com.connection.utils.common.grantReadUriPermission
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), ActivityResultHandler {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     private val viewModel: RegisterViewModel by viewModels()
     private lateinit var selectImageObserver: SelectImageObserver
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun getLayoutId(): Int = R.layout.fragment_register
 
     override fun provideObserver(destination: External) = selectImageObserver
@@ -30,6 +35,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(), ActivityResult
         observeLiveData()
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private fun selectImage() {
         selectImageObserver = SelectImageObserver(requireActivity().activityResultRegistry) {
             it?.let { uri ->

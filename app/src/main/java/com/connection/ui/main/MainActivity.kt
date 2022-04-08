@@ -14,10 +14,16 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     private val viewModel: MainActivityViewModel by viewModels()
     private lateinit var navigationController: NavController
     private lateinit var dataBinding: ActivityMainBinding
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initDataBinding()
@@ -28,6 +34,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean = navigationController.navigateUp()
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private fun initDataBinding() {
         dataBinding = DataBindingUtil.setContentView(
             this@MainActivity,

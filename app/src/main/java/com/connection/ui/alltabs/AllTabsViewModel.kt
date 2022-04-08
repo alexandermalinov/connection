@@ -34,6 +34,9 @@ class AllTabsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), AllTabsPresenter, ConnectionsPresenter {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     val uiLiveData: LiveData<AllTabsUiModel>
         get() = _uiLiveData
 
@@ -46,7 +49,6 @@ class AllTabsViewModel @Inject constructor(
     private val _uiLiveData = MutableLiveData(AllTabsUiModel())
     private val _favouriteConnectionsUiLiveData = MutableLiveData(FavouriteConnectionUiModel())
     private val _connectionsUiLiveDate = MutableLiveData(emptyList<ConnectionTabUiModel>())
-
     private val loggedUserId = savedStateHandle.get<String>(USER_ID) ?: EMPTY
     private var loggedUser: UserData? = null
 
@@ -56,6 +58,9 @@ class AllTabsViewModel @Inject constructor(
         }
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private suspend fun initData() {
         userRepository.getUser(loggedUserId) { user ->
             viewModelScope.launch {
@@ -101,6 +106,9 @@ class AllTabsViewModel @Inject constructor(
 
     private fun getConnectionById(id: String) = _connectionsUiLiveDate.value?.first { it.id == id }
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+     ---------------------------------------------------------------------------------------------*/
     override fun onSearchClick() {
         // TODO ("Not yet implemented")
     }

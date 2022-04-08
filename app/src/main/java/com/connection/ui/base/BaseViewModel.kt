@@ -7,6 +7,9 @@ import com.connection.navigation.Destination
 
 open class BaseViewModel : ViewModel() {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     val navigationLiveData: LiveData<Destination>
         get() = _navigationLiveData
 

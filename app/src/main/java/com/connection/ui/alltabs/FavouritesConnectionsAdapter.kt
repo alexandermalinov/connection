@@ -24,6 +24,9 @@ class FavouritesConnectionsAdapter : DataBoundListAdapter<FavouriteConnectionLis
     }
 ) {
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+     ---------------------------------------------------------------------------------------------*/
     override fun createBinding(
         parent: ViewGroup,
         viewType: Int

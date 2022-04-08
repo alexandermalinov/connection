@@ -25,6 +25,9 @@ class ConnectionsAdapter(val presenter: ConnectionsPresenter) :
         }
     ) {
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+     ---------------------------------------------------------------------------------------------*/
     override fun createBinding(
         parent: ViewGroup,
         viewType: Int

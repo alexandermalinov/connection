@@ -3,8 +3,8 @@ package com.connection.vo.message
 import androidx.databinding.BaseObservable
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.utils.common.Constants.USER_EXTRA_DATA_PICTURE
-import io.getstream.chat.android.client.models.Message
+import com.sendbird.android.BaseMessage
+import com.sendbird.android.UserMessage
 
 open class MessageListUiModel(
     var senderPicture: String = EMPTY,
@@ -16,20 +16,20 @@ class LoggedUserMessageUiModel : MessageListUiModel()
 
 class SenderUserMessageUiModel : MessageListUiModel()
 
-fun Message.toUiModel(loggedUserId: String) = if (user.id == loggedUserId)
-    LoggedUserMessageUiModel().apply {
-        senderPicture = user.extraData[USER_EXTRA_DATA_PICTURE].toString()
-        senderMessage = text
-        sendAt = DateTimeFormatter.formatMessageDateTime(createdAt?.time ?: 0L)
-    }
-else
-    SenderUserMessageUiModel().apply {
-        senderPicture = user.extraData[USER_EXTRA_DATA_PICTURE].toString()
-        senderMessage = text
-        sendAt = DateTimeFormatter.formatMessageDateTime(createdAt?.time ?: 0L)
-    }
+fun BaseMessage.toUiModel(loggedUserId: String?) =
+    if (sender.userId == loggedUserId)
+        LoggedUserMessageUiModel().apply {
+            senderPicture = sender?.profileUrl ?: EMPTY
+            senderMessage = message ?: EMPTY
+            sendAt = DateTimeFormatter.formatMessageDateTime(createdAt ?: 0L)
+        }
+    else
+        SenderUserMessageUiModel().apply {
+            senderPicture = sender?.profileUrl ?: EMPTY
+            senderMessage = message  ?: EMPTY
+            sendAt = DateTimeFormatter.formatMessageDateTime(createdAt ?: 0L)
+        }
 
-fun List<Message>.toUiModel(loggedUserId: String) = map {
+fun List<BaseMessage>.toUiModels(loggedUserId: String?) = map {
     it.toUiModel(loggedUserId)
 }
-

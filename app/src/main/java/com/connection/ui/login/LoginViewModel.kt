@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
+import com.connection.data.api.model.UserData
+import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
@@ -16,30 +18,53 @@ import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.login.LoginUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val chatTabRepository: ChatTabRepository
 ) : BaseViewModel(), LoginPresenter {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     val uiLiveData: LiveData<LoginUiModel>
         get() = _uiLiveData
 
     private val _uiLiveData = MutableLiveData(LoginUiModel())
 
-    private fun login(email: String, password: String) {
-        viewModelScope.launch {
-            userRepository.login(
-                email = email,
-                password = password,
-                onSuccess = { id ->
-                    _uiLiveData.value?.loading = true
-                    onLoginNavigate(id)
-                },
-                onFailure = {
-                    onFailureValidation()
-                })
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
+    private suspend fun login(email: String, password: String) {
+        _uiLiveData.value?.loading = true
+        userRepository.login(
+            email = email,
+            password = password,
+            onSuccess = { id ->
+                viewModelScope.launch {
+                    userRepository.getLoggedUser { user ->
+                        connectUser(user)
+                        _uiLiveData.value?.loading = false
+                    }
+                }
+            },
+            onFailure = {
+                onFailureValidation()
+            })
+    }
+
+    private fun connectUser(user: UserData?) {
+        user?.let {
+            chatTabRepository.connectUser(
+                it, { connectedUser ->
+                    onLoginNavigate(connectedUser.userId)
+                }, {
+                    Timber.e("error occurred while trying to connect user")
+                }
+            )
         }
     }
 
@@ -68,12 +93,17 @@ class LoginViewModel @Inject constructor(
         )
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onLoginClick() {
-        _uiLiveData.value?.let {
-            if (isDataValid()) {
-                login(it.email, it.password)
-            } else {
-                onFailureValidation()
+        viewModelScope.launch {
+            _uiLiveData.value?.let {
+                if (isDataValid()) {
+                    login(it.email, it.password)
+                } else {
+                    onFailureValidation()
+                }
             }
         }
     }

@@ -81,6 +81,9 @@
         <action
             android:id="@+id/action_peopleFragment_to_notConnectedPeople"
             app:destination="@id/notConnectedPeople" />
+        <action
+            android:id="@+id/action_peopleFragment_to_invitationsFragment"
+            app:destination="@id/invitationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/connectionChatFragment"
@@ -98,4 +101,8 @@
         android:id="@+id/notConnectedPeople"
         android:name="com.connection.ui.people.notconnected.NotConnectedPeopleFragment"
         android:label="NotConnectedPeople" />
+    <fragment
+        android:id="@+id/invitationsFragment"
+        android:name="com.connection.ui.people.invitation.InvitationsFragment"
+        android:label="InvitationsFragment" />
 </navigation>

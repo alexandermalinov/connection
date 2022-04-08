@@ -17,11 +17,13 @@ class ProfileViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel(), ProfilePresenter {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     val uiLiveData: LiveData<ProfileUiModel>
         get() = _uiLiveData
 
     private val _uiLiveData = MutableLiveData(ProfileUiModel())
-
     private var loggedUserId = EMPTY
 
     init {
@@ -33,6 +35,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
     private suspend fun initUserData() {
         loggedUserId = userRepository.getLoggedUserId()
     }

@@ -13,7 +13,9 @@ import com.connection.utils.common.Constants.CONNECTED_PEOPLE_TAB_POSITION
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.FRAGMENT_CONNECTED_PEOPLE
 import com.connection.utils.common.Constants.FRAGMENT_NOT_CONNECTED_PEOPLE
+import com.connection.utils.common.Constants.FRAGMENT_REQUESTS_PEOPLE
 import com.connection.utils.common.Constants.HEADER_MODEL
+import com.connection.utils.common.Constants.NOT_CONNECTED_PEOPLE_TAB_POSITION
 import com.connection.vo.people.PeopleListItemUiModel
 import com.connection.vo.people.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +28,9 @@ open class PeopleViewModel @Inject constructor(
     private val chatTabRepository: ChatTabRepository
 ) : BaseViewModel(), PeoplesPresenter {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+    ---------------------------------------------------------------------------------------------*/
     protected var loggedUser: UserData? = null
 
     init {
@@ -34,18 +39,25 @@ open class PeopleViewModel @Inject constructor(
         }
     }
 
-    private suspend fun initUserData() {
-        userRepository.getLoggedUser() {
-            loggedUser = it
-        }
-    }
-
+    /* --------------------------------------------------------------------------------------------
+     * Exposed
+    ---------------------------------------------------------------------------------------------*/
     fun onTabClick(tabPosition: Int) {
         when (tabPosition) {
             CONNECTED_PEOPLE_TAB_POSITION -> FRAGMENT_CONNECTED_PEOPLE
-            else -> FRAGMENT_NOT_CONNECTED_PEOPLE
+            NOT_CONNECTED_PEOPLE_TAB_POSITION -> FRAGMENT_NOT_CONNECTED_PEOPLE
+            else -> FRAGMENT_REQUESTS_PEOPLE
         }.let { tab ->
             onTabSelected(tab)
+        }
+    }
+
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
+    private suspend fun initUserData() {
+        userRepository.getLoggedUser() {
+            loggedUser = it
         }
     }
 
@@ -60,6 +72,9 @@ open class PeopleViewModel @Inject constructor(
         )
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onUserClick(user: PeopleListItemUiModel) {
         navigateToChat(user)
     }
@@ -67,8 +82,6 @@ open class PeopleViewModel @Inject constructor(
     override fun onConnectClick(senderUser: PeopleListItemUiModel) {
         viewModelScope.launch {
             loggedUser?.let {
-                //it.invitations += listOf(senderUser.id)
-                //userRepository.updateUser(it)
                 navigateToChat(senderUser)
             }
         }

@@ -29,6 +29,9 @@ class ChatTabRemoteSource @Inject constructor(
     private val client: ChatClient
 ) : ChatTabRepository.RemoteSource {
 
+    /* --------------------------------------------------------------------------------------------
+     * Properties
+     ---------------------------------------------------------------------------------------------*/
     private val connectedUsersQuery = QueryUsersRequest(
         filter = Filters.`in`("members", listOf("${auth.uid}")),
         offset = 0,
@@ -41,15 +44,17 @@ class ChatTabRemoteSource @Inject constructor(
         limit = 15,
     )
 
-    val listQuery = GroupChannel.createMyGroupChannelListQuery().apply {
-        setUserIdsIncludeFilter(listOf(auth.uid), GroupChannelListQuery.QueryType.AND)
+    private val listQuery = GroupChannel.createMyGroupChannelListQuery().apply {
         isIncludeEmpty = true
         isIncludeMetadata = true
-        memberStateFilter = GroupChannelListQuery.MemberStateFilter.JOINED
+        memberStateFilter = GroupChannelListQuery.MemberStateFilter.ALL
         order = GroupChannelListQuery.Order.LATEST_LAST_MESSAGE
         limit = PAGING_LIMIT
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+     ---------------------------------------------------------------------------------------------*/
     override suspend fun fetchChannels(
         onSuccess: (List<GroupChannel>) -> Unit,
         onFailure: () -> Unit
@@ -57,8 +62,7 @@ class ChatTabRemoteSource @Inject constructor(
         listQuery.next { channels, error ->
             if (channels != null) {
                 onSuccess(channels)
-            }
-            else {
+            } else {
                 Timber.e("error occurred fetching channels: ${error.message}")
                 onFailure()
             }
@@ -87,13 +91,17 @@ class ChatTabRemoteSource @Inject constructor(
     ) {
         SendBird.connect(user.id) { connectedUser, error ->
             if (error == null) {
-                connectedUser?.let { onSuccess(it) }
-                connectedUser.createMetaData(
-                    mapOf(
-                        USER_EXTRA_DATA_USERNAME to user.username,
-                        USER_EXTRA_DATA_PICTURE to user.picture
-                    )
-                ) { _, _ -> }
+                connectedUser?.let {
+                    SendBird.updateCurrentUserInfo(
+                        user.username,
+                        user.picture
+                    ) { error ->
+                        if (error == null)
+                            onSuccess(it)
+                        else
+                            onFailure()
+                    }
+                }
             } else
                 onFailure()
         }
