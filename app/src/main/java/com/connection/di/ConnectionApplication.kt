@@ -42,9 +42,5 @@ class ConnectionApplication : Application(), Configuration.Provider {
                 Timber.i("Application", "Called when initialization is completed.")
             }
         })
-        ChatClient
-            .Builder(GET_STREAM_API_KEY, this)
-            .logLevel(ChatLogLevel.ALL)
-            .build()
     }
 }

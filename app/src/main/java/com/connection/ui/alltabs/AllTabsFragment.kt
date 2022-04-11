@@ -9,6 +9,7 @@ import com.connection.databinding.FragmentAllTabsBinding
 import com.connection.ui.base.BaseFragment
 import com.connection.ui.connectiontab.ConnectionsAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
@@ -21,14 +22,13 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
     /* --------------------------------------------------------------------------------------------
      * Override
     ---------------------------------------------------------------------------------------------*/
+    override fun getLayoutId(): Int = R.layout.fragment_all_tabs
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initConnectionsRecyclerView()
-        initFavouriteConnectionsRecyclerView()
         observeLiveData()
     }
-
-    override fun getLayoutId(): Int = R.layout.fragment_all_tabs
 
     /* --------------------------------------------------------------------------------------------
      * Private
@@ -40,20 +40,10 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
         }
     }
 
-    private fun initFavouriteConnectionsRecyclerView() {
-        dataBinding.listFavouriteConnections.apply {
-            adapter = FavouritesConnectionsAdapter()
-            layoutManager = LinearLayoutManager(context).apply {
-                orientation = LinearLayoutManager.HORIZONTAL
-            }
-        }
-    }
-
     private fun observeLiveData() {
         dataBinding.presenter = viewModel
         observeUiLiveData()
         observeConnectionsLiveData()
-        observeFavouriteConnectionsUiLiveData()
         observeNavigation(viewModel.navigationLiveData)
     }
 
@@ -67,13 +57,6 @@ class AllTabsFragment : BaseFragment<FragmentAllTabsBinding>() {
         viewModel.connectionUiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
             (dataBinding.recyclerViewConnections.adapter as ConnectionsAdapter)
                 .submitList(uiLiveData)
-        }
-    }
-
-    private fun observeFavouriteConnectionsUiLiveData() {
-        viewModel.favouriteConnectionsUiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
-            (dataBinding.listFavouriteConnections.adapter as FavouritesConnectionsAdapter)
-                .submitList(uiLiveData.favouriteConnections)
         }
     }
 }

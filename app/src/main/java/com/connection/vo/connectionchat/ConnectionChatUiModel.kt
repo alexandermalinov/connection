@@ -26,7 +26,7 @@ data class ConnectionChatUiModel(
         }
 
     @get:Bindable
-    var connectionStatus = ConnectionStatus.NOT_CONNECTED
+    var connectionStatus = ConnectionStatus.CONNECTED
         set(value) {
             field = value
             handleConnectionStatus(value)
@@ -62,6 +62,13 @@ data class ConnectionChatUiModel(
         }
 
     @get:Bindable
+    var isRequestSent = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.requestSent)
+        }
+
+    @get:Bindable
     var loadingChatHistory = false
         set(value) {
             field = value
@@ -76,18 +83,31 @@ data class ConnectionChatUiModel(
                 isRequestTextVisible = false
                 isRequestButtonVisible = false
                 isRequestToConnectTextVisible = false
+                isRequestSent = false
             }
-            ConnectionStatus.REQUEST_SENT -> {
+            ConnectionStatus.INVITE_SENT -> {
                 isChatBoxVisible = false
-                isRequestTextVisible = true
+                isRequestTextVisible = false
                 isRequestButtonVisible = false
                 isRequestToConnectTextVisible = false
+                isRequestSent = true
+            }
+            ConnectionStatus.INVITE_RECEIVED -> {
+                isChatBoxVisible = false
+                isRequestTextVisible = true
+                isRequestButtonVisible = true
+                isRequestToConnectTextVisible = false
+                isRequestSent = false
             }
             ConnectionStatus.NOT_CONNECTED -> {
                 isChatBoxVisible = true
                 isRequestTextVisible = false
                 isRequestButtonVisible = false
                 isRequestToConnectTextVisible = true
+                isRequestSent = false
+            }
+            else -> {
+
             }
         }
     }

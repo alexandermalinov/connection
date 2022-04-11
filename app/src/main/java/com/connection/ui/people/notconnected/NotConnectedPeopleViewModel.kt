@@ -7,8 +7,8 @@ import com.connection.data.api.model.UserData
 import com.connection.data.api.model.UsersData
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
+import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.people.base.PeopleViewModel
-import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.people.PeopleUiModel
 import com.connection.vo.people.toUiModels
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +20,7 @@ import javax.inject.Inject
 class NotConnectedPeopleViewModel @Inject constructor(
     private val userRepository: UserRepository,
     chatTabRepository: ChatTabRepository
-) : PeopleViewModel(userRepository, chatTabRepository) {
+) : PeopleViewModel(userRepository) {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
@@ -42,18 +42,20 @@ class NotConnectedPeopleViewModel @Inject constructor(
     private suspend fun setupPeople() {
         _uiLiveData.value?.apply {
             loading = true
-            userRepository.getUsers({ users ->
-                onPeopleObtained(users)
-                loading = false
-            }, {
-                loading = false
-                Timber.e("error occurred while settings peoples data")
-            })
+            userRepository.getUsers(
+                onSuccess = { users ->
+                    onPeopleObtained(users)
+                    loading = false
+                },
+                onFailure = {
+                    loading = false
+                    Timber.e("error occurred while settings peoples data")
+                })
         }
     }
 
     private fun onPeopleObtained(usersData: UsersData) {
-        filterConnectedPeople(usersData).let { people ->
+        filterNotConnectedPeople(usersData).let { people ->
             if (people.isNullOrEmpty().not())
                 _uiLiveData.value = PeopleUiModel(people)
             else
@@ -61,11 +63,9 @@ class NotConnectedPeopleViewModel @Inject constructor(
         }
     }
 
-    private fun filterConnectedPeople(usersData: UsersData) = usersData.users
-        .filterNot { loggedUser?.connections?.contains(it.id) == true }
-        .toUiModels(false)
+    private fun filterNotConnectedPeople(usersData: UsersData) = usersData.users
+        .filterNot { user -> isConnected(user)  && user.id == loggedUser?.id}
+        .toUiModels(ConnectionStatus.NOT_CONNECTED)
 
-    // TODO ("implement")
-    private fun isConnection(user: UserData) =
-        loggedUser?.connections?.contains(user.id) == true && loggedUser?.id ?: EMPTY == user.id
+    private fun isConnected(user: UserData) = loggedUser?.connections?.contains(user.id) == true
 }

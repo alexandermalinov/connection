@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.sendbird.android.SendBird
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -74,7 +75,7 @@ class UserRemoteSource @Inject constructor(
         }
     }
 
-    override suspend fun getUser(
+    override fun getUser(
         id: String,
         onSuccess: (UserData?) -> Unit
     ) {
@@ -123,15 +124,23 @@ class UserRemoteSource @Inject constructor(
     }
 
     // TODO ("fix this shit")
-    override suspend fun updateUser(
+    override fun updateUser(
         userId: String,
-        update: Map<String, List<String>>
+        connections: List<String>
     ) {
         db.getReference("users")
             .child(userId)
-            .updateChildren(update)
+            .child("connections")
+            .setValue(connections)
             .addOnSuccessListener {
                 Timber.e("successfully updated user")
             }
+    }
+
+    override suspend fun logoutUser(onSuccess: () -> Unit) {
+        auth.signOut()
+        SendBird.disconnect {
+            onSuccess()
+        }
     }
 }

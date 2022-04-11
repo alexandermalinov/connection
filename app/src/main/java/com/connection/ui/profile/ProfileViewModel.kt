@@ -3,7 +3,11 @@ package com.connection.ui.profile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.connection.R
+import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
+import com.connection.navigation.NavigationGraph
+import com.connection.navigation.PopBackStack
 import com.connection.ui.base.BaseViewModel
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.profile.ProfileUiModel
@@ -40,5 +44,14 @@ class ProfileViewModel @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     private suspend fun initUserData() {
         loggedUserId = userRepository.getLoggedUserId()
+    }
+
+    override fun onLogoutClick() {
+        viewModelScope.launch {
+            userRepository.logoutUser {
+                _navigationLiveData.value =
+                    NavigationGraph(R.id.action_profileFragment_to_loginFragment)
+            }
+        }
     }
 }

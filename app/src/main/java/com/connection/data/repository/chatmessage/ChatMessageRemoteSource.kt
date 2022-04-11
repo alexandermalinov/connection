@@ -3,6 +3,7 @@ package com.connection.data.repository.chatmessage
 import com.sendbird.android.*
 import timber.log.Timber
 
+
 class ChatMessageRemoteSource : ChatMessageRepository.RemoteSource {
 
     /* --------------------------------------------------------------------------------------------
@@ -16,38 +17,49 @@ class ChatMessageRemoteSource : ChatMessageRepository.RemoteSource {
         setReverse(true)
     }
 
+    private fun createChannelParams(users: List<String>) = GroupChannelParams().apply {
+        setPublic(false)
+        setEphemeral(false)
+        setDistinct(true)
+        setSuper(false)
+        addUserIds(users)
+    }
+
     /* --------------------------------------------------------------------------------------------
      * Override
      ---------------------------------------------------------------------------------------------*/
-    override fun createChannel(
-        loggedUserId: String,
+    override suspend fun createChannel(
+        usersIds: Pair<String, String>,
         onSuccess: (GroupChannel) -> Unit,
         onFailure: () -> Unit
     ) {
-        GroupChannel.createChannelWithUserIds(
-            listOf(loggedUserId),
-            true
-        ) { channel, error ->
+        GroupChannel.createChannel(createChannelParams(listOf(usersIds.first))) { channel, error ->
             if (error == null) {
-                onSuccess(channel)
+                SendBird.setChannelInvitationPreference(false) {
+                    onSuccess(channel)
+                }
             } else {
                 onFailure()
-                Timber.e("${error.message}")
             }
         }
     }
 
     override fun inviteUser(
         channel: GroupChannel,
-        otherUserId: String
+        otherUserId: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
     ) {
         channel.inviteWithUserIds(listOf(otherUserId)) { error ->
-            if (error != null)
-                Timber.e("${error.message}")
+            if (error == null)
+                onSuccess()
+            else {
+                onFailure()
+            }
         }
     }
 
-    override fun getChannel(
+    override suspend fun getChannel(
         channelUrl: String,
         onSuccess: (GroupChannel) -> Unit,
         onFailure: () -> Unit
@@ -66,7 +78,7 @@ class ChatMessageRemoteSource : ChatMessageRepository.RemoteSource {
         onFailure: () -> Unit
     ) {
         channel.getMessagesByTimestamp(
-            channel.lastMessage.createdAt,
+            channel.lastMessage?.createdAt ?: 0L,
             createMessagesQuery(channel.unreadMessageCount)
         ) { messages, error ->
             channel.lastMessage
@@ -91,6 +103,34 @@ class ChatMessageRemoteSource : ChatMessageRepository.RemoteSource {
                 onSuccess(userMessage)
             else
                 onFailure()
+        }
+    }
+
+    override suspend fun acceptInvite(
+        channel: GroupChannel,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        channel.acceptInvitation() { error ->
+            if (error == null) {
+                onSuccess()
+            } else {
+                onFailure()
+            }
+        }
+    }
+
+    override suspend fun declineInvite(
+        channel: GroupChannel,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        channel.declineInvitation() { error ->
+            if (error == null) {
+                onSuccess()
+            } else {
+                onFailure()
+            }
         }
     }
 }

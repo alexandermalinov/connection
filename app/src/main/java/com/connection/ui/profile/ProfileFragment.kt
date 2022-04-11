@@ -31,6 +31,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     ---------------------------------------------------------------------------------------------*/
     private fun observeLiveData() {
         dataBinding.presenter = viewModel
+        observeNavigation(viewModel.navigationLiveData)
         observeUiLiveData()
     }
 

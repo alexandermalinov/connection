@@ -14,7 +14,7 @@ data class PeopleListItemUiModel(
     val profilePicture: String = EMPTY,
     val name: String = EMPTY,
     val online: Boolean = false,
-    val connectionStatus: ConnectionStatus = ConnectionStatus.NOT_CONNECTED
+    val connectionStatus: ConnectionStatus
 ) : BaseObservable() {
 
     @get:Bindable
@@ -31,23 +31,32 @@ fun PeopleListItemUiModel.toUiModel(channelId: String) = HeaderUiModel(
     profilePicture = profilePicture,
     username = name,
     isOnline = online,
-    connectionStatus = ConnectionStatus.NOT_CONNECTED
 )
 
-fun UserData.toUiModel(isConnection: Boolean) = PeopleListItemUiModel(
+fun UserData.toUiModel(connectionStatus: ConnectionStatus) = PeopleListItemUiModel(
     id = id,
     profilePicture = picture,
     name = username,
-    connectionStatus = ConnectionStatus.NOT_CONNECTED
+    connectionStatus = connectionStatus
 )
 
-fun List<UserData>.toUiModels(isConnection: Boolean) = map { it.toUiModel(isConnection) }
+fun List<UserData>.toUiModels(connectionStatus: ConnectionStatus) =
+    map { it.toUiModel(connectionStatus) }
 
-fun GroupChannel.toUiModel(loggedUserId: String) = PeopleListItemUiModel(
+fun GroupChannel.toUiModel(
+    loggedUserId: String,
+    connectionStatus: ConnectionStatus
+) = PeopleListItemUiModel(
     id = url,
-    profilePicture = members.find { it.userId != loggedUserId }?.profileUrl ?: EMPTY,
-    name = members.find { it.userId != loggedUserId }?.profileUrl ?: EMPTY,
-    connectionStatus = ConnectionStatus.REQUEST_SENT
+    profilePicture = getSender(loggedUserId)?.profileUrl ?: EMPTY,
+    name = getSender(loggedUserId)?.nickname ?: EMPTY,
+    connectionStatus = connectionStatus
 )
 
-fun List<GroupChannel>.toUiModels(loggedUserId: String) = map { it.toUiModel(loggedUserId) }
+fun List<GroupChannel>.toUiModels(
+    loggedUserId: String,
+    connectionStatus: ConnectionStatus
+) = map { it.toUiModel(loggedUserId, connectionStatus) }
+
+private fun GroupChannel.getSender(loggedUserId: String) = members
+    .find { it.userId != loggedUserId }

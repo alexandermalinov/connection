@@ -39,7 +39,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:padding="1dp"
-            android:src="@color/green"
+            android:src="@{model.online ? @color/green : @color/blue}"
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintEnd_toEndOf="@+id/image_avatar"
             app:layout_constraintHorizontal_bias="1.0"

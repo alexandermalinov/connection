@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initDataBinding()
         initNavController()
-        //dataBinding.bottomNavigationMenu.itemIconTintList = null
         initBottomNavigation()
     }
 
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initNavController() {
         navigationController = Navigation.findNavController(
-            this,
+            this@MainActivity,
             R.id.nav_host_fragment
         )
     }

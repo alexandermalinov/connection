@@ -193,7 +193,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
-            app:visibleGone="@{model.connectionStatus == ConnectionStatus.REQUEST_SENT ? true : false}" />
+            app:visibleGone="@{model.connectionStatus == ConnectionStatus.INVITE_SENT ? true : false}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

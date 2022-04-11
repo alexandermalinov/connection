@@ -39,7 +39,7 @@ class UserRepository @Inject constructor(
             onSuccess: (Uri?) -> Unit
         )
 
-        suspend fun getUser(
+        fun getUser(
             id: String,
             onSuccess: (UserData?) -> Unit
         )
@@ -53,10 +53,12 @@ class UserRepository @Inject constructor(
 
         suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit)
 
-        suspend fun updateUser(
+        fun updateUser(
             userId: String,
-            update: Map<String, List<String>>
+            connections: List<String>
         )
+
+        suspend fun logoutUser(onSuccess: () -> Unit)
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -95,7 +97,7 @@ class UserRepository @Inject constructor(
         remote.uploadImage(uri, onSuccess)
     }
 
-    suspend fun getUser(
+    fun getUser(
         id: String,
         onSuccess: (UserData?) -> Unit
     ) {
@@ -113,10 +115,14 @@ class UserRepository @Inject constructor(
         remote.getLoggedUser(onSuccess)
     }
 
-    suspend fun updateUser(
+    fun updateUser(
         userId: String,
-        update: Map<String, List<String>>
+        connections: List<String>
     ) {
-        remote.updateUser(userId, update)
+        remote.updateUser(userId, connections)
+    }
+
+    suspend fun logoutUser(onSuccess: () -> Unit) {
+        remote.logoutUser(onSuccess)
     }
 }

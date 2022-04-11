@@ -55,7 +55,7 @@ object Constants {
     // Nested Fragments Navigation
     const val FRAGMENT_CONNECTED_PEOPLE = "fragment_connected_people"
     const val FRAGMENT_NOT_CONNECTED_PEOPLE = "fragment_not_connected_people"
-    const val FRAGMENT_REQUESTS_PEOPLE = "fragment_invitations"
+    const val FRAGMENT_INVITATION_PEOPLE = "fragment_invitations"
     const val USER = "user"
 
     // People Screen Tabs Positions

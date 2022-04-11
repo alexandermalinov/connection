@@ -14,18 +14,20 @@ class ChatMessageRepository @Inject constructor(
      ---------------------------------------------------------------------------------------------*/
     interface RemoteSource {
 
-        fun createChannel(
-            loggedUserId: String,
+        suspend fun createChannel(
+            usersIds: Pair<String, String>,
             onSuccess: (GroupChannel) -> Unit,
             onFailure: () -> Unit
         )
 
         fun inviteUser(
             channel: GroupChannel,
-            otherUserId: String
+            otherUserId: String,
+            onSuccess: () -> Unit,
+            onFailure: () -> Unit
         )
 
-        fun getChannel(
+        suspend fun getChannel(
             channelUrl: String,
             onSuccess: (GroupChannel) -> Unit,
             onFailure: () -> Unit
@@ -43,27 +45,41 @@ class ChatMessageRepository @Inject constructor(
             onSuccess: (UserMessage) -> Unit,
             onFailure: () -> Unit
         )
+
+        suspend fun acceptInvite(
+            channel: GroupChannel,
+            onSuccess: () -> Unit,
+            onFailure: () -> Unit
+        )
+
+        suspend fun declineInvite(
+            channel: GroupChannel,
+            onSuccess: () -> Unit,
+            onFailure: () -> Unit
+        )
     }
 
     /* --------------------------------------------------------------------------------------------
      * Exposed
      ---------------------------------------------------------------------------------------------*/
-    fun createChannel(
-        loggedUserId: String,
+    suspend fun createChannel(
+        usersIds: Pair<String, String>,
         onSuccess: (GroupChannel) -> Unit,
         onFailure: () -> Unit
     ) {
-        remote.createChannel(loggedUserId, onSuccess, onFailure)
+        remote.createChannel(usersIds, onSuccess, onFailure)
     }
 
     fun inviteUser(
         channel: GroupChannel,
-        otherUserId: String
+        otherUserId: String,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
     ) {
-        remote.inviteUser(channel, otherUserId)
+        remote.inviteUser(channel, otherUserId, onSuccess, onFailure)
     }
 
-    fun getChannel(
+    suspend fun getChannel(
         channelUrl: String,
         onSuccess: (GroupChannel) -> Unit,
         onFailure: () -> Unit
@@ -86,5 +102,21 @@ class ChatMessageRepository @Inject constructor(
         onFailure: () -> Unit
     ) {
         remote.sendMessage(channel, message, onSuccess, onFailure)
+    }
+
+    suspend fun acceptInvite(
+        channel: GroupChannel,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.acceptInvite(channel, onSuccess, onFailure)
+    }
+
+    suspend fun declineInvite(
+        channel: GroupChannel,
+        onSuccess: () -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.declineInvite(channel, onSuccess, onFailure)
     }
 }

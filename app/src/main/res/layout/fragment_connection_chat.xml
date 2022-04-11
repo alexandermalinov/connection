@@ -118,18 +118,14 @@
             android:id="@+id/text_request_sender_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_small"
+            android:layout_marginHorizontal="@dimen/margin_small"
             android:text="@{model.header.username}"
             android:textColor="@color/teal_700"
             android:textSize="@dimen/text_xx_medium"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/button_accept"
-            app:layout_constraintEnd_toStartOf="@+id/text_request_description"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintBottom_toTopOf="@id/text_request_description"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/header"
-            app:layout_constraintVertical_chainStyle="packed"
             app:visibleGone="@{model.requestTextVisible}"
             tools:text="Alexander" />
 
@@ -137,13 +133,13 @@
             android:id="@+id/text_request_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
             android:text="@string/wishes_to_connect_with_you"
             android:textSize="@dimen/text_x_medium"
-            app:layout_constraintBottom_toBottomOf="@+id/text_request_sender_name"
+            app:layout_constraintBottom_toTopOf="@+id/button_accept"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/text_request_sender_name"
-            app:layout_constraintTop_toTopOf="@+id/text_request_sender_name"
+            app:layout_constraintStart_toStartOf="parent"
             app:visibleGone="@{model.requestTextVisible}" />
 
         <TextView
@@ -163,27 +159,26 @@
             android:id="@+id/button_accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_medium"
             android:onClick="@{() -> presenter.onAcceptClick()}"
             android:text="@string/accept"
             android:textColor="@color/white"
             app:cornerRadius="@dimen/radius_medium"
-            app:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_decline"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_request_sender_name"
             app:visibleGone="@{model.requestButtonVisible}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_decline"
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> presenter.onDeclineClick()}"
             android:text="@string/decline"
+            android:textColor="@color/white"
             android:textSize="@dimen/text_pre_xx_small"
             android:textStyle="bold"
             app:cornerRadius="@dimen/radius_medium"
@@ -194,6 +189,18 @@
             app:layout_constraintTop_toTopOf="@+id/button_accept"
             app:strokeColor="@color/teal_700"
             app:visibleGone="@{model.requestButtonVisible}" />
+
+        <TextView
+            android:id="@+id/textView4"
+            visibleGone="@{model.requestSent}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:gravity="center_horizontal"
+            android:text="@string/request_sent"
+            app:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/image_empty_chat"
@@ -227,8 +234,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header"
-            app:layout_constraintVertical_bias="1.0"
-            tools:listitem="@layout/list_item_message_sender_user" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_message_box"
@@ -240,7 +246,8 @@
             android:paddingStart="@dimen/padding_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:visibleGone="@{model.chatBoxVisible}">
 
             <ImageView
                 android:id="@+id/imageView"

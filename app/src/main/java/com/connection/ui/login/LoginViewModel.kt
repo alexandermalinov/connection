@@ -47,7 +47,6 @@ class LoginViewModel @Inject constructor(
                 viewModelScope.launch {
                     userRepository.getLoggedUser { user ->
                         connectUser(user)
-                        _uiLiveData.value?.loading = false
                     }
                 }
             },

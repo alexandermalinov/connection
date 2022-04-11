@@ -56,8 +56,6 @@ class ConnectionChatViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             setupUsers()
-            setupChat()
-            addOnReceiveEvent()
         }
     }
 
@@ -68,16 +66,22 @@ class ConnectionChatViewModel @Inject constructor(
         userRepository.getLoggedUser { user ->
             loggedUser = user
             senderUserId = savedStateHandle.get<HeaderUiModel>(HEADER_MODEL)?.senderId ?: EMPTY
+            viewModelScope.launch {
+                setupChat()
+            }
         }
     }
 
-    private fun setupChat() {
+    private suspend fun setupChat() {
         chatMessageRepository.getChannel(
             _uiLiveData.value?.header?.channelUrl ?: EMPTY, { channel ->
                 currentChannel = channel
-                senderUser = channel.getSenderUser()
+                senderUser = getSenderMember(channel)
+                setConnectionStatus(getLoggedMember(channel), senderUser)
                 initChatHistory(channel)
+                addOnReceiveEvent()
             }, {
+                setConnectionStatus(getLoggedMember(currentChannel), senderUser)
                 Timber.e("error getting channel")
             }
         )
@@ -85,15 +89,15 @@ class ConnectionChatViewModel @Inject constructor(
 
 
     private fun initChatHistory(channel: GroupChannel?) {
-        setChatLoading(true)
+        loadingChat(true)
         channel?.let {
             chatMessageRepository.getChannelMessages(
                 it, { messages ->
                     setupMessages(messages)
-                    setChatLoading(false)
+                    loadingChat(false)
                 }, {
                     Timber.e("error occurred fetching message history")
-                    setChatLoading(false)
+                    loadingChat(false)
                 })
         }
     }
@@ -105,11 +109,33 @@ class ConnectionChatViewModel @Inject constructor(
             _messagesLiveData.value = MessageUiModel(messages.toUiModels(loggedUser?.id))
     }
 
-    private fun setChatLoading(loading: Boolean) {
+    private fun loadingChat(loading: Boolean) {
         _uiLiveData.value?.loadingChatHistory = loading
     }
 
-    private fun GroupChannel.getSenderUser() = members.first { it.userId != loggedUser?.id }
+    private fun setConnectionStatus(
+        loggedUser: Member?,
+        senderUser: Member?
+    ) {
+        _uiLiveData.value?.connectionStatus = if (loggedUser != null && senderUser != null)
+            when {
+                loggedUser.memberState == Member.MemberState.JOINED && senderUser.memberState == Member.MemberState.JOINED ->
+                    ConnectionStatus.CONNECTED
+                loggedUser.memberState == Member.MemberState.JOINED && senderUser.memberState == Member.MemberState.INVITED ->
+                    ConnectionStatus.INVITE_SENT
+                loggedUser.memberState == Member.MemberState.INVITED && senderUser.memberState == Member.MemberState.JOINED ->
+                    ConnectionStatus.INVITE_RECEIVED
+                else -> ConnectionStatus.NOT_CONNECTED
+            }
+        else
+            ConnectionStatus.NOT_CONNECTED
+    }
+
+    private fun getSenderMember(channel: GroupChannel?) =
+        channel?.members?.first { it.userId != loggedUser?.id }
+
+    private fun getLoggedMember(channel: GroupChannel?) =
+        channel?.members?.first { it.userId == loggedUser?.id }
 
     private fun getLoadedMessages() = _messagesLiveData.value?.messages ?: emptyList()
 
@@ -133,23 +159,34 @@ class ConnectionChatViewModel @Inject constructor(
         currentChannel?.let {
             chatMessageRepository.sendMessage(
                 channel = it,
-                message = _uiLiveData.value?.message ?: EMPTY, { userMessage ->
+                message = _uiLiveData.value?.message ?: EMPTY,
+                onSuccess = { userMessage ->
                     _messagesLiveData.value = addNewMessage(userMessage.toUiModel(loggedUser?.id))
-                }, {
+                    _uiLiveData.value?.message = EMPTY
+                },
+                onFailure = {
                     Timber.e("error occurred sending message")
                 }
             )
         }
     }
 
-    private fun sendInitialMessage() {
+    private suspend fun sendInitialMessage() {
         chatMessageRepository.createChannel(
-            loggedUser?.id ?: EMPTY, { channel ->
-                chatMessageRepository.inviteUser(channel, senderUserId)
-                _uiLiveData.value?.connectionStatus = ConnectionStatus.REQUEST_SENT
-                currentChannel = channel
-                sendMessage()
-            }, {
+            usersIds = Pair(loggedUser?.id ?: EMPTY, senderUserId),
+            onSuccess = { channel ->
+                chatMessageRepository.inviteUser(
+                    channel,
+                    senderUserId, {
+                        _uiLiveData.value?.connectionStatus = ConnectionStatus.INVITE_SENT
+                        currentChannel = channel
+                        sendMessage()
+                    }, {
+                        Timber.e("error occurred creating channel")
+                    }
+                )
+            },
+            onFailure = {
                 Timber.e("error occurred creating channel")
             }
         )
@@ -166,24 +203,50 @@ class ConnectionChatViewModel @Inject constructor(
     }
 
     override fun onSendClick() {
-        _uiLiveData.value?.let { model ->
+        viewModelScope.launch {
             if (isInitialMessage())
                 sendInitialMessage()
             else
                 sendMessage()
-            model.message = EMPTY
         }
     }
 
     override fun onAcceptClick() {
         viewModelScope.launch {
-
+            currentChannel?.let { channel ->
+                chatMessageRepository.acceptInvite(
+                    channel = channel,
+                    onSuccess = {
+                        _uiLiveData.value?.connectionStatus = ConnectionStatus.CONNECTED
+                        initChatHistory(channel)
+                        userRepository.updateUser(
+                            userId = loggedUser?.id ?: EMPTY,
+                            connections = loggedUser?.connections
+                                ?.filter { it != senderUserId }
+                                ?: emptyList()
+                        )
+                    },
+                    onFailure = {
+                        Timber.e("error occurred accepting invite")
+                    }
+                )
+            }
         }
     }
 
     override fun onDeclineClick() {
         viewModelScope.launch {
-
+            currentChannel?.let { channel ->
+                chatMessageRepository.declineInvite(
+                    channel = channel,
+                    onSuccess = {
+                        _navigationLiveData.value = PopBackStack
+                    },
+                    onFailure = {
+                        Timber.e("error occurred declining invite")
+                    }
+                )
+            }
         }
     }
 }
