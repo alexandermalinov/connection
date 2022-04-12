@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:background="@color/pastel_yellow"
             android:paddingHorizontal="@dimen/padding_medium"
-            android:paddingTop="@dimen/padding_medium">
+            android:paddingTop="@dimen/padding_small">
 
             <TextView
                 android:id="@+id/text_header"
@@ -32,7 +32,7 @@
                 android:fontFamily="@font/san_serif"
                 android:text="@string/people"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_large"
+                android:textSize="@dimen/text_x_large"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
