@@ -15,14 +15,15 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/margin_medium"
         android:orientation="vertical"
         android:paddingBottom="@dimen/padding_medium">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium">
+            android:background="@color/pastel_yellow"
+            android:paddingHorizontal="@dimen/padding_medium"
+            android:paddingTop="@dimen/padding_medium">
 
             <TextView
                 android:id="@+id/text_header"
@@ -30,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/san_serif"
                 android:text="@string/people"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_large"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?android:attr/selectableItemBackground"
-                android:src="@drawable/ic_search_black"
+                android:src="@drawable/ic_search_white"
                 app:layout_constraintBottom_toBottomOf="@+id/text_header"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/text_header" />
@@ -52,11 +54,14 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorFullWidth="false"
+            android:background="@color/pastel_yellow"
+            android:paddingHorizontal="@dimen/padding_tiny"
             app:tabIndicatorColor="@color/white"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="4dp"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/TabLayoutStyle"
-            android:layout_marginTop="@dimen/margin_medium">
+            app:tabTextColor="@color/white">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
@@ -66,14 +71,14 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_small"
-                android:text="@string/discover" />
+                android:text="@string/discover"
+                android:textSize="@dimen/text_small" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_small"
-                android:text="@string/invitations" />
+                android:text="@string/invitations"
+                android:textSize="@dimen/text_small" />
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -91,7 +96,7 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/container_view_people"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
