@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ShapeAppearanceCornerSizeFifty" parents="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="RoundedTabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabBackground">@drawable/tabs_selector</item>
+        <item name="tabIndicator">@null</item>
+        <item name="android:background">@drawable/ic_rounded_rectangle_grey</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <!--<item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabTextColor">@color/black</item>-->
+    </style>
+
+    <style name="TabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.MyTheme.BottomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="elevationOverlayEnabled">false</item>
+        <item name="elevation">0dp</item>
+        <item name="backgroundColor">@color/black_700</item>
+    </style>
+
+    // Circle button
+    <style name="Widget.MaterialComponents.Button.IconOnly">
+        <item name="android:radius">24dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="iconGravity">textStart</item>
+    </style>
+
+</resources>

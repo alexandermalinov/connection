@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.profile.ProfilePresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.profile.ProfileUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/padding_large">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_profile"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+            app:glideRes="@{model.profilePicture}"
+            android:layout_marginTop="@dimen/margin_huge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+            tools:src="@drawable/ic_profile_picture" />
+
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_camera"
+            android:background="@drawable/ic_circle"
+            android:padding="@dimen/padding_small"
+            app:layout_constraintBottom_toBottomOf="@+id/image_profile"
+            app:layout_constraintEnd_toEndOf="@+id/image_profile"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/image_profile"
+            app:layout_constraintTop_toTopOf="@+id/image_profile"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/text_email_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_huge"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:text="Email"
+            app:layout_constraintStart_toEndOf="@+id/image_email"
+            app:layout_constraintTop_toBottomOf="@+id/image_profile" />
+
+        <ImageView
+            android:id="@+id/image_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_email_hint"
+            tools:src="@drawable/ic_email" />
+
+        <TextView
+            android:id="@+id/text_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:textColor="@color/black"
+            android:text="@{model.email}"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintBottom_toBottomOf="@+id/image_email"
+            app:layout_constraintStart_toEndOf="@+id/image_email"
+            app:layout_constraintTop_toTopOf="@+id/image_email"
+            tools:text="alexander.marinov@gmail.com" />
+
+        <ImageView
+            android:id="@+id/image_pencil_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/text_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_email" />
+
+        <TextView
+            android:id="@+id/text_username_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:text="name"
+            app:layout_constraintStart_toEndOf="@+id/image_email"
+            app:layout_constraintTop_toBottomOf="@+id/image_email" />
+
+        <ImageView
+            android:id="@+id/image_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_account"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_username_hint"
+            tools:src="@drawable/ic_account" />
+
+        <TextView
+            android:id="@+id/text_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:text="@{model.username}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintBottom_toBottomOf="@+id/image_username"
+            app:layout_constraintStart_toEndOf="@+id/image_username"
+            app:layout_constraintTop_toTopOf="@+id/image_username"
+            tools:text="Alexander Marinov" />
+
+        <ImageView
+            android:id="@+id/image_pencil_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/text_username"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_username" />
+
+        <TextView
+            android:id="@+id/text_password_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="Email"
+            app:layout_constraintStart_toStartOf="@+id/text_username_hint"
+            app:layout_constraintTop_toBottomOf="@+id/image_username" />
+
+        <ImageView
+            android:id="@+id/image_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_lock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_password_hint"
+            tools:src="@drawable/ic_lock" />
+
+        <ImageView
+            android:id="@+id/image_pencil_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/text_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_password" />
+
+        <TextView
+            android:id="@+id/text_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:text="@{model.password}"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintBottom_toBottomOf="@+id/image_password"
+            app:layout_constraintStart_toEndOf="@+id/image_password"
+            app:layout_constraintTop_toTopOf="@+id/image_password"
+            tools:text="test0123test" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> presenter.onLogoutClick()}"
+            android:text="@string/logout"
+            android:layout_marginTop="@dimen/margin_large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_password" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

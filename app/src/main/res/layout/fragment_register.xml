@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.register.RegisterPresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.register.RegisterUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        tools:context=".ui.register.RegisterFragment">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_profile_picture"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:onClick="@{() -> presenter.onProfileImageClick()}"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+            app:uriRes="@{model.profilePicture}"
+            tools:src="@drawable/ic_profile_picture" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:hint="@string/email"
+            app:boxCornerRadiusBottomEnd="@dimen/radius_medium"
+            app:boxCornerRadiusBottomStart="@dimen/radius_medium"
+            app:boxCornerRadiusTopEnd="@dimen/radius_medium"
+            app:boxCornerRadiusTopStart="@dimen/radius_medium"
+            app:counterMaxLength="100"
+            app:errorEnabled="true"
+            app:startIconDrawable="@drawable/ic_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:text="@={model.email}"
+                app:inputError="@{model.emailError}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_username"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:hint="@string/username"
+            app:boxCornerRadiusBottomEnd="@dimen/radius_medium"
+            app:boxCornerRadiusBottomStart="@dimen/radius_medium"
+            app:boxCornerRadiusTopEnd="@dimen/radius_medium"
+            app:boxCornerRadiusTopStart="@dimen/radius_medium"
+            app:startIconDrawable="@drawable/ic_account">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="@={model.username}"
+                app:inputError="@{model.usernameError}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:hint="@string/password"
+            app:boxCornerRadiusBottomEnd="@dimen/radius_medium"
+            app:boxCornerRadiusBottomStart="@dimen/radius_medium"
+            app:boxCornerRadiusTopEnd="@dimen/radius_medium"
+            app:boxCornerRadiusTopStart="@dimen/radius_medium"
+            app:startIconDrawable="@drawable/ic_lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:text="@={model.password}"
+                app:inputError="@{model.passwordError}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_large"
+            android:elevation="@dimen/button_elevation"
+            android:onClick="@{() -> presenter.onRegisterClick()}"
+            android:paddingHorizontal="@dimen/padding_large"
+            android:text="@string/register"
+            android:textColor="@color/white"
+            app:cornerRadius="@dimen/radius_medium"
+            app:visibleGone="@{!model.loading}" />
+
+        <ProgressBar
+            android:id="@+id/loading_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_gravity="center_horizontal"
+            android:elevation="@dimen/button_elevation"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/navy"
+            android:indeterminateTintMode="src_atop"
+            app:visibleGone="@{model.loading}" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_pre_medium"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text_already_have_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.onRegisterClick()}"
+                android:text="@string/already_have_account"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_sign_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_tiny"
+                android:elevation="@dimen/button_elevation"
+                android:onClick="@{() -> presenter.onLoginClick()}"
+                android:text="@string/sign_in"
+                android:textColor="@color/navy"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
