@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_medium"
-            android:text="@string/wishes_to_connect_with_you"
+            android:text="@string/sent_you_connection_request"
             android:textSize="@dimen/text_x_medium"
             app:layout_constraintBottom_toTopOf="@+id/button_accept"
             app:layout_constraintEnd_toEndOf="parent"

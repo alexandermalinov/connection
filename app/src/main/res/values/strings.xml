@@ -12,6 +12,8 @@
     <string name="login">Login</string>
     <string name="don_t_have_account_yet_sign_up">Don\'t have account yet?</string>
     <string name="already_have_account">Already have account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
 
     <string name="search">search</string>
     <string name="groups">Groups</string>
@@ -28,8 +30,6 @@
     <string name="invalid_username">Invalid username</string>
     <string name="invalid_password">Invalid password</string>
 
-    <string name="sign_up">Sign Up</string>
-    <string name="sign_in">Sign In</string>
     <string name="connect">Connect</string>
     <string name="message">Message</string>
     <string name="send_button_description">Send Button</string>
@@ -38,16 +38,18 @@
     <string name="favourites">Favourites</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
-    <string name="wishes_to_connect_with_you">sent you connection request</string>
+    <string name="sent_you_connection_request">sent you connection request</string>
     <string name="request_to_connect">request to connect by sending message</string>
     <string name="no_connections">Oops…looks like you don\'t have connections yet</string>
     <string name="discover">Discover</string>
     <string name="discover_connections">Make new connections and start communicating with other users</string>
     <string name="invitations">Invitations</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="there_are_no_invitations_yet">There are no invitations yet</string>
     <string name="request_sent">Request to connect is sent. To start messaging it has to be approved</string>
     <string name="logout">Logout</string>
-
+    <string name="wishes_to_connect_with_you">Wishes to connect\n with you</string>
+    <string name="waits_you_to_send_message">Waits you to send a message</string>
+    <string name="connections_count">connections and %s others</string>
+    <string name="connection_count">connections and %s other</string>
+    <string name="connect_to_start_chatting">Connect to start chatting</string>
 </resources>

@@ -1,26 +1,26 @@
-package com.connection.ui.people.base
+package com.connection.ui.people.invitation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import com.connection.R
-import com.connection.databinding.ListItemUserBinding
+import com.connection.databinding.ListItemInvitationBinding
 import com.connection.utils.DataBoundListAdapter
-import com.connection.vo.people.PeopleListItemUiModel
+import com.connection.vo.people.invitations.InvitationListItemUiModel
 
-class PeopleAdapter(val presenter: PeoplesPresenter) :
-    DataBoundListAdapter<PeopleListItemUiModel, ListItemUserBinding>(
-        object : DiffUtil.ItemCallback<PeopleListItemUiModel>() {
+class InvitationAdapter(val presenter: InvitationsPresenter) :
+    DataBoundListAdapter<InvitationListItemUiModel, ListItemInvitationBinding>(
+        object : DiffUtil.ItemCallback<InvitationListItemUiModel>() {
 
             override fun areItemsTheSame(
-                oldItem: PeopleListItemUiModel,
-                newItem: PeopleListItemUiModel
+                oldItem: InvitationListItemUiModel,
+                newItem: InvitationListItemUiModel
             ) = oldItem === newItem
 
             override fun areContentsTheSame(
-                oldItem: PeopleListItemUiModel,
-                newItem: PeopleListItemUiModel
+                oldItem: InvitationListItemUiModel,
+                newItem: InvitationListItemUiModel
             ) = oldItem == newItem
         }
     ) {
@@ -31,17 +31,17 @@ class PeopleAdapter(val presenter: PeoplesPresenter) :
     override fun createBinding(
         parent: ViewGroup,
         viewType: Int
-    ): ListItemUserBinding =
+    ): ListItemInvitationBinding =
         DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.list_item_user,
+            R.layout.list_item_invitation,
             parent,
             false
         )
 
     override fun bind(
-        binding: ListItemUserBinding,
-        item: PeopleListItemUiModel
+        binding: ListItemInvitationBinding,
+        item: InvitationListItemUiModel
     ) {
         binding.model = item
         binding.presenter = presenter

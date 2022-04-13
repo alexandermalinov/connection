@@ -222,8 +222,8 @@ class ConnectionChatViewModel @Inject constructor(
                         userRepository.updateUser(
                             userId = loggedUser?.id ?: EMPTY,
                             connections = loggedUser?.connections
-                                ?.filter { it != senderUserId }
-                                ?: emptyList()
+                                ?.plus(Pair(senderUserId, senderUser?.profileUrl ?: EMPTY))
+                                ?: emptyMap()
                         )
                     },
                     onFailure = {

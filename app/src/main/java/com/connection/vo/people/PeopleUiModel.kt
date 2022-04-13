@@ -4,9 +4,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.connection.BR
 
-data class PeopleUiModel(
-    val peoples: List<PeopleListItemUiModel> = emptyList()
-) : BaseObservable() {
+open class PeopleUiModel : BaseObservable() {
 
     @get:Bindable
     var loading = false

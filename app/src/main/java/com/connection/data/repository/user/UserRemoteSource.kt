@@ -126,7 +126,7 @@ class UserRemoteSource @Inject constructor(
     // TODO ("fix this shit")
     override fun updateUser(
         userId: String,
-        connections: List<String>
+        connections: Map<String, String>
     ) {
         db.getReference("users")
             .child(userId)

@@ -55,7 +55,7 @@ class UserRepository @Inject constructor(
 
         fun updateUser(
             userId: String,
-            connections: List<String>
+            connections: Map<String, String>
         )
 
         suspend fun logoutUser(onSuccess: () -> Unit)
@@ -117,7 +117,7 @@ class UserRepository @Inject constructor(
 
     fun updateUser(
         userId: String,
-        connections: List<String>
+        connections: Map<String, String>
     ) {
         remote.updateUser(userId, connections)
     }

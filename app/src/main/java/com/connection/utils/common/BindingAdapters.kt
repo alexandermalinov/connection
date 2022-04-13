@@ -61,3 +61,16 @@ fun ShapeableImageView.setUriRes(uri: Uri?) {
 fun TextView.setSafeText(value: Int) {
     text = value.toString()
 }
+
+@BindingAdapter("textFormatted")
+fun TextView.setTextFormatted(textRes: TextRes) {
+    with(textRes) {
+        setText(
+            if (textResource != INVALID_RES && text.isNullOrBlank().not()) {
+                resources.getString(textResource, text)
+            } else {
+                EMPTY
+            }
+        )
+    }
+}

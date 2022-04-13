@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.connection.R
 import com.connection.databinding.FragmentConnectedPeopleBinding
 import com.connection.ui.base.BaseFragment
-import com.connection.ui.people.base.PeopleAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +33,7 @@ class ConnectedPeopleFragment : BaseFragment<FragmentConnectedPeopleBinding>() {
     ---------------------------------------------------------------------------------------------*/
     private fun initPeopleRecyclerView() {
         dataBinding.recyclerViewPeoples.apply {
-            adapter = PeopleAdapter(viewModel)
+            adapter = ConnectedAdapter(viewModel)
             layoutManager = LinearLayoutManager(context)
         }
     }
@@ -48,8 +47,8 @@ class ConnectedPeopleFragment : BaseFragment<FragmentConnectedPeopleBinding>() {
     private fun observeUiLiveData() {
         viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
             dataBinding.model = uiLiveData
-            (dataBinding.recyclerViewPeoples.adapter as PeopleAdapter)
-                .submitList(uiLiveData.peoples)
+            (dataBinding.recyclerViewPeoples.adapter as ConnectedAdapter)
+                .submitList(uiLiveData.connections)
         }
     }
 }
