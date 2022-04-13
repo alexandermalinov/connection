@@ -26,10 +26,9 @@
             android:id="@+id/container_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/padding_medium"
-            android:paddingBottom="@dimen/padding_large"
-            android:paddingTop="@dimen/padding_medium"
             android:background="@color/pastel_yellow"
+            android:paddingHorizontal="@dimen/padding_medium"
+            android:paddingVertical="@dimen/padding_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -40,19 +39,21 @@
                 android:layout_height="36dp"
                 app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                 app:glideRes="@{model.profileImage}"
+                app:layout_constraintBottom_toBottomOf="@+id/image_notification"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
                 tools:src="@drawable/ic_profile_picture" />
 
-            <ImageView
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/image_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
                 android:src="@drawable/ic_search_white"
-                app:layout_constraintBottom_toBottomOf="@+id/text_connection"
+                app:fabSize="mini"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/text_connection" />
+                app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
@@ -108,11 +109,17 @@
              tools:listitem="@layout/list_item_chat_favourite_connection"
              tools:orientation="horizontal" />-->
 
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_wave"
+            app:layout_constraintTop_toBottomOf="@+id/container_header" />
+
         <TextView
             android:id="@+id/text_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginStart="@dimen/margin_medium"
             android:fontFamily="@font/san_serif"
             android:text="@string/chats"
@@ -120,7 +127,7 @@
             android:textSize="@dimen/text_xx_medium"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/container_header" />
+            app:layout_constraintTop_toBottomOf="@+id/view" />
 
         <ProgressBar
             android:id="@+id/loading_connections_bar"

@@ -40,9 +40,9 @@ open class PeopleViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            //onTabSelected(FRAGMENT_CONNECTED_PEOPLE)
             initUserData()
         }
-        //onTabSelected(FRAGMENT_CONNECTED_PEOPLE)
     }
 
     /* --------------------------------------------------------------------------------------------

@@ -58,7 +58,6 @@
             android:paddingHorizontal="@dimen/padding_tiny"
             app:tabIndicatorColor="@color/white"
             app:tabIndicatorFullWidth="false"
-            app:tabIndicatorHeight="4dp"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/TabLayoutStyle"
             app:tabTextColor="@color/white">
