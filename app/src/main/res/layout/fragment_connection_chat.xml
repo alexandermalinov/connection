@@ -24,6 +24,7 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/pastel_yellow"
             android:paddingHorizontal="@dimen/padding_medium"
             android:paddingVertical="@dimen/padding_small"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,20 +71,20 @@
                 app:layout_constraintTop_toTopOf="@+id/image_profile"
                 app:layout_constraintVertical_bias="1.0"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                app:strokeColor="@color/black_700"
+                app:strokeColor="@color/pastel_yellow"
                 app:strokeWidth="2dp"
                 app:visibleGone="@{model.header.online}" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/text_other_user_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:text="@{model.header.username}"
-                android:textColor="@color/white"
                 android:textSize="@dimen/text_medium"
+                android:textColor="@color/white"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                app:layout_constraintBottom_toTopOf="@+id/text_online"
                 app:layout_constraintEnd_toStartOf="@+id/menu_options"
                 app:layout_constraintStart_toEndOf="@+id/image_profile"
                 app:layout_constraintTop_toTopOf="@+id/image_profile"
@@ -91,14 +92,14 @@
                 tools:text="Victoria Marinova" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/text_online"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/online"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:layout_constraintStart_toStartOf="@+id/text_other_user_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_other_user_name"
                 app:visibleGone="@{model.header.online}"
                 tools:text="Online" />
 
@@ -120,7 +121,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
             android:text="@{model.header.username}"
-            android:textColor="@color/teal_700"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_xx_medium"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/text_request_description"
@@ -174,11 +175,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_decline"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{() -> presenter.onDeclineClick()}"
             android:text="@string/decline"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/text_pre_xx_small"
             android:textStyle="bold"
             app:cornerRadius="@dimen/radius_medium"
@@ -187,11 +189,11 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button_accept"
             app:layout_constraintTop_toTopOf="@+id/button_accept"
-            app:strokeColor="@color/teal_700"
+            app:strokeColor="@color/pastel_yellow"
             app:visibleGone="@{model.requestButtonVisible}" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/text_request_sent"
             visibleGone="@{model.requestSent}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -243,14 +245,13 @@
             android:layout_marginHorizontal="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_medium"
             android:background="@drawable/ic_rounded_rectangle_grey"
-            android:paddingStart="@dimen/padding_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:visibleGone="@{model.chatBoxVisible}">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image_attachment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small"
@@ -271,23 +272,21 @@
                 android:text="@={model.message}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_send"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/image_attachment"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/button_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/teal_700"
                 android:contentDescription="@string/send_button_description"
                 android:enabled="@{model.sendClickable}"
                 android:onClick="@{() -> presenter.onSendClick()}"
-                app:backgroundTint="@color/teal_700"
                 app:elevation="0dp"
                 app:fabSize="mini"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintBottom_toBottomOf="@+id/image_attachment"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/image_attachment"
                 app:srcCompat="@drawable/ic_send_black"
                 app:tint="@color/white" />
 

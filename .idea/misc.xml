@@ -8,11 +8,14 @@
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.223" />
         <entry key="app/src/main/res/drawable/ic_add_connection.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_add_message.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_arrow.xml" value="0.255" />
         <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_attach_file.xml" value="0.255" />
         <entry key="app/src/main/res/drawable/ic_background_gradient.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_camera.xml" value="0.2745" />
         <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_circle.xml" value="0.2745" />
+        <entry key="app/src/main/res/drawable/ic_clock.xml" value="0.255" />
         <entry key="app/src/main/res/drawable/ic_default_avatar.xml" value="0.263" />
         <entry key="app/src/main/res/drawable/ic_favorite.xml" value="0.237" />
         <entry key="app/src/main/res/drawable/ic_globe.xml" value="0.2235" />
@@ -43,12 +46,12 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_all_messages.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/layout/fragment_all_tabs.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_connected_people.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_connected_people.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_connection_chat.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_invitations.xml" value="0.3179347826086957" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_not_connected_people.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/fragment_people.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_not_connected_people.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_people.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.22083333333333333" />
@@ -57,8 +60,8 @@
         <entry key="app/src/main/res/layout/list_item_message.xml" value="0.33" />
         <entry key="app/src/main/res/layout/list_item_message_logged_used.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/layout/list_item_message_logged_user.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/list_item_message_sender_user.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/list_item_user.xml" value="1.0" />
+        <entry key="app/src/main/res/layout/list_item_message_sender_user.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_user.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3260416666666667" />
       </map>
     </option>

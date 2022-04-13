@@ -10,6 +10,7 @@
     <dimen name="text_x_medium">20sp</dimen>
     <dimen name="text_xx_medium">24sp</dimen>
     <dimen name="text_large">32sp</dimen>
+    <dimen name="text_x_large">42sp</dimen>
     <dimen name="text_huge">64sp</dimen>
 
     // Padding
@@ -29,6 +30,7 @@
     <dimen name="margin_pre_medium">20dp</dimen>
     <dimen name="margin_pre_x_medium">24dp</dimen>
     <dimen name="margin_large">32dp</dimen>
+    <dimen name="margin_x_large">36dp</dimen>
     <dimen name="margin_huge">64dp</dimen>
 
     // Radius

@@ -35,6 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            app:cornerRadius="@dimen/radius_medium"
             android:layout_marginTop="@dimen/margin_medium"
             android:onClick="@{() -> presenter.onDiscoverClick()}"
             android:text="@string/discover"
@@ -44,6 +45,7 @@
             android:id="@+id/recycler_view_peoples"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_small"
             tools:listitem="@layout/list_item_user"
             app:visibleGone="@{!model.emptyState}"/>
 

@@ -31,9 +31,9 @@ class PeopleFragment : BaseFragment<FragmentPeopleBinding>() {
      * Private
     ---------------------------------------------------------------------------------------------*/
     private fun observeLiveData() {
-        observeNavigation(viewModel.navigationLiveData)
         observeTabs()
         observeSelectedTab()
+        observeNavigation(viewModel.navigationLiveData)
     }
 
     private fun observeTabs() {

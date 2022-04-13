@@ -40,9 +40,9 @@ open class PeopleViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            //onTabSelected(FRAGMENT_CONNECTED_PEOPLE)
             initUserData()
         }
-        //onTabSelected(FRAGMENT_CONNECTED_PEOPLE)
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -101,7 +101,6 @@ open class PeopleViewModel @Inject constructor(
     }
 
     override fun onDiscoverClick() {
-        _navigationLiveData.value =
-            NavigationGraph(R.id.action_connectedPeopleFragment_to_notConnectedPeople)
+        _navigationLiveData.value = NavigationGraph(R.id.not_connected_people)
     }
 }
