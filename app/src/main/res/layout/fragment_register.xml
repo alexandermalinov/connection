@@ -23,20 +23,40 @@
         android:orientation="vertical"
         tools:context=".ui.register.RegisterFragment">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image_profile_picture"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:onClick="@{() -> presenter.onProfileImageClick()}"
-            android:scaleType="centerCrop"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-            app:uriRes="@{model.profilePicture}"
-            tools:src="@drawable/ic_profile_picture" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_large"
+            android:orientation="horizontal">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_profile_picture"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_vertical"
+                android:onClick="@{() -> presenter.onProfileImageClick()}"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+                app:uriRes="@{model.profilePicture}"
+                tools:src="@drawable/ic_profile_picture" />
+
+            <TextView
+                android:id="@+id/text_header_sign_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="@font/core_sans_regular"
+                android:text="@string/sign_up"
+                android:textColor="@color/black"
+                android:textSize="48sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
@@ -60,7 +80,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_username"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
@@ -81,7 +101,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
@@ -108,7 +128,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_large"
-            android:elevation="@dimen/button_elevation"
             android:onClick="@{() -> presenter.onRegisterClick()}"
             android:paddingHorizontal="@dimen/padding_large"
             android:text="@string/register"
@@ -120,8 +139,8 @@
             android:id="@+id/loading_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_medium"
             app:visibleGone="@{model.loading}" />
 
         <androidx.appcompat.widget.LinearLayoutCompat

@@ -49,7 +49,11 @@
     <string name="logout">Logout</string>
     <string name="wishes_to_connect_with_you">Wishes to connect\n with you</string>
     <string name="waits_you_to_send_message">Waits you to send a message</string>
-    <string name="connections_count">connections and %s others</string>
-    <string name="connection_count">connections and %s other</string>
+    <string name="connections_count">mutual connections \nand %s others</string>
+    <string name="connection_count">mutual connections \nand %s other</string>
+    <string name="no_connections_count">The user hasn\'t connections yet</string>
     <string name="connect_to_start_chatting">Connect to start chatting</string>
+    <string name="accepted">Accepted</string>
+    <string name="declined">Declined</string>
+    <string name="add_new">Add new</string>
 </resources>

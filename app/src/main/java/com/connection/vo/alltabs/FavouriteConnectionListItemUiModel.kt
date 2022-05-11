@@ -2,6 +2,8 @@ package com.connection.vo.alltabs
 
 import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.vo.base.isOtherUserOnline
+import com.sendbird.android.GroupChannel
 import io.getstream.chat.android.client.models.User
 
 data class FavouriteConnectionListItemUiModel(
@@ -10,8 +12,10 @@ data class FavouriteConnectionListItemUiModel(
     val online: Boolean = false
 )
 
-fun User.toUiModel() = FavouriteConnectionListItemUiModel(
-    image = extraData[Constants.USER_EXTRA_DATA_PICTURE].toString(),
-    username = extraData[Constants.USER_EXTRA_DATA_USERNAME].toString(),
-    online = online
+private fun GroupChannel.toUiModel(loggedUserId: String) = FavouriteConnectionListItemUiModel(
+    image = members.find { it.userId != loggedUserId }?.profileUrl ?: EMPTY,
+    username = members.find { it.userId != loggedUserId }?.nickname ?: EMPTY,
+    online = members.isOtherUserOnline(loggedUserId)
 )
+
+fun List<GroupChannel>.toFavouritePeople(loggedUserId: String) = map { it.toUiModel(loggedUserId) }

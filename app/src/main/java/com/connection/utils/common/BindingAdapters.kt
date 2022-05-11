@@ -1,12 +1,12 @@
 package com.connection.utils.common
 
+import android.graphics.Typeface
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.widget.ContentLoadingProgressBar
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.connection.R
@@ -18,11 +18,6 @@ import com.google.android.material.textfield.TextInputEditText
 @BindingAdapter("visibleGone")
 fun View.setVisibility(show: Boolean) {
     visibility = if (show) View.VISIBLE else View.GONE
-}
-
-@BindingAdapter("showHide")
-fun ContentLoadingProgressBar.showHide(show: Boolean) {
-    if (show) show() else hide()
 }
 
 @BindingAdapter("inputError")
@@ -72,5 +67,13 @@ fun TextView.setTextFormatted(textRes: TextRes) {
                 EMPTY
             }
         )
+    }
+}
+
+@BindingAdapter("boldText")
+fun TextView.setTextBold(shouldBoldText: Boolean) {
+    if (shouldBoldText) {
+        setTypeface(null, Typeface.BOLD)
+        setTextColor(resources.getColor(R.color.black))
     }
 }

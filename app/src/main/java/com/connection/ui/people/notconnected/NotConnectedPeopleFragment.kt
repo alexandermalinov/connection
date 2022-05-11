@@ -3,6 +3,7 @@ package com.connection.ui.people.notconnected
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.connection.R
 import com.connection.databinding.FragmentNotConnectedPeopleBinding
@@ -34,7 +35,7 @@ class NotConnectedPeopleFragment : BaseFragment<FragmentNotConnectedPeopleBindin
     private fun initPeopleRecyclerView() {
         dataBinding.recyclerViewPeoples.apply {
             adapter = NotConnectedAdapter(viewModel)
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = GridLayoutManager(context, 2)
         }
     }
 

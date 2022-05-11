@@ -4,5 +4,5 @@ import com.connection.vo.people.notconnected.NotConnectedPeopleListItemUiModel
 
 interface NotConnectedPresenter {
 
-    fun onSendRequestClick(user: NotConnectedPeopleListItemUiModel)
+    fun onConnectClick(user: NotConnectedPeopleListItemUiModel)
 }

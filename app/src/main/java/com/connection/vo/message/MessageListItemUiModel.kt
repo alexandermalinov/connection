@@ -4,12 +4,12 @@ import androidx.databinding.BaseObservable
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
 import com.sendbird.android.BaseMessage
-import com.sendbird.android.UserMessage
 
 open class MessageListUiModel(
     var senderPicture: String = EMPTY,
     var senderMessage: String = EMPTY,
-    var sendAt: String = EMPTY
+    var sendAt: String = EMPTY,
+    var isPictureVisible: Boolean = true
 ) : BaseObservable()
 
 class LoggedUserMessageUiModel : MessageListUiModel()
@@ -21,13 +21,13 @@ fun BaseMessage.toUiModel(loggedUserId: String?) =
         LoggedUserMessageUiModel().apply {
             senderPicture = sender?.profileUrl ?: EMPTY
             senderMessage = message ?: EMPTY
-            sendAt = DateTimeFormatter.formatMessageDateTime(createdAt ?: 0L)
+            sendAt = DateTimeFormatter.formatMessageDateTime(createdAt)
         }
     else
         SenderUserMessageUiModel().apply {
             senderPicture = sender?.profileUrl ?: EMPTY
-            senderMessage = message  ?: EMPTY
-            sendAt = DateTimeFormatter.formatMessageDateTime(createdAt ?: 0L)
+            senderMessage = message ?: EMPTY
+            sendAt = DateTimeFormatter.formatMessageDateTime(createdAt)
         }
 
 fun List<BaseMessage>.toUiModels(loggedUserId: String?) = map {

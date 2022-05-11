@@ -21,6 +21,7 @@ data class NavigationGraph(
 ) : Internal()
 
 object PopBackStack : Internal()
+
 class NestedFragmentGraph(
     val fragmentId: String,
     @IdRes

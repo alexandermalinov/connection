@@ -11,12 +11,10 @@ import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.people.base.PeopleViewModel
 import com.connection.utils.common.Constants
-import com.connection.vo.people.PeopleListItemUiModel
 import com.connection.vo.people.notconnected.NotConnectedPeopleListItemUiModel
 import com.connection.vo.people.notconnected.NotConnectedUiModel
 import com.connection.vo.people.notconnected.toUiModel
 import com.connection.vo.people.notconnected.toUiModels
-import com.connection.vo.people.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -37,31 +35,24 @@ class NotConnectedPeopleViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            setupPeople()
+            loadPeople()
         }
     }
 
     /* --------------------------------------------------------------------------------------------
      * Private
     ---------------------------------------------------------------------------------------------*/
-    private suspend fun setupPeople() {
-        _uiLiveData.value?.apply {
-            loading = true
-            userRepository.getUsers(
-                onSuccess = { users ->
-                    onPeopleObtained(users)
-                    loading = false
-                },
-                onFailure = {
-                    loading = false
-                    Timber.e("error occurred while settings peoples data")
-                })
-        }
+    private suspend fun loadPeople() {
+        _uiLiveData.value?.loading = true
+        userRepository.getUsers(
+            onSuccess = { users -> setUiData(users) },
+            onFailure = { Timber.e("error occurred while settings peoples data") })
+        _uiLiveData.value?.loading = false
     }
 
-    private fun onPeopleObtained(usersData: UsersData) {
+    private fun setUiData(usersData: UsersData) {
         filterNotConnectedPeople(usersData).let { people ->
-            if (people.isNullOrEmpty().not())
+            if (people.isNotEmpty())
                 _uiLiveData.value = NotConnectedUiModel(people)
             else
                 _uiLiveData.value?.emptyState = true
@@ -69,10 +60,11 @@ class NotConnectedPeopleViewModel @Inject constructor(
     }
 
     private fun filterNotConnectedPeople(usersData: UsersData) = usersData.users
-        .filterNot { user -> isConnected(user) && user.id == loggedUser?.id }
+        .filter { user -> isConnected(user).not() || user.id != loggedUser?.id }
         .toUiModels()
 
-    private fun isConnected(user: UserData) = loggedUser?.connections?.contains(user.id) == true
+    private fun isConnected(user: UserData) = loggedUser?.connections?.keys
+        ?.any { it == user.id } == true
 
     private fun navigateToChat(senderUser: NotConnectedPeopleListItemUiModel) {
         _navigationLiveData.value = NavigationGraph(
@@ -84,7 +76,7 @@ class NotConnectedPeopleViewModel @Inject constructor(
     /* --------------------------------------------------------------------------------------------
      * Override
     ---------------------------------------------------------------------------------------------*/
-    override fun onSendRequestClick(user: NotConnectedPeopleListItemUiModel) {
+    override fun onConnectClick(user: NotConnectedPeopleListItemUiModel) {
         navigateToChat(user)
     }
 }

@@ -18,7 +18,7 @@
     <dimen name="padding_tiny">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_medium">16dp</dimen>
-    <dimen name="padding_pre_medium">16dp</dimen>
+    <dimen name="padding_pre_medium">18dp</dimen>
     <dimen name="padding_pre_x_medium">24dp</dimen>
     <dimen name="padding_large">32dp</dimen>
     <dimen name="padding_huge">64dp</dimen>

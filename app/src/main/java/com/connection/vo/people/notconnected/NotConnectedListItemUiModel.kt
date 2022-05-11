@@ -36,8 +36,9 @@ private fun UserData.toUiModel() = NotConnectedPeopleListItemUiModel(
     connectionsCount = connections.size
 )
 
-private fun getConnectionsCountText(connectionsCount: Int) = if (connectionsCount <= 1)
-    R.string.connection_count
-else
-    R.string.connections_count
+private fun getConnectionsCountText(connectionsCount: Int) = when {
+    connectionsCount == 1 -> R.string.connection_count
+    connectionsCount > 1 -> R.string.connections_count
+    else -> R.string.no_connections_count
+}
 
