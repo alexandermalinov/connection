@@ -6,16 +6,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.connection.R
+import com.connection.databinding.ListItemImageMessageLoggedUserBinding
+import com.connection.databinding.ListItemImageMessageSenderUserBinding
 import com.connection.databinding.ListItemMessageLoggedUserBinding
 import com.connection.databinding.ListItemMessageSenderUserBinding
 import com.connection.ui.connectionchat.ConnectionChatPresenter
 import com.connection.utils.DataBoundListAdapter
-import com.connection.vo.message.LoggedUserMessageUiModel
-import com.connection.vo.message.MessageListUiModel
-import com.connection.vo.message.SenderUserMessageUiModel
+import com.connection.vo.message.*
 
 private const val MESSAGE_BY_LOGGED_USER = 1
 private const val MESSAGE_BY_SENDER_USER = 2
+private const val IMAGE_MESSAGE_BY_LOGGED_USER = 3
+private const val IMAGE_MESSAGE_BY_SENDER_USER = 4
+private const val MESSAGE_DATE = 5
 
 class MessageAdapter(val presenter: ConnectionChatPresenter) :
     DataBoundListAdapter<MessageListUiModel, ViewDataBinding>(
@@ -38,7 +41,10 @@ class MessageAdapter(val presenter: ConnectionChatPresenter) :
     ---------------------------------------------------------------------------------------------*/
     private fun getLayout(viewType: Int) = when (viewType) {
         MESSAGE_BY_LOGGED_USER -> R.layout.list_item_message_logged_user
-        else -> R.layout.list_item_message_sender_user
+        MESSAGE_BY_SENDER_USER -> R.layout.list_item_message_sender_user
+        IMAGE_MESSAGE_BY_LOGGED_USER -> R.layout.list_item_image_message_logged_user
+        IMAGE_MESSAGE_BY_SENDER_USER -> R.layout.list_item_image_message_sender_user
+        else -> R.layout.list_item_chat_date
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -66,11 +72,20 @@ class MessageAdapter(val presenter: ConnectionChatPresenter) :
             binding is ListItemMessageSenderUserBinding && item is SenderUserMessageUiModel -> {
                 binding.model = item
             }
+            binding is ListItemImageMessageLoggedUserBinding && item is LoggedUserImageMessageUiModel -> {
+                binding.model = item
+            }
+            binding is ListItemImageMessageSenderUserBinding && item is SenderUserImageMessageUiModel -> {
+                binding.model = item
+            }
         }
     }
 
     override fun getItemViewType(position: Int) = when (this.currentList[position]) {
         is LoggedUserMessageUiModel -> MESSAGE_BY_LOGGED_USER
-        else -> MESSAGE_BY_SENDER_USER
+        is SenderUserMessageUiModel -> MESSAGE_BY_SENDER_USER
+        is LoggedUserImageMessageUiModel -> IMAGE_MESSAGE_BY_LOGGED_USER
+        is MessageDateUiModel -> IMAGE_MESSAGE_BY_SENDER_USER
+        else -> MESSAGE_DATE
     }
 }

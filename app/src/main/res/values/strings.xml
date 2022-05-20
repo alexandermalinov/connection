@@ -56,4 +56,5 @@
     <string name="accepted">Accepted</string>
     <string name="declined">Declined</string>
     <string name="add_new">Add new</string>
+    <string name="send_image">Send Image</string>
 </resources>

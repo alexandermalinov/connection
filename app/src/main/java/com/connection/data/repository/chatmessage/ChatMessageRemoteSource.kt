@@ -1,7 +1,9 @@
 package com.connection.data.repository.chatmessage
 
+import com.connection.utils.common.Constants.EMPTY
 import com.sendbird.android.*
 import timber.log.Timber
+import java.io.File
 
 
 class ChatMessageRemoteSource : ChatMessageRepository.RemoteSource {
@@ -103,6 +105,28 @@ class ChatMessageRemoteSource : ChatMessageRepository.RemoteSource {
                 onSuccess(userMessage)
             else
                 onFailure()
+        }
+    }
+
+    override fun sendImageMessage(
+        channel: GroupChannel,
+        imageMessage: File,
+        onSuccess: (FileMessage) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        //File file, String name, String type, int size, String data,
+        channel.sendFileMessage(
+            imageMessage,
+            imageMessage.name,
+            "image/*",
+            imageMessage.length().toInt(),
+            EMPTY
+        ) { message, error ->
+            if (error == null) {
+                onSuccess(message)
+            } else {
+                onFailure()
+            }
         }
     }
 

@@ -1,8 +1,10 @@
 package com.connection.data.repository.chatmessage
 
 import com.sendbird.android.BaseMessage
+import com.sendbird.android.FileMessage
 import com.sendbird.android.GroupChannel
 import com.sendbird.android.UserMessage
+import java.io.File
 import javax.inject.Inject
 
 class ChatMessageRepository @Inject constructor(
@@ -43,6 +45,13 @@ class ChatMessageRepository @Inject constructor(
             channel: GroupChannel,
             message: String,
             onSuccess: (UserMessage) -> Unit,
+            onFailure: () -> Unit
+        )
+
+        fun sendImageMessage(
+            channel: GroupChannel,
+            imageMessage: File,
+            onSuccess: (FileMessage) -> Unit,
             onFailure: () -> Unit
         )
 
@@ -102,6 +111,15 @@ class ChatMessageRepository @Inject constructor(
         onFailure: () -> Unit
     ) {
         remote.sendMessage(channel, message, onSuccess, onFailure)
+    }
+
+    fun sendImageMessage(
+        channel: GroupChannel,
+        imageMessage: File,
+        onSuccess: (FileMessage) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.sendImageMessage(channel, imageMessage, onSuccess, onFailure)
     }
 
     suspend fun acceptInvite(

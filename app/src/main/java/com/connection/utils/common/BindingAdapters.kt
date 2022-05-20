@@ -9,6 +9,8 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.connection.R
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.INVALID_RES
@@ -41,6 +43,18 @@ fun View.setGlideRes(
             else
                 it
         }
+        .into(this as ImageView)
+}
+
+@BindingAdapter("glideRess", "defaultGlideRess")
+fun View.setGlideRess(
+    glideRes: String?,
+    @DrawableRes defaultGlideRes: Int
+) {
+    Glide.with(this)
+        .load(glideRes)
+        .error(defaultGlideRes)
+        .placeholder(defaultGlideRes)
         .into(this as ImageView)
 }
 

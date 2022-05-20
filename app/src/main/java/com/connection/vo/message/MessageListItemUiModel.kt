@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
 import com.sendbird.android.BaseMessage
+import com.sendbird.android.FileMessage
 
 open class MessageListUiModel(
     var senderPicture: String = EMPTY,
@@ -15,6 +16,12 @@ open class MessageListUiModel(
 class LoggedUserMessageUiModel : MessageListUiModel()
 
 class SenderUserMessageUiModel : MessageListUiModel()
+
+class LoggedUserImageMessageUiModel : MessageListUiModel()
+
+class SenderUserImageMessageUiModel : MessageListUiModel()
+
+class MessageDateUiModel() : MessageListUiModel()
 
 fun BaseMessage.toUiModel(loggedUserId: String?) =
     if (sender.userId == loggedUserId)
@@ -30,6 +37,22 @@ fun BaseMessage.toUiModel(loggedUserId: String?) =
             sendAt = DateTimeFormatter.formatMessageDateTime(createdAt)
         }
 
+fun FileMessage.toUiModel(loggedUserId: String?) = if (sender.userId == loggedUserId)
+    LoggedUserImageMessageUiModel().apply {
+        senderPicture = sender?.profileUrl ?: EMPTY
+        senderMessage = url ?: EMPTY
+        sendAt = DateTimeFormatter.formatMessageDateTime(createdAt)
+    }
+else
+    SenderUserImageMessageUiModel().apply {
+        senderPicture = sender?.profileUrl ?: EMPTY
+        senderMessage = url ?: EMPTY
+        sendAt = DateTimeFormatter.formatMessageDateTime(createdAt)
+    }
+
 fun List<BaseMessage>.toUiModels(loggedUserId: String?) = map {
-    it.toUiModel(loggedUserId)
+    if (it is FileMessage)
+        it.toUiModel(loggedUserId)
+    else
+        it.toUiModel(loggedUserId)
 }

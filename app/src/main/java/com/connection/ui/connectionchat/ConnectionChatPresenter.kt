@@ -9,4 +9,8 @@ interface ConnectionChatPresenter {
     fun onAcceptClick()
 
     fun onDeclineClick()
+
+    fun onGalleryClick()
+
+    fun onSendImageClick()
 }
