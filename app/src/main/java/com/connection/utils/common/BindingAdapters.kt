@@ -37,12 +37,7 @@ fun View.setGlideRes(
         .load(glideRes)
         .error(defaultGlideRes)
         .placeholder(defaultGlideRes)
-        .let {
-            if (glideRes.isNullOrBlank().not())
-                it.centerCrop()
-            else
-                it
-        }
+        .let { drawable -> if (!glideRes.isNullOrBlank()) drawable.centerCrop() else drawable }
         .into(this as ImageView)
 }
 

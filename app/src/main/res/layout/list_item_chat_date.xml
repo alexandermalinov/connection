@@ -6,12 +6,8 @@
     <data>
 
         <variable
-            name="presenter"
-            type="com.connection.ui.connectiontab.ConnectionsPresenter" />
-
-        <variable
             name="model"
-            type="com.connection.vo.connectiontab.ConnectionTabUiModel" />
+            type="com.connection.vo.message.MessageDateUiModel" />
 
         <import type="com.connection.R" />
     </data>
@@ -22,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium">
 
-        <View
+        <!--<View
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="0.5dp"
@@ -31,21 +27,26 @@
             app:layout_constraintEnd_toStartOf="@+id/text_date"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
         <TextView
             android:id="@+id/text_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_medium"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_rounded_rectangle_colored"
+            android:paddingVertical="@dimen/padding_small"
+            android:paddingHorizontal="@dimen/padding_medium"
+            android:text="@{model.date}"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/view2"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Feb 12" />
 
-        <View
+        <!--<View
             android:id="@+id/view2"
             android:layout_width="0dp"
             android:layout_height="0.5dp"
@@ -54,7 +55,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/text_date"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

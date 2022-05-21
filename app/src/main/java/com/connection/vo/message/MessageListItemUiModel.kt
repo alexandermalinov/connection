@@ -21,7 +21,7 @@ class LoggedUserImageMessageUiModel : MessageListUiModel()
 
 class SenderUserImageMessageUiModel : MessageListUiModel()
 
-class MessageDateUiModel() : MessageListUiModel()
+data class MessageDateUiModel(val date: String) : MessageListUiModel()
 
 fun BaseMessage.toUiModel(loggedUserId: String?) =
     if (sender.userId == loggedUserId)
@@ -50,9 +50,19 @@ else
         sendAt = DateTimeFormatter.formatMessageDateTime(createdAt)
     }
 
-fun List<BaseMessage>.toUiModels(loggedUserId: String?) = map {
-    if (it is FileMessage)
-        it.toUiModel(loggedUserId)
-    else
-        it.toUiModel(loggedUserId)
+fun List<BaseMessage>.toUiModels(loggedUserId: String?) = groupBy {
+    DateTimeFormatter.formatDayOfYear(it.createdAt)
+}.let {
+    val messages = mutableListOf<MessageListUiModel>()
+    it.keys.map { date ->
+        it[date]?.forEach { message ->
+            if (message is FileMessage) {
+                messages.add(message.toUiModel(loggedUserId))
+            } else {
+                messages.add(message.toUiModel(loggedUserId))
+            }
+        }
+        messages.add(MessageDateUiModel(date))
+    }
+    messages.toList()
 }

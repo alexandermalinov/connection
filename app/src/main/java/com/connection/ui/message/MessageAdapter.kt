@@ -6,10 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import com.connection.R
-import com.connection.databinding.ListItemImageMessageLoggedUserBinding
-import com.connection.databinding.ListItemImageMessageSenderUserBinding
-import com.connection.databinding.ListItemMessageLoggedUserBinding
-import com.connection.databinding.ListItemMessageSenderUserBinding
+import com.connection.databinding.*
 import com.connection.ui.connectionchat.ConnectionChatPresenter
 import com.connection.utils.DataBoundListAdapter
 import com.connection.vo.message.*
@@ -78,6 +75,9 @@ class MessageAdapter(val presenter: ConnectionChatPresenter) :
             binding is ListItemImageMessageSenderUserBinding && item is SenderUserImageMessageUiModel -> {
                 binding.model = item
             }
+            binding is ListItemChatDateBinding && item is MessageDateUiModel-> {
+                binding.model = item
+            }
         }
     }
 
@@ -85,7 +85,7 @@ class MessageAdapter(val presenter: ConnectionChatPresenter) :
         is LoggedUserMessageUiModel -> MESSAGE_BY_LOGGED_USER
         is SenderUserMessageUiModel -> MESSAGE_BY_SENDER_USER
         is LoggedUserImageMessageUiModel -> IMAGE_MESSAGE_BY_LOGGED_USER
-        is MessageDateUiModel -> IMAGE_MESSAGE_BY_SENDER_USER
+        is SenderUserImageMessageUiModel -> IMAGE_MESSAGE_BY_SENDER_USER
         else -> MESSAGE_DATE
     }
 }

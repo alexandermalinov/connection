@@ -166,12 +166,6 @@ class ConnectionChatViewModel @Inject constructor(
         listOf(message).plus(getLoadedMessages())
     )
 
-    fun List<MessageListUiModel>.setLastMessagePictureVisibility() {
-        lastOrNull()?.isPictureVisible = getOrNull(0)?.sendAt
-            .equals(getOrNull(1)?.sendAt)
-            .not()
-    }
-
     private fun addOnReceiveEvent() {
         SendBird.addChannelHandler(
             CONNECTION_CHANNEL_LISTENER,
@@ -179,9 +173,6 @@ class ConnectionChatViewModel @Inject constructor(
                 override fun onMessageReceived(p0: BaseChannel?, baseMessage: BaseMessage?) {
                     baseMessage?.let { message ->
                         _messagesLiveData.value = addNewMessage(message.toUiModel(loggedUser?.id))
-                            .also {
-                                it.messages.setLastMessagePictureVisibility()
-                            }
                     }
                 }
             })
@@ -194,9 +185,6 @@ class ConnectionChatViewModel @Inject constructor(
                 message = _uiLiveData.value?.message ?: EMPTY,
                 onSuccess = { userMessage ->
                     _messagesLiveData.value = addNewMessage(userMessage.toUiModel(loggedUser?.id))
-                        .also { messageModel ->
-                            messageModel.messages.setLastMessagePictureVisibility()
-                        }
                     _uiLiveData.value?.message = EMPTY
                 },
                 onFailure = {

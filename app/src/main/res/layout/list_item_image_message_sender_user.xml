@@ -24,7 +24,7 @@
             android:layout_height="36dp"
             app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.senderPicture}"
-            app:layout_constraintEnd_toStartOf="@+id/image_message_container"
+            app:layout_constraintEnd_toStartOf="@+id/image_message"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,29 +33,20 @@
             app:visibleGone="@{model.pictureVisible}"
             tools:src="@drawable/ic_profile_picture" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/image_message_container"
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
-            android:background="@drawable/ic_rounded_rectangle_grey"
             android:src="@drawable/detected_light"
+            app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+            app:glideRess="@{model.senderMessage}"
+            app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_profile"
             app:layout_constraintTop_toTopOf="@+id/image_profile"
-            app:layout_constraintWidth_max="300dp">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/image_message"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_small"
-                app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
-                app:glideRess="@{model.senderMessage}"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeTwelve"
-                tools:src="@drawable/detected_light" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeTwelve"
+            tools:src="@drawable/detected_light" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -63,8 +54,8 @@
             android:text="@{model.sendAt}"
             android:textSize="@dimen/text_pre_small"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/image_message_container"
-            app:layout_constraintTop_toBottomOf="@+id/image_message_container"
+            app:layout_constraintStart_toStartOf="@+id/image_message"
+            app:layout_constraintTop_toBottomOf="@+id/image_message"
             tools:text="22:45" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
