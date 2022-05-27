@@ -55,7 +55,7 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>(),
                 reverseLayout = true
                 stackFromEnd = true
             }
-            scrollToPosition(POSITION_START)
+            smoothScrollToPosition(POSITION_START)
         }
     }
 

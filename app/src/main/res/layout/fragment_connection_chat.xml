@@ -16,9 +16,11 @@
         <import type="com.connection.R" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/fragment_connection_chat_xml_constraintlayout_scene">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
@@ -48,7 +50,7 @@
                 android:id="@+id/image_profile"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_medium"
                 app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                 app:glideRes="@{model.header.profilePicture}"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -80,8 +82,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:text="@{model.header.username}"
-                android:textSize="@dimen/text_medium"
                 android:textColor="@color/white"
+                android:textSize="@dimen/text_medium"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/text_online"
                 app:layout_constraintEnd_toStartOf="@+id/menu_options"
@@ -170,8 +172,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:visibleGone="@{model.requestButtonVisible}"
-            tools:visibility="gone"/>
+            app:visibleGone="@{model.requestButtonVisible}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_decline"
@@ -190,8 +191,7 @@
             app:layout_constraintStart_toEndOf="@+id/button_accept"
             app:layout_constraintTop_toTopOf="@+id/button_accept"
             app:strokeColor="@color/pastel_yellow"
-            app:visibleGone="@{model.requestButtonVisible}"
-            tools:visibility="gone"/>
+            app:visibleGone="@{model.requestButtonVisible}" />
 
         <TextView
             android:id="@+id/text_request_sent"
@@ -214,8 +214,7 @@
             app:layout_constraintBottom_toTopOf="@+id/text_send_request"
             app:layout_constraintTop_toBottomOf="@+id/header"
             app:visibleGone="@{model.requestToConnectTextVisible}"
-            tools:layout_editor_absoluteX="32dp"
-            tools:visibility="gone"/>
+            tools:layout_editor_absoluteX="32dp" />
 
         <ProgressBar
             android:id="@+id/loading_favourites_bar"
@@ -239,7 +238,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header"
             app:layout_constraintVertical_bias="1.0"
-            tools:listitem="@layout/list_item_message_logged_user"/>
+            tools:listitem="@layout/list_item_message_logged_user" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_message_box"
@@ -248,7 +247,7 @@
             android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_medium"
             android:background="@drawable/ic_rounded_rectangle_grey"
-            app:layout_constraintBottom_toTopOf="@id/recycler_gallery"
+            app:layout_constraintBottom_toTopOf="@id/view_gallery_top_line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:visibleGone="@{model.chatBoxVisible}">
@@ -257,9 +256,9 @@
                 android:id="@+id/image_attachment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.onGalleryClick()}"
                 android:padding="@dimen/padding_tiny"
                 android:src="@drawable/ic_gallery"
-                android:onClick="@{() -> presenter.onGalleryClick()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -296,14 +295,25 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <View
+            android:id="@+id/view_gallery_top_line"
+            android:layout_width="60dp"
+            android:layout_height="4dp"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:background="@drawable/ic_rounded_rectangle_grey"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_gallery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:visibleGone="@{model.shouldOpenGallery}" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_gallery"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="4"
             app:visibleGone="@{model.shouldOpenGallery}"
             tools:listitem="@layout/list_item_gallery_image" />
@@ -324,6 +334,5 @@
             app:layout_constraintVertical_bias="0.9"
             app:visibleGone="@{model.shouldOpenGallery}" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

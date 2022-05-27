@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="800">
+        <KeyFrameSet></KeyFrameSet>
+        <OnSwipe motion:touchAnchorId="@+id/recycler_gallery" />
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/text_request_sender_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@id/text_request_description"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/text_request_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            motion:layout_constraintBottom_toTopOf="@+id/button_accept"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/text_send_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_large"
+            motion:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/button_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_medium"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toStartOf="@+id/button_decline"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintHorizontal_chainStyle="packed"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/button_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_medium"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toStartOf="@+id/button_decline"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintHorizontal_chainStyle="packed"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/button_decline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/button_accept"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toEndOf="@+id/button_accept"
+            motion:layout_constraintTop_toTopOf="@+id/button_accept"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/button_decline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="@+id/button_accept"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.5"
+            motion:layout_constraintStart_toEndOf="@+id/button_accept"
+            motion:layout_constraintTop_toTopOf="@+id/button_accept"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/text_request_sent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            motion:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/text_request_sent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_medium"
+            motion:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/image_empty_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@+id/text_send_request"
+            motion:layout_constraintTop_toBottomOf="@+id/header"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/loading_favourites_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/header"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/recycler_view_chat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/margin_small"
+            motion:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/header"
+            motion:layout_constraintVertical_bias="1.0"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/recycler_view_chat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/margin_small"
+            motion:layout_constraintBottom_toTopOf="@+id/container_message_box"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/header"
+            motion:layout_constraintVertical_bias="1.0"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/container_message_box"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_medium"
+            motion:layout_constraintBottom_toTopOf="@id/view_gallery_top_line"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/view_gallery_top_line"
+            android:layout_width="60dp"
+            android:layout_height="4dp"
+            android:layout_marginBottom="@dimen/margin_small"
+            motion:layout_constraintBottom_toTopOf="@+id/recycler_gallery"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/view_gallery_top_line"
+            android:layout_width="60dp"
+            android:layout_height="4dp"
+            android:layout_marginBottom="@dimen/margin_small"
+            motion:layout_constraintBottom_toTopOf="@+id/recycler_gallery"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/recycler_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:visibilityMode="ignore" />
+        <Constraint
+            android:id="@+id/button_send_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="@+id/recycler_gallery"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="@+id/recycler_gallery"
+            motion:layout_constraintVertical_bias="0.9"
+            motion:visibilityMode="ignore" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/recycler_view_chat"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintHorizontal_bias="0.0"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/header" />
+        <Constraint
+            android:id="@+id/container_message_box"
+            android:layout_width="0dp"
+            android:layout_height="0.1dp"
+            android:layout_marginBottom="@dimen/margin_medium"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent" />
+        <Constraint
+            android:id="@+id/view_gallery_top_line"
+            android:layout_width="60dp"
+            android:layout_height="4dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/header" />
+        <Constraint
+            android:id="@+id/recycler_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/view_gallery_top_line" />
+        <Constraint
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+</MotionScene>

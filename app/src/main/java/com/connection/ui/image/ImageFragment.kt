@@ -1,38 +1,54 @@
-package com.connection.ui.splash
+package com.connection.ui.image
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.connection.R
-import com.connection.databinding.FragmentSplashBinding
+import com.connection.databinding.FragmentImageBinding
 import com.connection.ui.base.BaseFragment
 import com.connection.utils.common.setStatusBarColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SplashFragment : BaseFragment<FragmentSplashBinding>() {
+class ImageFragment : BaseFragment<FragmentImageBinding>() {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
     ---------------------------------------------------------------------------------------------*/
-    private val viewModel: SplashViewModel by viewModels()
+    private val viewModel: ImageViewModel by viewModels()
 
     /* --------------------------------------------------------------------------------------------
      * Override
     ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        observeNavigation(viewModel.navigationLiveData)
+        observeLiveData()
     }
 
-    override fun getLayoutId(): Int = R.layout.fragment_splash
+    override fun getLayoutId() = R.layout.fragment_image
 
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
+    private fun observeLiveData() {
+        dataBinding.presenter = viewModel
+        observeNavigation(viewModel.navigationLiveData)
+        observeUiLiveData()
+    }
+
+    private fun observeUiLiveData() {
+        viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
+            dataBinding.model = uiLiveData
+        }
+    }
+
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onResume() {
         super.onResume()
-        setStatusBarColor(R.color.white)
+        setStatusBarColor(R.color.black)
     }
 
     override fun onPause() {

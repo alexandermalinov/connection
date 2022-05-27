@@ -9,6 +9,10 @@
             name="model"
             type="com.connection.vo.message.SenderUserImageMessageUiModel" />
 
+        <variable
+            name="presenter"
+            type="com.connection.ui.connectionchat.ConnectionChatPresenter" />
+
         <import type="com.connection.R" />
     </data>
 
@@ -38,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
+            android:onClick="@{() -> presenter.onImageOpenClick(model.id)}"
             android:src="@drawable/detected_light"
             app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
             app:glideRess="@{model.senderMessage}"

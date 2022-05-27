@@ -3,21 +3,29 @@ package com.connection.ui.connectionchat
 import android.app.Application
 import android.net.Uri
 import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.connection.R
 import com.connection.data.api.model.UserData
 import com.connection.data.repository.chatmessage.ChatMessageRepository
 import com.connection.data.repository.user.UserRepository
+import com.connection.navigation.NavigationGraph
 import com.connection.navigation.PopBackStack
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.gallery.GalleryLoader
 import com.connection.ui.gallery.GalleryPresenter
+import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.CONNECTION_CHANNEL_LISTENER
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.HEADER_MODEL
+import com.connection.utils.common.Constants.PICTURE
+import com.connection.utils.common.Constants.USERNAME
+import com.connection.utils.common.Constants.USER_ID
+import com.connection.utils.common.Constants.USER_PICTURE
 import com.connection.utils.createFile
 import com.connection.vo.connectionchat.ConnectionChatUiModel
 import com.connection.vo.connectionchat.HeaderUiModel
@@ -275,7 +283,7 @@ class ConnectionChatViewModel @Inject constructor(
 
     override fun onGalleryClick() {
         _galleryLiveData.value = GalleryLoader(application).loadGallery().toUiModel()
-        _uiLiveData.value?.shouldOpenGallery = true
+        _uiLiveData.value?.shouldOpenGallery = _uiLiveData.value?.shouldOpenGallery == false
     }
 
     override fun onImageClick(id: UUID) {
@@ -303,6 +311,21 @@ class ConnectionChatViewModel @Inject constructor(
                         }
                     )
                 }
+            }
+    }
+
+    override fun onImageOpenClick(id: Long) {
+        _messagesLiveData.value?.messages
+            ?.firstOrNull { message -> message.id == id }
+            ?.let {
+                _navigationLiveData.value = NavigationGraph(
+                    R.id.action_connection_chat_fragment_to_imageFragment,
+                    bundleOf(
+                        USER_PICTURE to senderUser?.profileUrl,
+                        USERNAME to senderUser?.nickname,
+                        PICTURE to it.senderMessage
+                    )
+                )
             }
     }
 }

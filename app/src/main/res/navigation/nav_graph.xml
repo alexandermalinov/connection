@@ -88,7 +88,11 @@
     <fragment
         android:id="@+id/connection_chat_fragment"
         android:name="com.connection.ui.connectionchat.ConnectionChatFragment"
-        android:label="ConnectionChatFragment" />
+        android:label="ConnectionChatFragment" >
+        <action
+            android:id="@+id/action_connection_chat_fragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/connectedPeopleFragment"
         android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
@@ -102,4 +106,8 @@
         android:id="@+id/invitations_fragment"
         android:name="com.connection.ui.people.invitation.InvitationsFragment"
         android:label="InvitationsFragment" />
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="com.connection.ui.image.ImageFragment"
+        android:label="ImageFragment" />
 </navigation>

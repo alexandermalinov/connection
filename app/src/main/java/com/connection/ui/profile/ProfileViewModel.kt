@@ -46,6 +46,9 @@ class ProfileViewModel @Inject constructor(
         loggedUserId = userRepository.getLoggedUserId()
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onLogoutClick() {
         viewModelScope.launch {
             userRepository.logoutUser {

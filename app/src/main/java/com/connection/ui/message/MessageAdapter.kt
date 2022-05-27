@@ -71,9 +71,11 @@ class MessageAdapter(val presenter: ConnectionChatPresenter) :
             }
             binding is ListItemImageMessageLoggedUserBinding && item is LoggedUserImageMessageUiModel -> {
                 binding.model = item
+                binding.presenter = presenter
             }
             binding is ListItemImageMessageSenderUserBinding && item is SenderUserImageMessageUiModel -> {
                 binding.model = item
+                binding.presenter = presenter
             }
             binding is ListItemChatDateBinding && item is MessageDateUiModel-> {
                 binding.model = item

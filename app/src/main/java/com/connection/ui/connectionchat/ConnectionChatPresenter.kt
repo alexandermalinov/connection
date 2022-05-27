@@ -13,4 +13,6 @@ interface ConnectionChatPresenter {
     fun onGalleryClick()
 
     fun onSendImageClick()
+
+    fun onImageOpenClick(id: Long)
 }
