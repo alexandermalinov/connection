@@ -1,15 +1,15 @@
 package com.connection.ui.profile
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
-import com.connection.navigation.PopBackStack
 import com.connection.ui.base.BaseViewModel
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.profile.ProfileUiModel
 import com.connection.vo.profile.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,5 +56,12 @@ class ProfileViewModel @Inject constructor(
                     NavigationGraph(R.id.action_profileFragment_to_loginFragment)
             }
         }
+    }
+
+    override fun onCreatePostClick() {
+        _navigationLiveData.value = NavigationGraph(
+            R.id.action_profile_fragment_to_imagePickerFragment,
+            bundleOf(USER_ID to loggedUserId)
+        )
     }
 }

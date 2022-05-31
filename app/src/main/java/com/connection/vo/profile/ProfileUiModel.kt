@@ -1,6 +1,6 @@
 package com.connection.vo.profile
 
-import com.connection.data.api.model.UserData
+import com.connection.data.api.model.user.UserData
 import com.connection.utils.common.Constants.EMPTY
 
 data class ProfileUiModel(

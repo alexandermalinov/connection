@@ -1,9 +1,9 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.model.UserData
-import com.connection.data.api.model.UsersData
-import com.connection.data.api.model.toMap
+import com.connection.data.api.model.user.UserData
+import com.connection.data.api.model.user.UsersData
+import com.connection.data.api.model.user.toMap
 import com.connection.utils.common.Constants.EMPTY
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

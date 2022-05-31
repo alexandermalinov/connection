@@ -3,7 +3,6 @@ package com.connection.ui.people.invitation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.connection.data.api.model.ConnectionData
 import com.connection.data.repository.chatmessage.ChatMessageRepository
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository

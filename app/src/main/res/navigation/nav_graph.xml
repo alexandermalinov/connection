@@ -9,7 +9,7 @@
         android:id="@+id/splash_fragment"
         android:name="com.connection.ui.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_registerFragment"
             app:destination="@id/register_fragment" />
@@ -26,7 +26,7 @@
         android:id="@+id/register_fragment"
         android:name="com.connection.ui.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_allMessagesFragment"
             app:destination="@id/all_messages_fragment" />
@@ -41,7 +41,7 @@
         android:id="@+id/login_fragment"
         android:name="com.connection.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_allMessagesFragment"
             app:destination="@id/all_messages_fragment" />
@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/all_messages_fragment"
         android:name="com.connection.ui.alltabs.AllTabsFragment"
-        android:label="AllMessagesFragment" >
+        android:label="AllMessagesFragment">
         <action
             android:id="@+id/action_allMessagesFragment_to_profileFragment"
             app:destination="@id/profile_fragment" />
@@ -63,15 +63,18 @@
     <fragment
         android:id="@+id/profile_fragment"
         android:name="com.connection.ui.profile.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_profile_fragment_to_imagePickerFragment"
+            app:destination="@id/imagePickerFragment" />
     </fragment>
     <fragment
         android:id="@+id/people_fragment"
         android:name="com.connection.ui.people.base.PeopleFragment"
-        android:label="PeopleFragment" >
+        android:label="PeopleFragment">
         <action
             android:id="@+id/action_peopleFragment_to_connectionChatFragment"
             app:destination="@id/connection_chat_fragment" />
@@ -88,7 +91,7 @@
     <fragment
         android:id="@+id/connection_chat_fragment"
         android:name="com.connection.ui.connectionchat.ConnectionChatFragment"
-        android:label="ConnectionChatFragment" >
+        android:label="ConnectionChatFragment">
         <action
             android:id="@+id/action_connection_chat_fragment_to_imageFragment"
             app:destination="@id/imageFragment" />
@@ -96,7 +99,7 @@
     <fragment
         android:id="@+id/connectedPeopleFragment"
         android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
-        android:label="ConnectedPeopleFragment" >
+        android:label="ConnectedPeopleFragment">
         <action
             android:id="@+id/action_connectedPeopleFragment_to_connection_chat_fragment"
             app:destination="@id/connection_chat_fragment" />
@@ -113,4 +116,16 @@
         android:id="@+id/imageFragment"
         android:name="com.connection.ui.image.ImageFragment"
         android:label="ImageFragment" />
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.connection.ui.post.createpost.CreatePostFragment"
+        android:label="CreatePostFragment" />
+    <fragment
+        android:id="@+id/imagePickerFragment"
+        android:name="com.connection.ui.post.imagepicker.ImagePickerFragment"
+        android:label="ImagePickerFragment" >
+        <action
+            android:id="@+id/action_imagePickerFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
+    </fragment>
 </navigation>

@@ -1,8 +1,8 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.model.UserData
-import com.connection.data.api.model.UsersData
+import com.connection.data.api.model.user.UserData
+import com.connection.data.api.model.user.UsersData
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(

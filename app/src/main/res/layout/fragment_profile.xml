@@ -131,6 +131,7 @@
             tools:text="test0123test" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_large"
@@ -140,6 +141,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_password" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:onClick="@{() -> presenter.onCreatePostClick()}"
+            android:text="@string/create_post"
+            app:cornerRadius="@dimen/radius_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_logout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/edit_text_shape.xml" value="0.329" />
         <entry key="app/src/main/res/drawable/ic_accept.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.223" />
@@ -26,6 +27,7 @@
         <entry key="app/src/main/res/drawable/ic_gallery.xml" value="0.2455" />
         <entry key="app/src/main/res/drawable/ic_globe.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_human_moon.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_next.xml" value="0.3185" />
         <entry key="app/src/main/res/drawable/ic_no_messages.xml" value="0.215" />
         <entry key="app/src/main/res/drawable/ic_notifications_black.xml" value="0.3175" />
         <entry key="app/src/main/res/drawable/ic_options.xml" value="0.2195" />
@@ -54,7 +56,9 @@
         <entry key="app/src/main/res/layout/fragment_all_tabs.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_connected_people.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_connection_chat.xml" value="0.2111111111111111" />
+        <entry key="app/src/main/res/layout/fragment_create_post.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_image.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_image_picker.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_invitations.xml" value="0.3179347826086957" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_not_connected_people.xml" value="0.25" />

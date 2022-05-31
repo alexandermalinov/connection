@@ -5,14 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.UserData
+import com.connection.data.api.model.user.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.isEmailValid
 import com.connection.ui.isPasswordValid
-import com.connection.ui.isUsernameValid
 import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.login.LoginUiModel

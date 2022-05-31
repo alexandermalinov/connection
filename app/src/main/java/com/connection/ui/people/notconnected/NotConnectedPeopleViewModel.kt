@@ -5,12 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.UserData
-import com.connection.data.api.model.UsersData
+import com.connection.data.api.model.user.UserData
+import com.connection.data.api.model.user.UsersData
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.people.base.PeopleViewModel
-import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.vo.people.notconnected.NotConnectedPeopleListItemUiModel
 import com.connection.vo.people.notconnected.NotConnectedUiModel

@@ -9,8 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.ConnectionData
-import com.connection.data.api.model.UserData
+import com.connection.data.api.model.user.UserData
 import com.connection.data.repository.chatmessage.ChatMessageRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
@@ -19,13 +18,11 @@ import com.connection.ui.base.BaseViewModel
 import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.gallery.GalleryLoader
 import com.connection.ui.gallery.GalleryPresenter
-import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.CONNECTION_CHANNEL_LISTENER
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.utils.common.Constants.PICTURE
 import com.connection.utils.common.Constants.USERNAME
-import com.connection.utils.common.Constants.USER_ID
 import com.connection.utils.common.Constants.USER_PICTURE
 import com.connection.utils.createFile
 import com.connection.vo.connectionchat.ConnectionChatUiModel

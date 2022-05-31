@@ -1,7 +1,7 @@
 package com.connection.vo.people.notconnected
 
 import com.connection.R
-import com.connection.data.api.model.UserData
+import com.connection.data.api.model.user.UserData
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.TextRes
 import com.connection.vo.connectionchat.HeaderUiModel

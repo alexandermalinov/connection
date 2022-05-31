@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.UserData
+import com.connection.data.api.model.user.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
@@ -15,10 +15,7 @@ import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.connectiontab.ConnectionsPresenter
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.HEADER_MODEL
-import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.alltabs.AllTabsUiModel
-import com.connection.vo.alltabs.FavouriteConnectionUiModel
-import com.connection.vo.alltabs.toFavouritePeople
 import com.connection.vo.connectiontab.ConnectionTabUiModel
 import com.connection.vo.connectiontab.toUiModel
 import com.connection.vo.connectiontab.toUiModels

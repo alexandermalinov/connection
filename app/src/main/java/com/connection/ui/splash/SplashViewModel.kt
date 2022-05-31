@@ -3,7 +3,7 @@ package com.connection.ui.splash
 import androidx.core.os.bundleOf
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.UserData
+import com.connection.data.api.model.user.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.post.imagepicker.ImagePickerPresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.post.imagepicker.ImagePickerUiModel" />
+
+        <import type="com.connection.R" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/pastel_yellow"
+            android:paddingHorizontal="@dimen/padding_pre_medium"
+            android:paddingVertical="@dimen/padding_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_decline"
+                android:onClick="@{() -> presenter.onDiscardClick()}"
+                app:layout_constraintBottom_toBottomOf="@+id/text_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_header"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/core_sans_regular"
+                android:text="@string/choose_image"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_xx_medium"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/image_next"
+                app:layout_constraintStart_toEndOf="@+id/image_back"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_next"
+                android:onClick="@{() -> presenter.onNextClick()}"
+                app:layout_constraintBottom_toBottomOf="@+id/text_header"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_header" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/image_selected"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+            app:glideRes="@{model.selectedPicture}"
+            app:layout_constraintBottom_toTopOf="@+id/text_gallery"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="400dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_header"
+            tools:src="@drawable/detected_light" />
+
+        <TextView
+            android:id="@+id/text_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:fontFamily="@font/core_sans_regular"
+            android:text="@string/gallery"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_x_medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_gallery"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_selected" />
+
+        <ImageView
+            android:id="@+id/image_expand_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:src="@drawable/ic_expand_more"
+            app:layout_constraintBottom_toBottomOf="@+id/text_gallery"
+            app:layout_constraintStart_toEndOf="@+id/text_gallery"
+            app:layout_constraintTop_toTopOf="@+id/text_gallery" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_gallery"
+            app:spanCount="4"
+            tools:listitem="@layout/list_item_gallery_image" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

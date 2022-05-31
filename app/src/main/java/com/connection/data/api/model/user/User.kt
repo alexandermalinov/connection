@@ -1,11 +1,6 @@
-package com.connection.data.api.model
+package com.connection.data.api.model.user
 
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.utils.common.Constants.USER_EXTRA_DATA_CONNECTIONS
-import com.connection.utils.common.Constants.USER_EXTRA_DATA_DESCRIPTION
-import com.connection.utils.common.Constants.USER_EXTRA_DATA_PICTURE
-import com.connection.utils.common.Constants.USER_EXTRA_DATA_USERNAME
-import io.getstream.chat.android.client.models.User
 
 data class UsersData(val users: List<UserData> = emptyList())
 
