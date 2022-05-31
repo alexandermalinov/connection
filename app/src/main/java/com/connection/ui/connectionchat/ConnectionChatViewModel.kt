@@ -1,20 +1,37 @@
 package com.connection.ui.connectionchat
 
+import android.app.Application
+import android.net.Uri
+import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
+import com.connection.R
+import com.connection.data.api.model.ConnectionData
 import com.connection.data.api.model.UserData
 import com.connection.data.repository.chatmessage.ChatMessageRepository
 import com.connection.data.repository.user.UserRepository
+import com.connection.navigation.NavigationGraph
 import com.connection.navigation.PopBackStack
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.base.ConnectionStatus
+import com.connection.ui.gallery.GalleryLoader
+import com.connection.ui.gallery.GalleryPresenter
+import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.CONNECTION_CHANNEL_LISTENER
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.HEADER_MODEL
+import com.connection.utils.common.Constants.PICTURE
+import com.connection.utils.common.Constants.USERNAME
+import com.connection.utils.common.Constants.USER_ID
+import com.connection.utils.common.Constants.USER_PICTURE
+import com.connection.utils.createFile
 import com.connection.vo.connectionchat.ConnectionChatUiModel
 import com.connection.vo.connectionchat.HeaderUiModel
+import com.connection.vo.gallery.GalleryImageListItemUiModel
+import com.connection.vo.gallery.toUiModel
 import com.connection.vo.message.MessageListUiModel
 import com.connection.vo.message.MessageUiModel
 import com.connection.vo.message.toUiModel
@@ -23,14 +40,16 @@ import com.sendbird.android.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class ConnectionChatViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val chatMessageRepository: ChatMessageRepository,
-    private val savedStateHandle: SavedStateHandle
-) : BaseViewModel(), ConnectionChatPresenter {
+    private val savedStateHandle: SavedStateHandle,
+    private val application: Application
+) : BaseViewModel(), ConnectionChatPresenter, GalleryPresenter {
 
     /* --------------------------------------------------------------------------------------------
     * Properties
@@ -41,6 +60,9 @@ class ConnectionChatViewModel @Inject constructor(
     val messagesLiveData: LiveData<MessageUiModel>
         get() = _messagesLiveData
 
+    val galleryLiveData: LiveData<List<GalleryImageListItemUiModel>>
+        get() = _galleryLiveData
+
     private val _uiLiveData = MutableLiveData(ConnectionChatUiModel()).apply {
         savedStateHandle.get<HeaderUiModel>(HEADER_MODEL)?.let { headerModel ->
             value = ConnectionChatUiModel(headerModel)
@@ -48,6 +70,7 @@ class ConnectionChatViewModel @Inject constructor(
     }
 
     private val _messagesLiveData = MutableLiveData(MessageUiModel())
+    private val _galleryLiveData = MutableLiveData<List<GalleryImageListItemUiModel>>(emptyList())
     private var loggedUser: UserData? = null
     private var senderUser: Member? = null
     private var currentChannel: GroupChannel? = null
@@ -56,6 +79,15 @@ class ConnectionChatViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             setupUsers()
+        }
+    }
+
+    /* --------------------------------------------------------------------------------------------
+     * Exposed
+    ---------------------------------------------------------------------------------------------*/
+    fun setImageMessage(uri: Uri) {
+        viewModelScope.launch {
+            _uiLiveData.value?.imageMessage = uri
         }
     }
 
@@ -103,7 +135,7 @@ class ConnectionChatViewModel @Inject constructor(
     }
 
     private fun setupMessages(messages: List<BaseMessage>) {
-        if (messages.isNullOrEmpty())
+        if (messages.isEmpty())
             Timber.e("chat has no messages yet")
         else
             _messagesLiveData.value = MessageUiModel(messages.toUiModels(loggedUser?.id))
@@ -148,8 +180,8 @@ class ConnectionChatViewModel @Inject constructor(
             CONNECTION_CHANNEL_LISTENER,
             object : SendBird.ChannelHandler() {
                 override fun onMessageReceived(p0: BaseChannel?, baseMessage: BaseMessage?) {
-                    baseMessage?.let {
-                        _messagesLiveData.value = addNewMessage(it.toUiModel(loggedUser?.id))
+                    baseMessage?.let { message ->
+                        _messagesLiveData.value = addNewMessage(message.toUiModel(loggedUser?.id))
                     }
                 }
             })
@@ -218,12 +250,25 @@ class ConnectionChatViewModel @Inject constructor(
                     channel = channel,
                     onSuccess = {
                         _uiLiveData.value?.connectionStatus = ConnectionStatus.CONNECTED
+                        currentChannel = channel
                         initChatHistory(channel)
                         userRepository.updateUser(
                             userId = loggedUser?.id ?: EMPTY,
-                            connections = loggedUser?.connections
-                                ?.filter { it != senderUserId }
-                                ?: emptyList()
+                            connections = mapOf(
+                                Pair(
+                                    senderUserId,
+                                    senderUser?.profileUrl ?: EMPTY
+                                )
+                            )
+                        )
+                        userRepository.updateUser(
+                            userId = senderUserId,
+                            connections = mapOf(
+                                Pair(
+                                    loggedUser?.id ?: EMPTY,
+                                    loggedUser?.picture ?: EMPTY
+                                )
+                            )
                         )
                     },
                     onFailure = {
@@ -248,5 +293,53 @@ class ConnectionChatViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    override fun onGalleryClick() {
+        _galleryLiveData.value = GalleryLoader(application).loadGallery().toUiModel()
+        _uiLiveData.value?.shouldOpenGallery = _uiLiveData.value?.shouldOpenGallery == false
+    }
+
+    override fun onImageClick(id: UUID) {
+        _galleryLiveData.value
+            ?.firstOrNull { image -> image.id == id }
+            ?.let {
+                it.isSelected = !it.isSelected
+            }
+    }
+
+    override fun onSendImageClick() {
+        _galleryLiveData.value
+            ?.firstOrNull { image -> image.isSelected }
+            ?.let {
+                currentChannel?.let { channel ->
+                    chatMessageRepository.sendImageMessage(
+                        channel,
+                        application.createFile(it.image.toUri()),
+                        onSuccess = { fileMessage ->
+                            _messagesLiveData.value =
+                                addNewMessage(fileMessage.toUiModel(loggedUser?.id))
+                        },
+                        onFailure = {
+                            Timber.e("error occurred sending message")
+                        }
+                    )
+                }
+            }
+    }
+
+    override fun onImageOpenClick(id: Long) {
+        _messagesLiveData.value?.messages
+            ?.firstOrNull { message -> message.id == id }
+            ?.let {
+                _navigationLiveData.value = NavigationGraph(
+                    R.id.action_connection_chat_fragment_to_imageFragment,
+                    bundleOf(
+                        USER_PICTURE to senderUser?.profileUrl,
+                        USERNAME to senderUser?.nickname,
+                        PICTURE to it.senderMessage
+                    )
+                )
+            }
     }
 }

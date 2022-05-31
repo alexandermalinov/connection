@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import com.connection.R
 import com.connection.databinding.FragmentSplashBinding
 import com.connection.ui.base.BaseFragment
+import com.connection.utils.common.setStatusBarColor
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,4 +29,14 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_splash
+
+    override fun onResume() {
+        super.onResume()
+        setStatusBarColor(R.color.white)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        setStatusBarColor(R.color.pastel_yellow)
+    }
 }

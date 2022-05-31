@@ -2,6 +2,7 @@ package com.connection.vo.connectiontab
 
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.vo.base.isOtherUserOnline
 import com.connection.vo.connectionchat.HeaderUiModel
 import com.sendbird.android.GroupChannel
 import com.sendbird.android.Member
@@ -43,9 +44,3 @@ fun ConnectionTabUiModel.toUiModel() = HeaderUiModel(
     username = username,
     isOnline = isOnline,
 )
-
-/* -------------------------------------------------------------------------------------------------
- * Private
---------------------------------------------------------------------------------------------------*/
-private fun List<Member>.isOtherUserOnline(loggedUserId: String) =
-    firstOrNull { it.userId != loggedUserId }?.connectionStatus == User.ConnectionStatus.ONLINE

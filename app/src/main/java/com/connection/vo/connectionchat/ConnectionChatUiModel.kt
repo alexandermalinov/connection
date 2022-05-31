@@ -1,5 +1,6 @@
 package com.connection.vo.connectionchat
 
+import android.net.Uri
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.connection.BR
@@ -16,6 +17,13 @@ data class ConnectionChatUiModel(
             field = value
             sendClickable = field.isNotBlank()
             notifyPropertyChanged(BR.message)
+        }
+
+    @get:Bindable
+    var imageMessage: Uri? = Uri.EMPTY
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.imageMessage)
         }
 
     @get:Bindable
@@ -111,4 +119,11 @@ data class ConnectionChatUiModel(
             }
         }
     }
+
+    @get:Bindable
+    var shouldOpenGallery = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.shouldOpenGallery)
+        }
 }

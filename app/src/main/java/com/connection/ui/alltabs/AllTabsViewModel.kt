@@ -17,6 +17,8 @@ import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.alltabs.AllTabsUiModel
+import com.connection.vo.alltabs.FavouriteConnectionUiModel
+import com.connection.vo.alltabs.toFavouritePeople
 import com.connection.vo.connectiontab.ConnectionTabUiModel
 import com.connection.vo.connectiontab.toUiModel
 import com.connection.vo.connectiontab.toUiModels
@@ -44,7 +46,8 @@ class AllTabsViewModel @Inject constructor(
 
     private val _uiLiveData = MutableLiveData(AllTabsUiModel())
     private val _connectionsUiLiveDate = MutableLiveData(emptyList<ConnectionTabUiModel>())
-    private val loggedUserId = savedStateHandle.get<String>(USER_ID) ?: EMPTY
+    private val loggedUserId
+        get() = loggedUser?.id ?: EMPTY
     private var loggedUser: UserData? = null
 
     init {
@@ -72,12 +75,11 @@ class AllTabsViewModel @Inject constructor(
             ConnectionStatus.CONNECTED,
             onSuccess = { channels ->
                 setupChannelsUiData(channels)
-                _uiLiveData.value?.loadingConnections = false
             },
             onFailure = {
                 Timber.e("Failed to fetch channels")
-                _uiLiveData.value?.loadingConnections = false
             })
+        _uiLiveData.value?.loadingConnections = false
     }
 
     private fun setupChannelsUiData(channels: List<GroupChannel>) {

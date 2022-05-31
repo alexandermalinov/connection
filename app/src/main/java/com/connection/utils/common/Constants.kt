@@ -24,6 +24,9 @@ object Constants {
 
     // SaveStateHandle Keys
     const val USER_ID = "id"
+    const val USERNAME = "username"
+    const val USER_PICTURE = "user_picture"
+    const val PICTURE = "picture"
 
     // Channel Types
     const val CHANNEL_TYPE_MESSAGING = "messaging"

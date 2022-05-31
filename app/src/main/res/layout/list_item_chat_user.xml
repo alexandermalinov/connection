@@ -21,21 +21,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:onClick="@{() -> presenter.onConnectionClick(model.id)}"
-        android:paddingVertical="@dimen/margin_medium">
+        android:onClick="@{() -> presenter.onConnectionClick(model.id)}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_avatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginVertical="@dimen/margin_medium"
             app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.profileImage}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
             tools:src="@drawable/ic_profile_picture" />
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/shapeableImageView"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:padding="1dp"
@@ -58,12 +60,11 @@
             android:layout_marginStart="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/black"
             android:text="@{model.username}"
             android:textSize="@dimen/text_medium"
-            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/image_avatar"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
+            app:boldText="@{model.unreadMessagesCount >= 1}"
             tools:text="Alice Henry" />
 
         <TextView
@@ -77,6 +78,7 @@
             app:layout_constraintEnd_toStartOf="@+id/text_last_message_date"
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/text_name"
+            app:boldText="@{model.unreadMessagesCount >= 1}"
             tools:text="Great. I will have a look" />
 
         <TextView
@@ -87,6 +89,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_name"
+            app:boldText="@{model.unreadMessagesCount >= 1}"
             tools:text="12:34 AM" />
 
         <TextView
@@ -104,5 +107,12 @@
             app:visibleGone="@{model.unreadMessagesCount >= 1}"
             tools:text="9+" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,35 +3,47 @@ package com.connection.ui.connectionchat
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.connection.R
 import com.connection.databinding.FragmentConnectionChatBinding
+import com.connection.navigation.External
 import com.connection.ui.base.BaseFragment
+import com.connection.ui.gallery.GalleryAdapter
 import com.connection.ui.message.MessageAdapter
 import com.connection.utils.common.Constants.POSITION_START
+import com.connection.utils.common.grantReadUriPermission
+import com.connection.utils.image.ActivityResultHandler
+import com.connection.utils.image.SelectImageObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
+class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>(),
+    ActivityResultHandler {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
     ---------------------------------------------------------------------------------------------*/
     private val viewModel: ConnectionChatViewModel by viewModels()
+    private lateinit var selectImageObserver: SelectImageObserver
 
     /* --------------------------------------------------------------------------------------------
      * Override
     ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dataBinding.presenter = viewModel
         initChatRecyclerView()
+        initGalleryRecyclerView()
+        selectImage()
+        setObservers()
         observeLiveData()
         observeNavigation(viewModel.navigationLiveData)
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_connection_chat
+
+    override fun provideObserver(destination: External) = selectImageObserver
 
     /* --------------------------------------------------------------------------------------------
      * Private
@@ -43,13 +55,22 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
                 reverseLayout = true
                 stackFromEnd = true
             }
-            scrollToPosition(POSITION_START)
+            smoothScrollToPosition(POSITION_START)
+        }
+    }
+
+    private fun initGalleryRecyclerView() {
+        dataBinding.recyclerGallery.apply {
+            adapter = GalleryAdapter(viewModel)
+            layoutManager = GridLayoutManager(context, 4)
         }
     }
 
     private fun observeLiveData() {
+        dataBinding.presenter = viewModel
         observeUiLiveData()
         observeMessagesLiveData()
+        observeGalleryLiveData()
     }
 
     private fun observeUiLiveData() {
@@ -61,10 +82,32 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>() {
     private fun observeMessagesLiveData() {
         viewModel.messagesLiveData.observe(viewLifecycleOwner) { uiLiveData ->
             dataBinding.apply {
-                (recyclerViewChat.adapter as MessageAdapter)
-                    .submitList(uiLiveData.messages)
+                (recyclerViewChat.adapter as MessageAdapter).submitList(uiLiveData.messages)
                 recyclerViewChat.smoothScrollToPosition(POSITION_START)
             }
+        }
+    }
+
+    private fun observeGalleryLiveData() {
+        viewModel.galleryLiveData.observe(viewLifecycleOwner) { galleryLiveData ->
+            dataBinding.apply {
+                (recyclerGallery.adapter as GalleryAdapter).submitList(galleryLiveData)
+            }
+        }
+    }
+
+    private fun selectImage() {
+        selectImageObserver = SelectImageObserver(requireActivity().activityResultRegistry) {
+            it?.let { uri ->
+                viewModel.setImageMessage(uri)
+                grantReadUriPermission(uri)
+            }
+        }
+    }
+
+    private fun setObservers() {
+        with(viewLifecycleOwner.lifecycle) {
+            addObserver(selectImageObserver)
         }
     }
 }

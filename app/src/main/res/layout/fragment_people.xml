@@ -12,43 +12,25 @@
         <import type="com.connection.R" />
     </data>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/padding_medium">
+        android:background="@color/pastel_yellow">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/text_header"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/pastel_yellow"
-            android:paddingHorizontal="@dimen/padding_medium"
-            android:paddingTop="@dimen/padding_small">
-
-            <TextView
-                android:id="@+id/text_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/san_serif"
-                android:text="@string/people"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_x_large"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="People" />
-
-            <ImageView
-                android:id="@+id/image_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:src="@drawable/ic_search_white"
-                app:layout_constraintBottom_toBottomOf="@+id/text_header"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/text_header" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:fontFamily="@font/core_sans_regular"
+            android:text="@string/people"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="People" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
@@ -56,8 +38,12 @@
             android:layout_height="wrap_content"
             android:background="@color/pastel_yellow"
             android:paddingHorizontal="@dimen/padding_tiny"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_header"
             app:tabIndicatorColor="@color/white"
             app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="3dp"
             app:tabMode="scrollable"
             app:tabTextAppearance="@style/TabLayoutStyle"
             app:tabTextColor="@color/white">
@@ -70,33 +56,26 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/discover"
-                android:textSize="@dimen/text_small" />
+                android:text="@string/discover" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/invitations"
-                android:textSize="@dimen/text_small" />
+                android:text="@string/invitations" />
 
         </com.google.android.material.tabs.TabLayout>
-
-        <ProgressBar
-            android:id="@+id/loading_favourites_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/margin_medium"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_favourites"
-            app:visibleGone="@{model.loading}" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/container_view_people"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabs" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

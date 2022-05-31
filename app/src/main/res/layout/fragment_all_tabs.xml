@@ -27,25 +27,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/pastel_yellow"
-            android:paddingHorizontal="@dimen/padding_medium"
-            android:paddingVertical="@dimen/padding_medium"
+            android:paddingHorizontal="@dimen/padding_pre_medium"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_pre_x_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_profile"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:padding="1dp"
                 app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                 app:glideRes="@{model.profileImage}"
-                app:layout_constraintBottom_toBottomOf="@+id/image_notification"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp"
                 tools:src="@drawable/ic_profile_picture" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/image_notification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,81 +57,39 @@
                 android:src="@drawable/ic_search_white"
                 app:fabSize="mini"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />-->
 
 
             <TextView
                 android:id="@+id/text_connection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/san_serif"
+                android:layout_marginStart="@dimen/margin_small"
+                android:fontFamily="@font/core_sans_regular"
                 android:text="@string/connection"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_x_large"
+                android:textSize="@dimen/text_xx_medium"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/image_profile"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_profile"
                 app:layout_constraintTop_toTopOf="@+id/image_profile"
                 tools:text="Connection" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- <TextView
-             android:id="@+id/text_favourites"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginStart="@dimen/margin_medium"
-             android:layout_marginTop="@dimen/margin_large"
-             android:fontFamily="@font/san_serif"
-             android:text="@string/favourites"
-             android:textSize="@dimen/text_xx_medium"
-             android:textStyle="bold"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@+id/image_profile" />
-
-         <ProgressBar
-             android:id="@+id/loading_favourites_bar"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_marginTop="@dimen/margin_medium"
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@+id/text_favourites"
-             app:visibleGone="@{model.loadingFavourites}" />
-
-         <androidx.recyclerview.widget.RecyclerView
-             android:id="@+id/list_favourite_connections"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_marginHorizontal="@dimen/margin_medium"
-             android:layout_marginTop="@dimen/margin_medium"
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toBottomOf="@+id/text_favourites"
-             tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-             tools:listitem="@layout/list_item_chat_favourite_connection"
-             tools:orientation="horizontal" />-->
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/ic_wave"
-            app:layout_constraintTop_toBottomOf="@+id/container_header" />
-
         <TextView
             android:id="@+id/text_chat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:fontFamily="@font/san_serif"
+            android:layout_marginStart="@dimen/padding_pre_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:fontFamily="@font/core_sans_regular"
             android:text="@string/chats"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_xx_medium"
+            android:textSize="@dimen/text_x_medium"
             android:textStyle="bold"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
+            app:layout_constraintTop_toBottomOf="@+id/container_header" />
 
         <ProgressBar
             android:id="@+id/loading_connections_bar"
@@ -153,8 +115,8 @@
             app:visibleGone="@{model.emptyChannelList}" />
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="352dp"
+            android:layout_height="493dp"
             android:layout_marginHorizontal="@dimen/margin_large"
             android:src="@drawable/ic_no_messages"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -167,7 +129,7 @@
             android:id="@+id/recycler_view_connections"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginHorizontal="@dimen/padding_pre_medium"
             app:layout_constraintBottom_toTopOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

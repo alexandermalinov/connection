@@ -126,15 +126,13 @@ class UserRemoteSource @Inject constructor(
     // TODO ("fix this shit")
     override fun updateUser(
         userId: String,
-        connections: List<String>
+        connections: Map<String, String>
     ) {
         db.getReference("users")
             .child(userId)
             .child("connections")
-            .setValue(connections)
-            .addOnSuccessListener {
-                Timber.e("successfully updated user")
-            }
+            .child(connections.keys.first())
+            .setValue(connections.values.first())
     }
 
     override suspend fun logoutUser(onSuccess: () -> Unit) {

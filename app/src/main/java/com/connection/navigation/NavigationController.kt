@@ -58,7 +58,7 @@ private fun Fragment.handleExternalNavigation(destination: External) {
 }
 
 private fun Fragment.navigateToFragment(destination: NestedFragmentGraph) {
-    fun selectFragment(id: String) = when (id) {
+    fun getFragment(id: String) = when (id) {
         FRAGMENT_CONNECTED_PEOPLE -> ConnectedPeopleFragment()
         FRAGMENT_NOT_CONNECTED_PEOPLE -> NotConnectedPeopleFragment()
         FRAGMENT_INVITATION_PEOPLE -> InvitationsFragment()
@@ -66,6 +66,6 @@ private fun Fragment.navigateToFragment(destination: NestedFragmentGraph) {
     }
     childFragmentManager.commit {
         setReorderingAllowed(true)
-        replace(destination.containerViewId, selectFragment(destination.fragmentId))
+        replace(destination.containerViewId, getFragment(destination.fragmentId))
     }
 }

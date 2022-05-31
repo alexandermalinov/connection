@@ -29,7 +29,8 @@
             app:layout_constraintStart_toEndOf="@+id/text_message"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-            tools:src="@drawable/ic_profile_picture" />
+            tools:src="@drawable/ic_profile_picture"
+            app:visibleGone="@{model.pictureVisible}"/>
 
         <TextView
             android:id="@+id/text_message"

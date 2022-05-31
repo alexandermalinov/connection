@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.people.connected.ConnectedPresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.people.connected.ConnectedPeopleListItemUiModel" />
+
+        <import type="com.connection.R" />
+
+        <import type="com.connection.ui.base.ConnectionStatus" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/margin_small"
+        android:layout_marginHorizontal="@dimen/margin_tiny"
+        android:elevation="8dp"
+        app:cardCornerRadius="@dimen/radius_medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_medium">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+                app:glideRes="@{model.profilePicture}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+                tools:src="@drawable/ic_profile_picture" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_online_indicator"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:padding="1dp"
+                android:src="@color/green"
+                app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
+                app:layout_constraintEnd_toEndOf="@+id/image_avatar"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="@+id/image_avatar"
+                app:layout_constraintTop_toTopOf="@+id/image_avatar"
+                app:layout_constraintVertical_bias="1.0"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp"
+                app:visibleGone="@{model.online}" />
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{model.name}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/button_chat"
+                app:layout_constraintStart_toEndOf="@+id/image_avatar"
+                app:layout_constraintTop_toTopOf="@+id/image_avatar"
+                tools:text="Alice Henry" />
+
+            <TextView
+                android:id="@+id/text_wishes_connection"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:ellipsize="end"
+                android:text="@string/waits_you_to_send_message"
+                app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
+                app:layout_constraintStart_toEndOf="@+id/image_avatar"
+                app:layout_constraintTop_toBottomOf="@+id/text_name"
+                tools:text="Waits you to send a message" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/button_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:elevation="2dp"
+                android:contentDescription="@string/send_button_description"
+                android:onClick="@{() -> presenter.onChatClick(model)}"
+                android:src="@drawable/ic_add_message"
+                app:fabSize="mini"
+                app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/image_avatar"
+                app:tint="@color/white" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

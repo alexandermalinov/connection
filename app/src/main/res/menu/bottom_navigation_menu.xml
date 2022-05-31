@@ -14,10 +14,4 @@
         android:id="@+id/profile_fragment"
         android:icon="@drawable/ic_account"
         android:title="@string/profile" />
-
-    <item
-        android:id="@+id/settings"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings" />
-
 </menu>
