@@ -48,8 +48,8 @@ fun View.setGlideRess(
 ) {
     Glide.with(this)
         .load(glideRes)
+        .fitCenter()
         .error(defaultGlideRes)
-        .placeholder(defaultGlideRes)
         .into(this as ImageView)
 }
 

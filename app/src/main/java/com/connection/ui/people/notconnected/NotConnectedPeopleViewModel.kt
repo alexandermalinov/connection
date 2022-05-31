@@ -11,6 +11,7 @@ import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.people.base.PeopleViewModel
 import com.connection.utils.common.Constants
+import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.vo.people.notconnected.NotConnectedPeopleListItemUiModel
 import com.connection.vo.people.notconnected.NotConnectedUiModel
 import com.connection.vo.people.notconnected.toUiModel
@@ -60,7 +61,7 @@ class NotConnectedPeopleViewModel @Inject constructor(
     }
 
     private fun filterNotConnectedPeople(usersData: UsersData) = usersData.users
-        .filter { user -> isConnected(user).not() || user.id != loggedUser?.id }
+        .filter { user -> isConnected(user).not() && user.id != loggedUser?.id }
         .toUiModels()
 
     private fun isConnected(user: UserData) = loggedUser?.connections?.keys
@@ -69,7 +70,7 @@ class NotConnectedPeopleViewModel @Inject constructor(
     private fun navigateToChat(senderUser: NotConnectedPeopleListItemUiModel) {
         _navigationLiveData.value = NavigationGraph(
             R.id.action_peopleFragment_to_connectionChatFragment,
-            bundleOf(Constants.HEADER_MODEL to senderUser.toUiModel())
+            bundleOf(HEADER_MODEL to senderUser.toUiModel())
         )
     }
 

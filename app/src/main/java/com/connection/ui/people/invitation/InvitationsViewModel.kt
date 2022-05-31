@@ -3,6 +3,7 @@ package com.connection.ui.people.invitation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.connection.data.api.model.ConnectionData
 import com.connection.data.repository.chatmessage.ChatMessageRepository
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
@@ -76,9 +77,7 @@ class InvitationsViewModel @Inject constructor(
     private fun updateUserConnections(invitation: InvitationListItemUiModel) {
         userRepository.updateUser(
             userId = loggedUser?.id ?: EMPTY,
-            connections = loggedUser?.connections
-                ?.plus(Pair(invitation.otherUserId, invitation.profilePicture))
-                ?: emptyMap()
+            connections = mapOf(Pair(invitation.otherUserId, invitation.profilePicture))
         )
     }
 
@@ -108,12 +107,8 @@ class InvitationsViewModel @Inject constructor(
         viewModelScope.launch {
             chatMessageRepository.getChannel(
                 channelUrl = invitation.channelUrl,
-                onSuccess = { channel ->
-                    acceptInvitation(channel, invitation)
-                },
-                onFailure = {
-                    Timber.e("error occurred accepting invite")
-                }
+                onSuccess = { channel -> acceptInvitation(channel, invitation) },
+                onFailure = { Timber.e("error occurred accepting invite") }
             )
         }
     }
@@ -122,12 +117,8 @@ class InvitationsViewModel @Inject constructor(
         viewModelScope.launch {
             chatMessageRepository.getChannel(
                 channelUrl = invitation.channelUrl,
-                onSuccess = { channel ->
-                    declineInvitation(channel)
-                },
-                onFailure = {
-                    Timber.e("error occurred declining invite")
-                }
+                onSuccess = { channel -> declineInvitation(channel) },
+                onFailure = { Timber.e("error occurred declining invite") }
             )
         }
     }

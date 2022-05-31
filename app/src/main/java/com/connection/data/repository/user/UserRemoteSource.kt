@@ -131,10 +131,8 @@ class UserRemoteSource @Inject constructor(
         db.getReference("users")
             .child(userId)
             .child("connections")
-            .setValue(connections)
-            .addOnSuccessListener {
-                Timber.e("successfully updated user")
-            }
+            .child(connections.keys.first())
+            .setValue(connections.values.first())
     }
 
     override suspend fun logoutUser(onSuccess: () -> Unit) {

@@ -208,8 +208,8 @@
         <ImageView
             android:id="@+id/image_empty_chat"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_large"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_large"
             android:src="@drawable/ic_no_messages"
             app:layout_constraintBottom_toTopOf="@+id/text_send_request"
             app:layout_constraintTop_toBottomOf="@+id/header"

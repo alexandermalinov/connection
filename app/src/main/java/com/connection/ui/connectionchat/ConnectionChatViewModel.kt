@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.connection.R
+import com.connection.data.api.model.ConnectionData
 import com.connection.data.api.model.UserData
 import com.connection.data.repository.chatmessage.ChatMessageRepository
 import com.connection.data.repository.user.UserRepository
@@ -249,12 +250,25 @@ class ConnectionChatViewModel @Inject constructor(
                     channel = channel,
                     onSuccess = {
                         _uiLiveData.value?.connectionStatus = ConnectionStatus.CONNECTED
+                        currentChannel = channel
                         initChatHistory(channel)
                         userRepository.updateUser(
                             userId = loggedUser?.id ?: EMPTY,
-                            connections = loggedUser?.connections
-                                ?.plus(Pair(senderUserId, senderUser?.profileUrl ?: EMPTY))
-                                ?: emptyMap()
+                            connections = mapOf(
+                                Pair(
+                                    senderUserId,
+                                    senderUser?.profileUrl ?: EMPTY
+                                )
+                            )
+                        )
+                        userRepository.updateUser(
+                            userId = senderUserId,
+                            connections = mapOf(
+                                Pair(
+                                    loggedUser?.id ?: EMPTY,
+                                    loggedUser?.picture ?: EMPTY
+                                )
+                            )
                         )
                     },
                     onFailure = {

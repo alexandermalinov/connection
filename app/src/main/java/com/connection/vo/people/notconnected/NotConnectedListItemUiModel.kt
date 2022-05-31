@@ -5,7 +5,6 @@ import com.connection.data.api.model.UserData
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.TextRes
 import com.connection.vo.connectionchat.HeaderUiModel
-import com.connection.vo.people.PeopleListItemUiModel
 
 data class NotConnectedPeopleListItemUiModel(
     val otherUserId: String = EMPTY,
@@ -37,8 +36,8 @@ private fun UserData.toUiModel() = NotConnectedPeopleListItemUiModel(
 )
 
 private fun getConnectionsCountText(connectionsCount: Int) = when {
-    connectionsCount == 1 -> R.string.connection_count
-    connectionsCount > 1 -> R.string.connections_count
+    connectionsCount in 1..4 -> R.string.connection_count
+    connectionsCount > 4 -> R.string.connections_count
     else -> R.string.no_connections_count
 }
 
