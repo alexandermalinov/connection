@@ -97,6 +97,9 @@
         android:id="@+id/connectedPeopleFragment"
         android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
         android:label="ConnectedPeopleFragment" >
+        <action
+            android:id="@+id/action_connectedPeopleFragment_to_connection_chat_fragment"
+            app:destination="@id/connection_chat_fragment" />
     </fragment>
     <fragment
         android:id="@+id/not_connected_people"

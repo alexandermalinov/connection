@@ -83,7 +83,7 @@ class AllTabsViewModel @Inject constructor(
     }
 
     private fun setupChannelsUiData(channels: List<GroupChannel>) {
-        if (channels.isNullOrEmpty()) {
+        if (channels.isEmpty()) {
             _uiLiveData.value?.emptyChannelList = true
         } else {
             _connectionsUiLiveDate.value = channels.toUiModels(loggedUserId)

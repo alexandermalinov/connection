@@ -1,15 +1,20 @@
 package com.connection.ui.people.connected
 
+import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.connection.R
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
+import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.people.base.PeopleViewModel
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.vo.people.connected.ConnectedPeopleListItemUiModel
 import com.connection.vo.people.connected.ConnectedUiModel
+import com.connection.vo.people.connected.toUiModel
 import com.connection.vo.people.connected.toUiModels
 import com.sendbird.android.GroupChannel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,7 +62,7 @@ class ConnectedPeopleViewModel @Inject constructor(
         channels
             .toUiModels(loggedUser?.id ?: EMPTY)
             .let {
-                if (it.isNullOrEmpty().not())
+                if (it.isNotEmpty())
                     _uiLiveData.value = ConnectedUiModel(it)
                 else
                     _uiLiveData.value?.emptyState = true
@@ -68,6 +73,9 @@ class ConnectedPeopleViewModel @Inject constructor(
      * Override
     ---------------------------------------------------------------------------------------------*/
     override fun onChatClick(user: ConnectedPeopleListItemUiModel) {
-        // TODO("Not yet implemented")
+        _navigationLiveData.value = NavigationGraph(
+            R.id.connection_chat_fragment,
+            bundleOf(HEADER_MODEL to user.toUiModel())
+        )
     }
 }
