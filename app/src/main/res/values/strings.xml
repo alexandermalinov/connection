@@ -66,4 +66,10 @@
     <string name="title">Title</string>
     <string name="description">Description</string>
     <string name="selected_image">Selected Image</string>
+    <string name="post_creator">Post Creator</string>
+    <string name="posts">Posts</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="feed">Feed</string>
+    <string name="home">Home</string>
 </resources>

@@ -50,7 +50,7 @@ class SplashViewModel @Inject constructor(
         user?.let {
             chatTabRepository.connectUser(
                 it, {
-                    navigateToAllTabs(user)
+                    navigateToFeed(user)
                 }, {
                     Timber.e("error occurred while trying to connect user")
                 }
@@ -58,9 +58,9 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private fun navigateToAllTabs(user: UserData?) {
+    private fun navigateToFeed(user: UserData?) {
         _navigationLiveData.value = NavigationGraph(
-            R.id.action_splashFragment_to_allMessagesFragment,
+            R.id.action_splash_fragment_to_feedFragment,
             bundleOf(USER_ID to user?.id)
         )
     }

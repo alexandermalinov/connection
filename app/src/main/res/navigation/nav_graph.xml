@@ -21,6 +21,9 @@
             android:id="@+id/action_splashFragment_to_allMessagesFragment"
             app:destination="@id/all_messages_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splash_fragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
     <fragment
         android:id="@+id/register_fragment"
@@ -119,7 +122,11 @@
     <fragment
         android:id="@+id/createPostFragment"
         android:name="com.connection.ui.post.createpost.CreatePostFragment"
-        android:label="CreatePostFragment" />
+        android:label="CreatePostFragment" >
+        <action
+            android:id="@+id/action_createPostFragment_to_profile_fragment"
+            app:destination="@id/profile_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/imagePickerFragment"
         android:name="com.connection.ui.post.imagepicker.ImagePickerFragment"
@@ -128,4 +135,8 @@
             android:id="@+id/action_imagePickerFragment_to_createPostFragment"
             app:destination="@id/createPostFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.connection.ui.feed.FeedFragment"
+        android:label="FeedFragment" />
 </navigation>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.connection.vo.post.PostUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginVertical="@dimen/margin_medium"
+            android:layout_marginStart="@dimen/margin_medium"
+            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+            app:glideRes="@{model.creatorPicture}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+            tools:src="@drawable/ic_profile_picture" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/core_sans_regular"
+            android:maxLines="2"
+            android:text="@{model.creatorUsername}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintBottom_toTopOf="@+id/text_create_at"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/image_avatar"
+            app:layout_constraintTop_toTopOf="@+id/image_avatar"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Alice Henry" />
+
+        <TextView
+            android:id="@+id/text_create_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/core_sans_regular"
+            android:text="@{model.creatorUsername}"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
+            app:layout_constraintEnd_toEndOf="@+id/text_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_name"
+            tools:text="12:45" />
+
+        <ImageView
+            android:id="@+id/image_post_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:scaleType="centerCrop"
+            app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+            app:glideRess="@{model.picture}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="400dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_avatar"
+            tools:src="@drawable/detected_light" />
+
+        <ImageView
+            android:id="@+id/button_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:src="@drawable/ic_love"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_post_picture"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/button_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:src="@drawable/ic_comment"
+            app:layout_constraintBottom_toBottomOf="@+id/button_like"
+            app:layout_constraintStart_toEndOf="@+id/button_like"
+            app:layout_constraintTop_toTopOf="@+id/button_like"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/button_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_like"
+            app:tint="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

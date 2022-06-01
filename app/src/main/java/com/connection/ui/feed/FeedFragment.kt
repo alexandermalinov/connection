@@ -1,22 +1,21 @@
-package com.connection.ui.profile
+package com.connection.ui.feed
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.connection.R
-import com.connection.databinding.FragmentProfileBinding
+import com.connection.databinding.FragmentFeedBinding
 import com.connection.ui.base.BaseFragment
-import com.connection.ui.profile.posts.PostsImageAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
+class FeedFragment : BaseFragment<FragmentFeedBinding>() {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
     ---------------------------------------------------------------------------------------------*/
-    private val viewModel: ProfileViewModel by viewModels()
+    private val viewModel: FeedViewModel by viewModels()
 
     /* --------------------------------------------------------------------------------------------
      * Override
@@ -27,20 +26,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         observeLiveData()
     }
 
-    override fun getLayoutId() = R.layout.fragment_profile
+    override fun getLayoutId() = R.layout.fragment_feed
 
     /* --------------------------------------------------------------------------------------------
      * Private
     ---------------------------------------------------------------------------------------------*/
     private fun initPostsRecyclerView() {
         dataBinding.recyclerViewPosts.apply {
-            adapter = PostsImageAdapter(viewModel)
-            layoutManager = GridLayoutManager(context, 3)
+            adapter = PostsFeedAdapter(viewModel)
+            layoutManager = LinearLayoutManager(context)
         }
     }
 
     private fun observeLiveData() {
-        dataBinding.presenter = viewModel
+        //dataBinding.presenter = viewModel
         observeNavigation(viewModel.navigationLiveData)
         observeUiLiveData()
         observePostsLiveData()
@@ -54,7 +53,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private fun observePostsLiveData() {
         viewModel.postsLiveData.observe(viewLifecycleOwner) { postsLiveData ->
-            (dataBinding.recyclerViewPosts.adapter as PostsImageAdapter).submitList(postsLiveData.posts)
+            (dataBinding.recyclerViewPosts.adapter as PostsFeedAdapter).submitList(postsLiveData.posts)
         }
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.profile.posts.PostsPresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.post.PostUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <ImageView
+        android:id="@+id/image_message"
+        android:layout_width="136dp"
+        android:layout_height="136dp"
+        android:paddingTop="1dp"
+        android:onClick="@{() -> presenter.onPostClick(model.id)}"
+        app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+        app:glideRes="@{model.picture}"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_gallery" />
+</layout>

@@ -1,32 +1,31 @@
-package com.connection.data.api.model.post
+package com.connection.vo.post
 
+import android.net.Uri
+import com.connection.data.api.model.post.Comment
+import com.connection.data.api.model.post.Post
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.vo.post.PostUiModel
+import java.util.*
 
-data class Posts(val posts: List<Post> = emptyList())
-
-data class Post(
+data class PostUiModel(
     val id: String = EMPTY,
     val creatorId: String = EMPTY,
     val creatorUsername: String = EMPTY,
     val creatorPicture: String = EMPTY,
-    val title: String = EMPTY,
-    val description: String = EMPTY,
     val picture: String = EMPTY,
+    var title: String = EMPTY,
+    var description: String = EMPTY,
     val createAt: Long = 0L,
     val comments: List<Comment> = emptyList()
 )
 
-fun Post.toUiModel() = PostUiModel(
-    id = id,
+fun PostUiModel.toPost(picture: Uri?) = Post(
+    id = UUID.randomUUID().toString(),
     creatorId = creatorId,
     creatorUsername = creatorUsername,
     creatorPicture = creatorPicture,
-    picture = picture,
     title = title,
     description = description,
-    createAt = createAt,
-    comments = comments
+    picture = picture.toString(),
+    comments = comments,
+    createAt = System.currentTimeMillis()
 )
-
-fun Posts.toUiModels() = posts.map { posts -> posts.toUiModel() }

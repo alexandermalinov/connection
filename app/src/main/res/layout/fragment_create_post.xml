@@ -11,7 +11,7 @@
 
         <variable
             name="model"
-            type="com.connection.vo.post.createpost.CreatePostUiModel" />
+            type="com.connection.vo.post.PostUiModel" />
 
         <import type="com.connection.R" />
 
@@ -19,7 +19,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                 android:paddingHorizontal="@dimen/padding_pre_medium"
                 android:paddingVertical="@dimen/padding_small"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -83,7 +84,6 @@
                 android:layout_marginTop="@dimen/margin_medium"
                 app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                 app:glideRes="@{model.creatorPicture}"
-                app:layout_constraintBottom_toTopOf="@+id/image_post_image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/container_header"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
@@ -103,32 +103,44 @@
                 app:layout_constraintTop_toTopOf="@+id/image_profile"
                 tools:text="Alexander Malinov Marinov" />
 
+            <TextView
+                android:id="@+id/text_selected_image_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:fontFamily="@font/core_sans_regular"
+                android:text="@string/selected_image"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/image_profile"
+                app:layout_constraintTop_toBottomOf="@+id/image_profile" />
+
             <ImageView
                 android:id="@+id/image_post_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_medium"
-                android:layout_marginTop="@dimen/margin_medium"
-                app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
-                app:glideRes="@{model.picture}"
-                app:layout_constraintBottom_toTopOf="@+id/text_title_header"
+                android:layout_marginTop="@dimen/margin_small"
+                android:scaleType="centerCrop"
+                app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+                app:glideRess="@{model.picture}"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_max="400dp"
+                app:layout_constraintHeight_max="300dp"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_profile"
+                app:layout_constraintTop_toBottomOf="@+id/text_selected_image_header"
                 tools:src="@drawable/detected_light" />
 
             <TextView
                 android:id="@+id/text_title_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/core_sans_regular"
                 android:text="@string/title"
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/edit_text_title"
                 app:layout_constraintStart_toStartOf="@+id/image_profile"
                 app:layout_constraintTop_toBottomOf="@+id/image_post_image" />
 
@@ -144,6 +156,7 @@
                 android:maxLines="2"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:paddingVertical="@dimen/padding_small"
+                android:text="@={model.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_title_header" />
@@ -152,9 +165,9 @@
                 android:id="@+id/text_description_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:fontFamily="@font/core_sans_regular"
-                android:maxLength="200"
                 android:text="@string/description"
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold"
@@ -167,11 +180,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_large"
                 android:background="@drawable/edit_text_shape"
+                android:gravity="top"
                 android:hint="@string/enter_description"
                 android:lines="10"
                 android:paddingHorizontal="@dimen/padding_medium"
                 android:paddingVertical="@dimen/padding_small"
+                android:text="@={model.description}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_description_header" />

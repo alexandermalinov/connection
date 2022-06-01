@@ -1,4 +1,4 @@
-package com.connection.ui.profile
+package com.connection.ui.feed
 
 import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
@@ -10,9 +10,11 @@ import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
+import com.connection.ui.profile.ProfilePresenter
 import com.connection.ui.profile.posts.PostsPresenter
+import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.utils.common.Constants.USER_ID
+import com.connection.vo.feed.FeedUiModel
 import com.connection.vo.post.PostsUiModel
 import com.connection.vo.profile.ProfileUiModel
 import com.connection.vo.profile.toUiModel
@@ -22,29 +24,29 @@ import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileViewModel @Inject constructor(
+class FeedViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val postRepository: PostRepository
-) : BaseViewModel(), ProfilePresenter, PostsPresenter {
+) : BaseViewModel(), FeedPresenter, PostsPresenter {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
     ---------------------------------------------------------------------------------------------*/
-    val uiLiveData: LiveData<ProfileUiModel>
+    val uiLiveData: LiveData<FeedUiModel>
         get() = _uiLiveData
 
     val postsLiveData: LiveData<PostsUiModel>
         get() = _postsLiveData
 
-    private val _uiLiveData = MutableLiveData(ProfileUiModel())
+    private val _uiLiveData = MutableLiveData(FeedUiModel())
     private val _postsLiveData = MutableLiveData(PostsUiModel())
-    private var loggedUserId = EMPTY
+    private var loggedUserId = Constants.EMPTY
 
     init {
         viewModelScope.launch {
             loadUserData()
             userRepository.getUser(loggedUserId) { user ->
-                _uiLiveData.value = user?.toUiModel()
+                _uiLiveData.value = _uiLiveData.value?.copy(userId = user?.id ?: EMPTY)
             }
             loadPosts()
         }
@@ -59,12 +61,9 @@ class ProfileViewModel @Inject constructor(
 
     private suspend fun loadPosts() {
         postRepository.getUserPosts(
-            id = _uiLiveData.value?.id ?: EMPTY,
+            id = _uiLiveData.value?.userId ?: EMPTY,
             onSuccess = { posts ->
                 _postsLiveData.value = PostsUiModel(posts.toUiModels())
-                _uiLiveData.value = _uiLiveData.value?.copy(
-                    postsCount = posts.posts.size.toString()
-                )
             },
             onFailure = {
                 Timber.e("Error occurred fetching posts")
@@ -75,22 +74,6 @@ class ProfileViewModel @Inject constructor(
     /* --------------------------------------------------------------------------------------------
      * Override
     ---------------------------------------------------------------------------------------------*/
-    override fun onLogoutClick() {
-        viewModelScope.launch {
-            userRepository.logoutUser {
-                _navigationLiveData.value =
-                    NavigationGraph(R.id.action_profileFragment_to_loginFragment)
-            }
-        }
-    }
-
-    override fun onCreatePostClick() {
-        _navigationLiveData.value = NavigationGraph(
-            R.id.action_profile_fragment_to_imagePickerFragment,
-            bundleOf(USER_ID to loggedUserId)
-        )
-    }
-
     override fun onPostClick(postId: String) {
         // TODO("Not yet implemented")
     }
