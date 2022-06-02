@@ -6,23 +6,25 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import com.connection.R
 import com.connection.databinding.ListItemChatFavouriteConnectionBinding
+import com.connection.ui.connectiontab.ConnectionsPresenter
 import com.connection.utils.DataBoundListAdapter
 import com.connection.vo.alltabs.FavouriteConnectionListItemUiModel
 
-class FavouritesConnectionsAdapter : DataBoundListAdapter<FavouriteConnectionListItemUiModel, ListItemChatFavouriteConnectionBinding>(
-    object : DiffUtil.ItemCallback<FavouriteConnectionListItemUiModel>() {
+class FavouritesConnectionsAdapter(val presenter: ConnectionsPresenter) :
+    DataBoundListAdapter<FavouriteConnectionListItemUiModel, ListItemChatFavouriteConnectionBinding>(
+        object : DiffUtil.ItemCallback<FavouriteConnectionListItemUiModel>() {
 
-        override fun areItemsTheSame(
-            oldItem: FavouriteConnectionListItemUiModel,
-            newItem: FavouriteConnectionListItemUiModel
-        ) = oldItem === newItem
+            override fun areItemsTheSame(
+                oldItem: FavouriteConnectionListItemUiModel,
+                newItem: FavouriteConnectionListItemUiModel
+            ) = oldItem === newItem
 
-        override fun areContentsTheSame(
-            oldItem: FavouriteConnectionListItemUiModel,
-            newItem: FavouriteConnectionListItemUiModel
-        ) = oldItem == newItem
-    }
-) {
+            override fun areContentsTheSame(
+                oldItem: FavouriteConnectionListItemUiModel,
+                newItem: FavouriteConnectionListItemUiModel
+            ) = oldItem == newItem
+        }
+    ) {
 
     /* --------------------------------------------------------------------------------------------
      * Override
@@ -43,6 +45,6 @@ class FavouritesConnectionsAdapter : DataBoundListAdapter<FavouriteConnectionLis
         item: FavouriteConnectionListItemUiModel
     ) {
         binding.model = item
-        //binding.presenter = bindingPresenter
+        binding.presenter = presenter
     }
 }

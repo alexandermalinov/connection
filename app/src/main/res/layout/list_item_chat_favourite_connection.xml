@@ -7,7 +7,7 @@
 
         <variable
             name="presenter"
-            type="com.connection.ui.alltabs.FavouriteConnectionPresenter" />
+            type="com.connection.ui.connectiontab.ConnectionsPresenter" />
 
         <variable
             name="model"

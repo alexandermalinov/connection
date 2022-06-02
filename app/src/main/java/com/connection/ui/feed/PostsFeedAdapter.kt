@@ -6,12 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import com.connection.R
 import com.connection.databinding.ListItemFeedPostBinding
-import com.connection.databinding.ListItemPostImageBinding
-import com.connection.ui.profile.posts.PostsPresenter
 import com.connection.utils.DataBoundListAdapter
 import com.connection.vo.post.PostUiModel
 
-class PostsFeedAdapter(val presenter: PostsPresenter) :
+class PostsFeedAdapter(val presenter: FeedPostPresenter) :
     DataBoundListAdapter<PostUiModel, ListItemFeedPostBinding>(
         object : DiffUtil.ItemCallback<PostUiModel>() {
 
@@ -46,6 +44,6 @@ class PostsFeedAdapter(val presenter: PostsPresenter) :
         item: PostUiModel
     ) {
         binding.model = item
-        //binding.presenter = presenter
+        binding.presenter = presenter
     }
 }

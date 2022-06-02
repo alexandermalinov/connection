@@ -23,6 +23,8 @@ class PostRepository @Inject constructor(
             onSuccess: (Posts) -> Unit,
             onFailure: () -> Unit
         )
+
+        suspend fun like(id: String, isLiked: Boolean)
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -42,5 +44,9 @@ class PostRepository @Inject constructor(
         onFailure: () -> Unit
     ) {
         remote.getUserPosts(id, onSuccess, onFailure)
+    }
+
+    suspend fun like(id: String, isLiked: Boolean) {
+        remote.like(id, isLiked)
     }
 }

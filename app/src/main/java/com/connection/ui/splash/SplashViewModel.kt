@@ -49,11 +49,9 @@ class SplashViewModel @Inject constructor(
     private fun connectUser(user: UserData?) {
         user?.let {
             chatTabRepository.connectUser(
-                it, {
-                    navigateToFeed(user)
-                }, {
-                    Timber.e("error occurred while trying to connect user")
-                }
+                user = it,
+                onSuccess = { navigateToFeed(user) },
+                onFailure = { Timber.e("error occurred while trying to connect user") }
             )
         }
     }

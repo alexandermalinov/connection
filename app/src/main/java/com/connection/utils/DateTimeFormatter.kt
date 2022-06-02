@@ -11,6 +11,7 @@ object DateTimeFormatter {
     private val hourMinuteFormat = SimpleDateFormat("hh:mm", Locale.US)
     private val weekDayFormat = SimpleDateFormat("EEEE", Locale.US)
     private val dayOfYearFormat = SimpleDateFormat("EEEE MMM d yyyy", Locale.US)
+    private val dateDayMinutesFormat = SimpleDateFormat("E MMM dd", Locale.US)
 
     /* --------------------------------------------------------------------------------------------
      * Exposed
@@ -20,4 +21,6 @@ object DateTimeFormatter {
     fun formatWeekDay(timestamp: Long): String = weekDayFormat.format(timestamp)
 
     fun formatDayOfYear(timestamp: Long): String = dayOfYearFormat.format(timestamp)
+
+    fun formatDayMinutes(timestamp: Long): String = dateDayMinutesFormat.format(timestamp)
 }

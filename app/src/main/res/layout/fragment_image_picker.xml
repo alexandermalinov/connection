@@ -25,8 +25,7 @@
             android:id="@+id/container_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/pastel_yellow"
-            android:paddingHorizontal="@dimen/padding_pre_medium"
+            android:paddingHorizontal="@dimen/padding_medium"
             android:paddingVertical="@dimen/padding_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,40 +35,41 @@
                 android:id="@+id/image_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/padding_small"
-                android:src="@drawable/ic_decline"
+                android:paddingVertical="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
                 android:onClick="@{() -> presenter.onDiscardClick()}"
-                app:layout_constraintBottom_toBottomOf="@+id/text_header"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/text_header"
-                app:tint="@color/white" />
-
-            <TextView
-                android:id="@+id/text_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/core_sans_regular"
-                android:text="@string/choose_image"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_xx_medium"
-                android:textStyle="bold"
+                android:src="@drawable/ic_decline"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/image_next"
-                app:layout_constraintStart_toEndOf="@+id/image_back"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
 
             <ImageView
                 android:id="@+id/image_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.onNextClick()}"
                 android:padding="@dimen/padding_small"
                 android:src="@drawable/ic_next"
-                android:onClick="@{() -> presenter.onNextClick()}"
-                app:layout_constraintBottom_toBottomOf="@+id/text_header"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/text_header" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/black" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/text_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:fontFamily="@font/core_sans_regular"
+            android:text="@string/choose_image"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_xx_medium"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_header" />
 
         <ImageView
             android:id="@+id/image_selected"
@@ -77,12 +77,13 @@
             android:layout_height="0dp"
             app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.selectedPicture}"
+            android:layout_marginTop="@dimen/margin_pre_x_medium"
             app:layout_constraintBottom_toTopOf="@+id/text_gallery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_max="400dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/container_header"
+            app:layout_constraintTop_toBottomOf="@+id/text_header"
             tools:src="@drawable/detected_light" />
 
         <TextView

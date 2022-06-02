@@ -71,4 +71,13 @@ object Constants {
 
     // Sendbird channel on receive listener
     const val CONNECTION_CHANNEL_LISTENER = "connection_channel_listener"
+
+    // Posts
+    const val POST_ID = "post_id"
+
+    // Messages
+    const val CONNECTION_REQUEST = "Connection Request"
+
+    // Chats
+    const val FIRST_TEN_CHANNELS = "10"
 }

@@ -6,109 +6,155 @@
     <data>
 
         <variable
+            name="presenter"
+            type="com.connection.ui.feed.FeedPostPresenter" />
+
+        <variable
             name="model"
             type="com.connection.vo.post.PostUiModel" />
 
         <import type="com.connection.R" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image_avatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginVertical="@dimen/margin_medium"
-            android:layout_marginStart="@dimen/margin_medium"
-            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
-            app:glideRes="@{model.creatorPicture}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-            tools:src="@drawable/ic_profile_picture" />
-
-        <TextView
-            android:id="@+id/text_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/core_sans_regular"
-            android:maxLines="2"
-            android:text="@{model.creatorUsername}"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_medium"
-            app:layout_constraintBottom_toTopOf="@+id/text_create_at"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/image_avatar"
-            app:layout_constraintTop_toTopOf="@+id/image_avatar"
-            app:layout_constraintVertical_chainStyle="packed"
-            tools:text="Alice Henry" />
-
-        <TextView
-            android:id="@+id/text_create_at"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/core_sans_regular"
-            android:text="@{model.creatorUsername}"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
-            app:layout_constraintEnd_toEndOf="@+id/text_name"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/text_name"
-            app:layout_constraintTop_toBottomOf="@+id/text_name"
-            tools:text="12:45" />
-
-        <ImageView
-            android:id="@+id/image_post_picture"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
-            android:scaleType="centerCrop"
-            app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
-            app:glideRess="@{model.picture}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="400dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_avatar"
-            tools:src="@drawable/detected_light" />
+            android:layout_marginVertical="@dimen/margin_medium"
+            android:layout_marginHorizontal="@dimen/margin_medium">
 
-        <ImageView
-            android:id="@+id/button_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_small"
-            android:src="@drawable/ic_love"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_post_picture"
-            app:tint="@color/black" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_avatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+                app:glideRes="@{model.creatorPicture}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+                tools:src="@drawable/ic_profile_picture" />
 
-        <ImageView
-            android:id="@+id/button_comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:src="@drawable/ic_comment"
-            app:layout_constraintBottom_toBottomOf="@+id/button_like"
-            app:layout_constraintStart_toEndOf="@+id/button_like"
-            app:layout_constraintTop_toTopOf="@+id/button_like"
-            app:tint="@color/black" />
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:ellipsize="end"
+                android:fontFamily="@font/core_sans_regular"
+                android:maxLines="2"
+                android:text="@{model.creatorUsername}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/image_avatar"
+                app:layout_constraintTop_toTopOf="@+id/image_avatar"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="Alice Henry" />
 
-        <ImageView
-            android:id="@+id/button_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:src="@drawable/ic_bookmark"
-            app:layout_constraintBottom_toBottomOf="@+id/button_like"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button_like"
-            app:tint="@color/black" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_post_picture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:scaleType="centerCrop"
+                app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+                app:glideRess="@{model.picture}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_max="400dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_avatar"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeThree"
+                tools:src="@drawable/green_background" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/button_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingVertical="@dimen/padding_small"
+                android:paddingEnd="@dimen/padding_small"
+                android:onClick="@{() -> presenter.onLikeClick(model.id)}"
+                android:src="@{model.liked ? @drawable/ic_favourite_filled : @drawable/ic_love}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_post_picture"
+                tools:src="@drawable/ic_favorite" />
 
+            <TextView
+                android:id="@+id/text_likes_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="130"
+                app:layout_constraintBottom_toBottomOf="@id/button_like"
+                app:layout_constraintStart_toEndOf="@+id/button_like"
+                app:layout_constraintTop_toTopOf="@id/button_like"
+                tools:text="130" />
+
+            <ImageView
+                android:id="@+id/button_comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:onClick="@{() -> presenter.onCommentsClick(model.id)}"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_comment_rounded"
+                app:layout_constraintBottom_toBottomOf="@+id/button_like"
+                app:layout_constraintStart_toEndOf="@+id/text_likes_count"
+                app:layout_constraintTop_toTopOf="@+id/button_like"
+                app:tint="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                app:layout_constraintBottom_toBottomOf="@id/button_comments"
+                app:layout_constraintStart_toEndOf="@id/button_comments"
+                app:layout_constraintTop_toTopOf="@id/button_comments"
+                tools:text="100" />
+
+            <ImageView
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.onSaveClick(model.id)}"
+                android:paddingVertical="@dimen/padding_small"
+                android:src="@drawable/ic_bookmark"
+                app:layout_constraintBottom_toBottomOf="@+id/button_like"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button_like"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/text_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{model.description}"
+                app:layout_constraintEnd_toEndOf="@+id/text_name"
+                app:layout_constraintStart_toStartOf="@+id/image_avatar"
+                app:layout_constraintTop_toBottomOf="@+id/button_like"
+                tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+
+            <TextView
+                android:id="@+id/text_create_at"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small"
+                android:fontFamily="@font/core_sans_regular"
+                android:text="@{model.createdAt}"
+                android:textSize="@dimen/text_pre_small"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/text_description"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/text_description"
+                app:layout_constraintTop_toBottomOf="@+id/text_description"
+                tools:text="12:45" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

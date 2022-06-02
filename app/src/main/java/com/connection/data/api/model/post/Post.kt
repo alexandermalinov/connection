@@ -1,5 +1,6 @@
 package com.connection.data.api.model.post
 
+import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.post.PostUiModel
 
@@ -10,11 +11,11 @@ data class Post(
     val creatorId: String = EMPTY,
     val creatorUsername: String = EMPTY,
     val creatorPicture: String = EMPTY,
-    val title: String = EMPTY,
     val description: String = EMPTY,
     val picture: String = EMPTY,
     val createAt: Long = 0L,
-    val comments: List<Comment> = emptyList()
+    val comments: List<Comment> = emptyList(),
+    val likes: List<String> = emptyList()
 )
 
 fun Post.toUiModel() = PostUiModel(
@@ -23,10 +24,10 @@ fun Post.toUiModel() = PostUiModel(
     creatorUsername = creatorUsername,
     creatorPicture = creatorPicture,
     picture = picture,
-    title = title,
     description = description,
-    createAt = createAt,
-    comments = comments
+    createdAt = DateTimeFormatter.formatDayMinutes(System.currentTimeMillis()),
+    comments = comments,
+    likes = likes
 )
 
 fun Posts.toUiModels() = posts.map { posts -> posts.toUiModel() }

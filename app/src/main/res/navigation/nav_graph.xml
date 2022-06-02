@@ -138,5 +138,12 @@
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.connection.ui.feed.FeedFragment"
-        android:label="FeedFragment" />
+        android:label="FeedFragment" >
+        <action
+            android:id="@+id/action_feedFragment_to_imagePickerFragment"
+            app:destination="@id/imagePickerFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_profile_fragment"
+            app:destination="@id/profile_fragment" />
+    </fragment>
 </navigation>

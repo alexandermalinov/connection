@@ -62,4 +62,16 @@ class PostRemoteSource @Inject constructor(
                 }
             })
     }
+
+    override suspend fun like(id: String, isLiked: Boolean) {
+        db.getReference("posts")
+            .child(id)
+            .child("likes")
+            .let {
+                if (isLiked)
+                    it.push().setValue(true)
+                else
+                    it.removeValue()
+            }
+    }
 }

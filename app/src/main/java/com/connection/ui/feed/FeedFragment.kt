@@ -6,7 +6,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.connection.R
 import com.connection.databinding.FragmentFeedBinding
+import com.connection.ui.alltabs.FavouritesConnectionsAdapter
 import com.connection.ui.base.BaseFragment
+import com.connection.ui.connectiontab.ConnectionsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,6 +24,7 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
     ---------------------------------------------------------------------------------------------*/
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initConnectionsRecyclerView()
         initPostsRecyclerView()
         observeLiveData()
     }
@@ -38,10 +41,18 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
         }
     }
 
+    private fun initConnectionsRecyclerView() {
+        dataBinding.recyclerViewFavouriteConnections.apply {
+            adapter = FavouritesConnectionsAdapter(viewModel)
+            layoutManager = LinearLayoutManager(context)
+        }
+    }
+
     private fun observeLiveData() {
-        //dataBinding.presenter = viewModel
+        dataBinding.presenter = viewModel
         observeNavigation(viewModel.navigationLiveData)
         observeUiLiveData()
+        observeConnectionsLiveData()
         observePostsLiveData()
     }
 
@@ -54,6 +65,13 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
     private fun observePostsLiveData() {
         viewModel.postsLiveData.observe(viewLifecycleOwner) { postsLiveData ->
             (dataBinding.recyclerViewPosts.adapter as PostsFeedAdapter).submitList(postsLiveData.posts)
+        }
+    }
+
+    private fun observeConnectionsLiveData() {
+        viewModel.connectionUiLiveData.observe(viewLifecycleOwner) { connectionsLiveData ->
+            (dataBinding.recyclerViewFavouriteConnections.adapter as FavouritesConnectionsAdapter)
+                .submitList(connectionsLiveData.favouriteConnections)
         }
     }
 }
