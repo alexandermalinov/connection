@@ -20,7 +20,7 @@ data class PostUiModel(
     var description: String = EMPTY,
     val createdAt: String = EMPTY,
     val comments: List<Comment> = emptyList(),
-    val likes: List<String> = emptyList()
+    val likes: Map<String, String> = emptyMap()
 ) : BaseObservable() {
 
     @get:Bindable

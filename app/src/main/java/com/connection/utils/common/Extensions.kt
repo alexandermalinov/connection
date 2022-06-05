@@ -21,3 +21,16 @@ fun Fragment.setStatusBarColor(color: Int) {
         requireActivity().window?.statusBarColor = resources.getColor(color)
     }
 }
+
+fun Fragment.setStatusBarTransparent() {
+    requireActivity().window.setFlags(
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+    )
+}
+
+fun Fragment.removeTransparentStatusBar() {
+    requireActivity().window.clearFlags(
+        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+    )
+}

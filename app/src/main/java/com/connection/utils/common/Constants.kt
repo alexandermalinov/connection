@@ -80,4 +80,8 @@ object Constants {
 
     // Chats
     const val FIRST_TEN_CHANNELS = "10"
+
+    // Posts
+    const val POSTS = "posts"
+    const val POST_LIKES = "likes"
 }

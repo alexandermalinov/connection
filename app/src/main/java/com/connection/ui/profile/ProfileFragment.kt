@@ -8,6 +8,8 @@ import com.connection.R
 import com.connection.databinding.FragmentProfileBinding
 import com.connection.ui.base.BaseFragment
 import com.connection.ui.profile.posts.PostsImageAdapter
+import com.connection.utils.common.removeTransparentStatusBar
+import com.connection.utils.common.setStatusBarTransparent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,9 +27,20 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initPostsRecyclerView()
         observeLiveData()
+        setStatusBarTransparent()
     }
 
     override fun getLayoutId() = R.layout.fragment_profile
+
+    override fun onStart() {
+        super.onStart()
+        setStatusBarTransparent()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        removeTransparentStatusBar()
+    }
 
     /* --------------------------------------------------------------------------------------------
      * Private

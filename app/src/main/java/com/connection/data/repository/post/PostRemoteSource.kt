@@ -4,7 +4,8 @@ import android.net.Uri
 import androidx.core.net.toUri
 import com.connection.data.api.model.post.Post
 import com.connection.data.api.model.post.Posts
-import com.connection.data.api.model.user.UserData
+import com.connection.utils.common.Constants.POSTS
+import com.connection.utils.common.Constants.POST_LIKES
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -49,11 +50,13 @@ class PostRemoteSource @Inject constructor(
     ) {
         val posts = mutableListOf<Post>()
         db.getReference("posts")
+            .orderByChild("createAt")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEach { post ->
                         post.getValue(Post::class.java)?.let { posts.add(it) }
                     }
+                    posts.sortByDescending { it.createAt }
                     onSuccess.invoke(Posts(posts))
                 }
 
@@ -63,15 +66,20 @@ class PostRemoteSource @Inject constructor(
             })
     }
 
-    override suspend fun like(id: String, isLiked: Boolean) {
-        db.getReference("posts")
-            .child(id)
-            .child("likes")
+    override suspend fun like(
+        postId: String,
+        isLiked: Boolean,
+        userId: String,
+        userProfilePicture: String
+    ) {
+        db.getReference(POSTS)
+            .child(postId)
+            .child(POST_LIKES)
             .let {
                 if (isLiked)
-                    it.push().setValue(true)
+                    it.push().setValue(mapOf(userId to userProfilePicture))
                 else
-                    it.removeValue()
+                    it.setValue(null)
             }
     }
 }

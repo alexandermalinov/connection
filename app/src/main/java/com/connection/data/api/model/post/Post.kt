@@ -15,7 +15,7 @@ data class Post(
     val picture: String = EMPTY,
     val createAt: Long = 0L,
     val comments: List<Comment> = emptyList(),
-    val likes: List<String> = emptyList()
+    val likes: Map<String, String> = emptyMap()
 )
 
 fun Post.toUiModel() = PostUiModel(

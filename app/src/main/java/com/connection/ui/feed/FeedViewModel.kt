@@ -103,11 +103,19 @@ class FeedViewModel @Inject constructor(
     }
 
     override fun onLikeClick(id: String) {
-        _postsLiveData.value?.posts
-            ?.find { post -> post.id == id }
-            ?.let { post ->
-                post.isLiked = !post.isLiked
-            }
+        viewModelScope.launch {
+            _postsLiveData.value?.posts
+                ?.find { post -> post.id == id }
+                ?.let { post ->
+                    post.isLiked = !post.isLiked
+                    postRepository.like(
+                        id,
+                        post.isLiked,
+                        loggedUser?.id ?: EMPTY,
+                        loggedUser?.picture ?: EMPTY
+                    )
+                }
+        }
     }
 
     override fun onCommentsClick(id: String) {
