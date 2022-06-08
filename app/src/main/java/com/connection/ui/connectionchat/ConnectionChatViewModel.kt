@@ -224,6 +224,34 @@ class ConnectionChatViewModel @Inject constructor(
     private fun isInitialMessage() =
         _uiLiveData.value?.connectionStatus == ConnectionStatus.NOT_CONNECTED
 
+    private fun updateUsers() {
+        userRepository.updateUser(
+            userId = loggedUser?.id ?: EMPTY,
+            connections = mapOf(
+                Pair(
+                    senderUserId,
+                    senderUser?.profileUrl ?: EMPTY
+                )
+            )
+        )
+        userRepository.updateUser(
+            userId = senderUserId,
+            connections = mapOf(
+                Pair(
+                    loggedUser?.id ?: EMPTY,
+                    loggedUser?.picture ?: EMPTY
+                )
+            )
+        )
+    }
+
+    private fun handleAcceptClick(channel: GroupChannel) {
+        _uiLiveData.value?.connectionStatus = ConnectionStatus.CONNECTED
+        currentChannel = channel
+        initChatHistory(channel)
+        updateUsers()
+    }
+
     /* --------------------------------------------------------------------------------------------
      * Override
     ---------------------------------------------------------------------------------------------*/
@@ -245,32 +273,8 @@ class ConnectionChatViewModel @Inject constructor(
             currentChannel?.let { channel ->
                 chatMessageRepository.acceptInvite(
                     channel = channel,
-                    onSuccess = {
-                        _uiLiveData.value?.connectionStatus = ConnectionStatus.CONNECTED
-                        currentChannel = channel
-                        initChatHistory(channel)
-                        userRepository.updateUser(
-                            userId = loggedUser?.id ?: EMPTY,
-                            connections = mapOf(
-                                Pair(
-                                    senderUserId,
-                                    senderUser?.profileUrl ?: EMPTY
-                                )
-                            )
-                        )
-                        userRepository.updateUser(
-                            userId = senderUserId,
-                            connections = mapOf(
-                                Pair(
-                                    loggedUser?.id ?: EMPTY,
-                                    loggedUser?.picture ?: EMPTY
-                                )
-                            )
-                        )
-                    },
-                    onFailure = {
-                        Timber.e("error occurred accepting invite")
-                    }
+                    onSuccess = { handleAcceptClick(channel) },
+                    onFailure = { Timber.e("error occurred accepting invite") }
                 )
             }
         }
@@ -298,11 +302,13 @@ class ConnectionChatViewModel @Inject constructor(
     }
 
     override fun onImageClick(id: UUID) {
-        _galleryLiveData.value
-            ?.firstOrNull { image -> image.id == id }
-            ?.let {
-                it.isSelected = !it.isSelected
-            }
+        _galleryLiveData.value = _galleryLiveData.value?.map { image ->
+            if (image.id != id)
+                image.isSelected = false
+            else
+                image.isSelected = !image.isSelected
+            image
+        }
     }
 
     override fun onSendImageClick() {

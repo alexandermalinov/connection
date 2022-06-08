@@ -97,6 +97,7 @@
                     android:id="@+id/recycler_view_favourite_connections"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_medium"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -105,7 +106,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_recent_chats"
                     tools:listitem="@layout/list_item_chat_favourite_connection" />
 
-                <TextView
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.2dp"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:background="@color/dark_grey"/>
+
+                <!--<TextView
                     android:id="@+id/text_posts_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -117,7 +124,7 @@
                     android:textSize="@dimen/text_x_medium"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recycler_view_favourite_connections" />
+                    app:layout_constraintTop_toBottomOf="@id/recycler_view_favourite_connections" />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_posts"

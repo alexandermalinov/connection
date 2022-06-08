@@ -16,11 +16,10 @@
         <import type="com.connection.R" />
     </data>
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutDescription="@xml/fragment_connection_chat_xml_constraintlayout_scene">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
@@ -247,7 +246,7 @@
             android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginBottom="@dimen/margin_small"
             android:background="@drawable/ic_rounded_rectangle_grey"
-            app:layout_constraintBottom_toTopOf="@id/view_gallery_top_line"
+            app:layout_constraintBottom_toTopOf="@id/container_gallery"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:visibleGone="@{model.chatBoxVisible}">
@@ -295,44 +294,54 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <View
-            android:id="@+id/view_gallery_top_line"
-            android:layout_width="60dp"
-            android:layout_height="4dp"
-            android:layout_marginBottom="@dimen/margin_small"
-            android:background="@drawable/ic_rounded_rectangle_grey"
-            app:layout_constraintBottom_toTopOf="@+id/recycler_gallery"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:visibleGone="@{model.shouldOpenGallery}" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_gallery"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/container_gallery"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:spanCount="4"
-            app:visibleGone="@{model.shouldOpenGallery}"
-            tools:listitem="@layout/list_item_gallery_image" />
+            app:visibleGone="@{model.shouldOpenGallery}">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_send_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> presenter.onSendImageClick()}"
-            android:text="@string/send_image"
-            android:textSize="@dimen/text_pre_xx_small"
-            android:textStyle="bold"
-            app:cornerRadius="@dimen/radius_medium"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/recycler_gallery"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/recycler_gallery"
-            app:layout_constraintVertical_bias="0.9"
-            app:visibleGone="@{model.shouldOpenGallery}" />
+            <View
+                android:id="@+id/view_gallery_top_line"
+                android:layout_width="60dp"
+                android:layout_height="4dp"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:background="@drawable/ic_rounded_rectangle_grey" />
 
-    </androidx.constraintlayout.motion.widget.MotionLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/core_sans_regular"
+                android:text="@string/all_photos"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_medium"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="@dimen/margin_small"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4"
+                tools:listitem="@layout/list_item_gallery_image" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_send_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:onClick="@{() -> presenter.onSendImageClick()}"
+                android:text="@string/send_image"
+                android:textSize="@dimen/text_pre_xx_small"
+                android:textStyle="bold"
+                app:cornerRadius="@dimen/radius_medium" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

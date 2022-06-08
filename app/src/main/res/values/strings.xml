@@ -72,4 +72,6 @@
     <string name="posts">Posts</string>
     <string name="recent_chats">Recent Chats</string>
     <string name="save">Save</string>
+    <string name="all_photos">All Photos</string>
+    <string name="post">Post</string>
 </resources>
