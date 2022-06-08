@@ -5,6 +5,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.connection.BR
 import com.connection.data.api.model.post.Comment
+import com.connection.data.api.model.post.Like
 import com.connection.data.api.model.post.Post
 import com.connection.data.api.model.user.UserData
 import com.connection.utils.DateTimeFormatter
@@ -28,6 +29,13 @@ data class PostUiModel(
         set(value) {
             field = value
             notifyPropertyChanged(BR.liked)
+        }
+
+    @get:Bindable
+    var likesCount: String = EMPTY
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.likesCount)
         }
 }
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
+import com.connection.data.api.model.post.Like
 import com.connection.data.api.model.post.toUiModels
 import com.connection.data.api.model.user.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
@@ -15,7 +16,6 @@ import com.connection.ui.base.BaseViewModel
 import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.connectiontab.ConnectionsPresenter
 import com.connection.ui.profile.posts.PostsPresenter
-import com.connection.utils.common.Constants
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.FIRST_TEN_CHANNELS
 import com.connection.utils.common.Constants.HEADER_MODEL
@@ -73,7 +73,9 @@ class FeedViewModel @Inject constructor(
     private suspend fun loadPosts() {
         postRepository.getUserPosts(
             id = loggedUser?.id ?: EMPTY,
-            onSuccess = { posts -> _postsLiveData.value = PostsUiModel(posts.toUiModels()) },
+            onSuccess = { posts ->
+                _postsLiveData.value = PostsUiModel(posts.toUiModels(loggedUser?.id ?: EMPTY))
+            },
             onFailure = { Timber.e("Error occurred fetching posts") }
         )
     }
@@ -108,11 +110,17 @@ class FeedViewModel @Inject constructor(
                 ?.find { post -> post.id == id }
                 ?.let { post ->
                     post.isLiked = !post.isLiked
+                    if (post.isLiked)
+                        post.likesCount = (post.likesCount.toInt() + 1).toString()
+                    else
+                        post.likesCount = (post.likesCount.toInt() - 1).toString()
                     postRepository.like(
                         id,
                         post.isLiked,
-                        loggedUser?.id ?: EMPTY,
-                        loggedUser?.picture ?: EMPTY
+                        Like(
+                            userId = loggedUser?.id ?: EMPTY,
+                            userProfilePicture = loggedUser?.picture ?: EMPTY
+                        )
                     )
                 }
         }

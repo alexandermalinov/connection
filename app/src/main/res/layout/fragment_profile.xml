@@ -114,7 +114,7 @@
                     android:layout_height="136dp"
                     android:layout_marginTop="164dp"
                     android:elevation="2dp"
-                    android:padding="3dp"
+                    android:padding="1dp"
                     app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                     app:glideRes="@{model.profilePicture}"
                     app:layout_constraintEnd_toEndOf="@+id/image_background_holder"
@@ -123,7 +123,7 @@
                     app:layout_constraintVertical_chainStyle="packed"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
                     app:strokeColor="@color/white"
-                    app:strokeWidth="6dp"
+                    app:strokeWidth="2dp"
                     tools:src="@drawable/ic_profile_picture" />
 
                 <TextView
@@ -144,12 +144,12 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_additional_information"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:padding="@dimen/padding_medium"
-                    app:layout_constraintEnd_toEndOf="@+id/text_username"
-                    app:layout_constraintStart_toStartOf="@+id/text_username"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_username">
 
                     <TextView
@@ -169,11 +169,11 @@
                         android:id="@+id/text_connections"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:layout_marginEnd="@dimen/margin_large"
+                        android:gravity="center_horizontal"
                         android:text="@string/connections"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/view"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/text_connections_count" />
 
                     <View
@@ -203,10 +203,9 @@
                         android:id="@+id/text_posts_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_medium"
+                        android:layout_marginStart="@dimen/margin_large"
                         android:text="@string/posts"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/view"
                         app:layout_constraintTop_toBottomOf="@+id/text_posts_count" />
 

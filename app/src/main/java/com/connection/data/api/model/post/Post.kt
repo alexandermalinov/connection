@@ -18,7 +18,7 @@ data class Post(
     val likes: Map<String, String> = emptyMap()
 )
 
-fun Post.toUiModel() = PostUiModel(
+fun Post.toUiModel(loggedUserId: String) = PostUiModel(
     id = id,
     creatorId = creatorId,
     creatorUsername = creatorUsername,
@@ -28,6 +28,9 @@ fun Post.toUiModel() = PostUiModel(
     createdAt = DateTimeFormatter.formatDayMinutes(System.currentTimeMillis()),
     comments = comments,
     likes = likes
-)
+).also { post ->
+    post.isLiked = likes.keys.any { it == loggedUserId }
+    post.likesCount = likes.keys.size.toString()
+}
 
-fun Posts.toUiModels() = posts.map { posts -> posts.toUiModel() }
+fun Posts.toUiModels(loggedUserId: String) = posts.map { posts -> posts.toUiModel(loggedUserId) }

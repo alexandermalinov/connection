@@ -2,8 +2,10 @@ package com.connection.data.repository.post
 
 import android.net.Uri
 import androidx.core.net.toUri
+import com.connection.data.api.model.post.Like
 import com.connection.data.api.model.post.Post
 import com.connection.data.api.model.post.Posts
+import com.connection.data.api.model.post.toMap
 import com.connection.utils.common.Constants.POSTS
 import com.connection.utils.common.Constants.POST_LIKES
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +19,6 @@ import java.util.*
 import javax.inject.Inject
 
 class PostRemoteSource @Inject constructor(
-    private val auth: FirebaseAuth,
     private val db: FirebaseDatabase,
     private val storage: FirebaseStorage
 ) : PostRepository.RemoteSource {
@@ -27,7 +28,7 @@ class PostRemoteSource @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     override fun createPost(post: Post) {
         db.getReference("posts")
-            .push()
+            .child(post.id)
             .setValue(post)
     }
 
@@ -51,7 +52,7 @@ class PostRemoteSource @Inject constructor(
         val posts = mutableListOf<Post>()
         db.getReference("posts")
             .orderByChild("createAt")
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEach { post ->
                         post.getValue(Post::class.java)?.let { posts.add(it) }
@@ -69,17 +70,17 @@ class PostRemoteSource @Inject constructor(
     override suspend fun like(
         postId: String,
         isLiked: Boolean,
-        userId: String,
-        userProfilePicture: String
+        like: Like
     ) {
         db.getReference(POSTS)
             .child(postId)
             .child(POST_LIKES)
+            .child(like.userId)
             .let {
                 if (isLiked)
-                    it.push().setValue(mapOf(userId to userProfilePicture))
+                    it.setValue(like.userProfilePicture)
                 else
-                    it.setValue(null)
+                    it.removeValue()
             }
     }
 }

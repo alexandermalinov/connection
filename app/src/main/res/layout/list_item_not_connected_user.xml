@@ -27,9 +27,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
             android:padding="@dimen/padding_medium">
 
             <com.google.android.material.imageview.ShapeableImageView
@@ -46,13 +48,13 @@
 
             <TextView
                 android:id="@+id/text_name"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_tiny"
                 android:layout_marginHorizontal="@dimen/margin_medium"
                 android:ellipsize="end"
                 android:gravity="center_horizontal"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:text="@{model.name}"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_medium"
@@ -60,17 +62,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_avatar"
-                tools:text="Alice Henry" />
+                tools:text="Alice Henry Marinov" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/container_other_people"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/margin_tiny"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/textView"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_name">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image_other_user_one"
@@ -139,13 +141,13 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:padding="@dimen/padding_micro"
                 app:layout_constraintBottom_toTopOf="@+id/button_request"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/container_other_people"
                 app:textFormatted="@{model.connectionsCountText}"
                 tools:text="connections \nand 4 others" />
 
@@ -165,7 +167,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:strokeColor="@color/pastel_yellow" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.cardview.widget.CardView>
 

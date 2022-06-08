@@ -7,7 +7,7 @@
         motion:constraintSetStart="@id/start"
         motion:duration="800">
         <KeyFrameSet></KeyFrameSet>
-        <OnSwipe motion:touchAnchorId="@+id/recycler_gallery" />
+        <OnSwipe motion:touchAnchorId="@+id/view_gallery_top_line" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -130,24 +130,12 @@
             motion:layout_constraintVertical_bias="1.0"
             motion:visibilityMode="ignore" />
         <Constraint
-            android:id="@+id/recycler_view_chat"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="@dimen/margin_small"
-            motion:layout_constraintBottom_toTopOf="@+id/container_message_box"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintHorizontal_bias="0.0"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:layout_constraintTop_toBottomOf="@+id/header"
-            motion:layout_constraintVertical_bias="1.0"
-            motion:visibilityMode="ignore" />
-        <Constraint
             android:id="@+id/container_message_box"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginEnd="@dimen/margin_medium"
-            android:layout_marginBottom="@dimen/margin_medium"
+            android:layout_marginBottom="@dimen/margin_small"
             motion:layout_constraintBottom_toTopOf="@id/view_gallery_top_line"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
@@ -157,15 +145,7 @@
             android:layout_width="60dp"
             android:layout_height="4dp"
             android:layout_marginBottom="@dimen/margin_small"
-            motion:layout_constraintBottom_toTopOf="@+id/recycler_gallery"
-            motion:layout_constraintEnd_toEndOf="parent"
-            motion:layout_constraintStart_toStartOf="parent"
-            motion:visibilityMode="ignore" />
-        <Constraint
-            android:id="@+id/view_gallery_top_line"
-            android:layout_width="60dp"
-            android:layout_height="4dp"
-            android:layout_marginBottom="@dimen/margin_small"
+            android:visibility="gone"
             motion:layout_constraintBottom_toTopOf="@+id/recycler_gallery"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintStart_toStartOf="parent"

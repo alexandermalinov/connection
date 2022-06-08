@@ -44,7 +44,7 @@ class FeedFragment : BaseFragment<FragmentFeedBinding>() {
     private fun initConnectionsRecyclerView() {
         dataBinding.recyclerViewFavouriteConnections.apply {
             adapter = FavouritesConnectionsAdapter(viewModel)
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 

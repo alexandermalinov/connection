@@ -37,6 +37,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     override fun onPause() {
         super.onPause()
-        setStatusBarColor(R.color.pastel_yellow)
+        setStatusBarColor(R.color.black)
     }
 }

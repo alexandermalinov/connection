@@ -1,6 +1,7 @@
 package com.connection.data.repository.post
 
 import android.net.Uri
+import com.connection.data.api.model.post.Like
 import com.connection.data.api.model.post.Post
 import com.connection.data.api.model.post.Posts
 import javax.inject.Inject
@@ -27,8 +28,7 @@ class PostRepository @Inject constructor(
         suspend fun like(
             postId: String,
             isLiked: Boolean,
-            userId: String,
-            userProfilePicture: String
+            like: Like
         )
     }
 
@@ -54,9 +54,8 @@ class PostRepository @Inject constructor(
     suspend fun like(
         postId: String,
         isLiked: Boolean,
-        userId: String,
-        userProfilePicture: String
+        like: Like
     ) {
-        remote.like(postId, isLiked, userId, userProfilePicture)
+        remote.like(postId, isLiked, like)
     }
 }

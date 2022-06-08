@@ -52,7 +52,7 @@
     <string name="wishes_to_connect_with_you">Wishes to connect\n with you</string>
     <string name="waits_you_to_send_message">Waits you to send a message</string>
     <string name="connections_count">mutual connections \nand %s others</string>
-    <string name="connection_count">mutual connections</string>
+    <string name="connection_count">%s mutual connection</string>
     <string name="no_connections_count">The user hasn\'t connections yet</string>
     <string name="connect_to_start_chatting">Connect to start chatting</string>
     <string name="accepted">Accepted</string>

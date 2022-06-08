@@ -61,7 +61,7 @@ class ProfileViewModel @Inject constructor(
         postRepository.getUserPosts(
             id = _uiLiveData.value?.id ?: EMPTY,
             onSuccess = { posts ->
-                _postsLiveData.value = PostsUiModel(posts.toUiModels())
+                _postsLiveData.value = PostsUiModel(posts.toUiModels(loggedUserId))
                 _uiLiveData.value = _uiLiveData.value?.copy(
                     postsCount = posts.posts.size.toString()
                 )
