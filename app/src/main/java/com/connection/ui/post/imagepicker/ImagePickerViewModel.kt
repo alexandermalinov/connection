@@ -62,6 +62,6 @@ class ImagePickerViewModel @Inject constructor(
     }
 
     override fun onDiscardClick() {
-        _navigationLiveData.value = PopBackStack
+        _navigationLiveData.value = NavigationGraph(R.id.action_imagePickerFragment_to_feedFragment)
     }
 }
