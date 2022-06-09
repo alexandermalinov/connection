@@ -1,7 +1,6 @@
 package com.connection.ui.register
 
 import android.net.Uri
-import androidx.core.os.bundleOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -15,8 +14,6 @@ import com.connection.ui.isEmailValid
 import com.connection.ui.isPasswordValid
 import com.connection.ui.isUsernameValid
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.utils.common.Constants.INVALID_RES
-import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.register.RegisterUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -49,16 +46,29 @@ class RegisterViewModel @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     private suspend fun register() {
         _uiLiveData.value?.let { uiData ->
-            userRepository.registerAuth(uiData.email, uiData.password) { id ->
-                userRepository.uploadImage(uiData.profilePicture) {
-                    getUser(id, it)?.let { user ->
-                        userRepository.registerDB(user) {
-                            navigate(id)
-                        }
-                    }
+            userRepository.registerAuth(
+                uiData.email,
+                uiData.password,
+                onFailure = { onFailedValidation() },
+                onSuccess = { id -> uploadUserPicture(id, uiData) }
+            )
+        }
+    }
+
+    private fun uploadUserPicture(id: String, uiData: RegisterUiModel) {
+        userRepository.uploadImage(
+            uiData.profilePicture,
+            onFailure = { onFailedValidation() },
+            onSuccess = {
+                getUser(id, it)?.let { user ->
+                    userRepository.registerDB(
+                        user = user,
+                        onSuccess = { navigate() },
+                        onFailure = { onFailedValidation() }
+                    )
                 }
             }
-        }
+        )
     }
 
     private fun getUser(
@@ -74,11 +84,8 @@ class RegisterViewModel @Inject constructor(
         )
     }
 
-    private fun navigate(userId: String) {
-        _navigationLiveData.value = NavigationGraph(
-            R.id.action_registerFragment_to_allMessagesFragment,
-            bundleOf(USER_ID to userId)
-        )
+    private fun navigate() {
+        _navigationLiveData.value = NavigationGraph(R.id.action_register_fragment_to_feedFragment)
     }
 
     private fun isDataValid() = _uiLiveData.value?.email?.isEmailValid() == true &&
@@ -90,23 +97,17 @@ class RegisterViewModel @Inject constructor(
         register()
     }
 
-    private fun onFailureValidation() {
+    private fun onFailedValidation() {
         _uiLiveData.value?.apply {
             loading = false
-            emailError = if (email.isEmailValid().not())
-                R.string.invalid_email
-            else
-                INVALID_RES
+            if (email.isEmailValid().not())
+                emailError = R.string.invalid_email
 
-            usernameError = if (username.isUsernameValid().not())
-                R.string.invalid_username
-            else
-                INVALID_RES
+            if (username.isUsernameValid().not())
+                usernameError = R.string.invalid_username
 
-            passwordError = if (password.isPasswordValid().not())
-                R.string.invalid_password
-            else
-                INVALID_RES
+            if (password.isPasswordValid().not())
+                passwordError = R.string.invalid_password
         }
     }
 
@@ -118,7 +119,7 @@ class RegisterViewModel @Inject constructor(
             if (isDataValid())
                 onSuccessfulValidation()
             else
-                onFailureValidation()
+                onFailedValidation()
         }
     }
 

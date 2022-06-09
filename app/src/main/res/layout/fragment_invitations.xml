@@ -21,6 +21,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:src="@drawable/ic_share_link"
+            android:layout_gravity="center_horizontal"
+            app:visibleGone="@{model.emptyState}"/>
+
         <TextView
             android:id="@+id/text_discover"
             android:layout_width="wrap_content"

@@ -17,7 +17,6 @@ class ChatTabRepository @Inject constructor(
 
         fun connectUser(
             user: UserData,
-            onSuccess: (User) -> Unit,
             onFailure: () -> Unit
         )
 
@@ -41,9 +40,8 @@ class ChatTabRepository @Inject constructor(
 
     fun connectUser(
         user: UserData,
-        onSuccess: (User) -> Unit,
         onFailure: () -> Unit
     ) {
-        remote.connectUser(user, onSuccess, onFailure)
+        remote.connectUser(user, onFailure)
     }
 }

@@ -5,4 +5,6 @@ interface FeedPresenter {
     fun onProfilePictureClick()
 
     fun onCreatePostClick()
+
+    fun onDiscoverClick()
 }

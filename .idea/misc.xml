@@ -49,6 +49,7 @@
         <entry key="app/src/main/res/drawable/ic_people_black.xml" value="0.1985" />
         <entry key="app/src/main/res/drawable/ic_people_filled.xml" value="0.1965" />
         <entry key="app/src/main/res/drawable/ic_people_outlined.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_phone_women.xml" value="0.213" />
         <entry key="app/src/main/res/drawable/ic_profile_picture.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_red_circle.xml" value="0.3285" />
         <entry key="app/src/main/res/drawable/ic_register_background.xml" value="0.2" />
@@ -80,7 +81,7 @@
         <entry key="app/src/main/res/layout/fragment_connected_people.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_connection_chat.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_create_post.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_image.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_image_picker.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_invitations.xml" value="0.3179347826086957" />

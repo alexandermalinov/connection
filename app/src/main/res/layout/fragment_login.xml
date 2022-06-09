@@ -43,8 +43,7 @@
             app:boxCornerRadiusBottomEnd="@dimen/radius_medium"
             app:boxCornerRadiusBottomStart="@dimen/radius_medium"
             app:boxCornerRadiusTopEnd="@dimen/radius_medium"
-            app:boxCornerRadiusTopStart="@dimen/radius_medium"
-            app:startIconDrawable="@drawable/ic_email">
+            app:boxCornerRadiusTopStart="@dimen/radius_medium">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -65,8 +64,7 @@
             app:boxCornerRadiusBottomEnd="@dimen/radius_medium"
             app:boxCornerRadiusBottomStart="@dimen/radius_medium"
             app:boxCornerRadiusTopEnd="@dimen/radius_medium"
-            app:boxCornerRadiusTopStart="@dimen/radius_medium"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:boxCornerRadiusTopStart="@dimen/radius_medium">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -76,16 +74,16 @@
                 app:inputError="@{model.passwordError}" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/button_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/padding_large"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_medium"
             android:onClick="@{() -> presenter.onLoginClick()}"
             android:text="@string/login"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold"
             app:cornerRadius="@dimen/radius_medium"
             app:visibleGone="@{!model.loading}" />

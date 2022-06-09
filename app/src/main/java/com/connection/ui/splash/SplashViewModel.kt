@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val userRepository: UserRepository,
-    private val chatTabRepository: ChatTabRepository
+    private val userRepository: UserRepository
 ) : BaseViewModel() {
 
     init {
@@ -33,34 +32,16 @@ class SplashViewModel @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     private suspend fun navigateUser() {
         if (userRepository.isUserLoggedIn()) {
-            onLoggedUser()
+            delay(SPLASH_SCREEN_DELAY)
+            navigateToFeed()
         } else {
             delay(SPLASH_SCREEN_DELAY)
             navigateToLogin()
         }
     }
 
-    private suspend fun onLoggedUser() {
-        userRepository.getLoggedUser { user ->
-            connectUser(user)
-        }
-    }
-
-    private fun connectUser(user: UserData?) {
-        user?.let {
-            chatTabRepository.connectUser(
-                user = it,
-                onSuccess = { navigateToFeed(user) },
-                onFailure = { Timber.e("error occurred while trying to connect user") }
-            )
-        }
-    }
-
-    private fun navigateToFeed(user: UserData?) {
-        _navigationLiveData.value = NavigationGraph(
-            R.id.action_splash_fragment_to_feedFragment,
-            bundleOf(USER_ID to user?.id)
-        )
+    private fun navigateToFeed() {
+        _navigationLiveData.value = NavigationGraph(R.id.action_splash_fragment_to_feedFragment)
     }
 
     private fun navigateToLogin() {

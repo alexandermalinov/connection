@@ -24,19 +24,22 @@ class UserRepository @Inject constructor(
         suspend fun registerAuth(
             email: String,
             password: String,
-            onSuccess: (String) -> Unit
+            onSuccess: (String) -> Unit,
+            onFailure: () -> Unit
         )
 
         fun registerDB(
             user: UserData,
-            onSuccess: (UserData) -> Unit
+            onSuccess: (UserData) -> Unit,
+            onFailure: () -> Unit
         )
 
         fun isUserLoggedIn(): Boolean
 
         fun uploadImage(
             uri: Uri?,
-            onSuccess: (Uri?) -> Unit
+            onSuccess: (Uri?) -> Unit,
+            onFailure: () -> Unit
         )
 
         fun getUser(
@@ -76,25 +79,28 @@ class UserRepository @Inject constructor(
     suspend fun registerAuth(
         email: String,
         password: String,
-        onSuccess: (String) -> Unit
+        onSuccess: (String) -> Unit,
+        onFailure: () -> Unit
     ) {
-        remote.registerAuth(email, password, onSuccess)
+        remote.registerAuth(email, password, onSuccess, onFailure)
     }
 
     fun registerDB(
         user: UserData,
-        onSuccess: (UserData) -> Unit
+        onSuccess: (UserData) -> Unit,
+        onFailure: () -> Unit
     ) {
-        remote.registerDB(user, onSuccess)
+        remote.registerDB(user, onSuccess, onFailure)
     }
 
     fun isUserLoggedIn() = remote.isUserLoggedIn()
 
     fun uploadImage(
         uri: Uri?,
-        onSuccess: (Uri?) -> Unit
+        onSuccess: (Uri?) -> Unit,
+        onFailure: () -> Unit
     ) {
-        remote.uploadImage(uri, onSuccess)
+        remote.uploadImage(uri, onSuccess, onFailure)
     }
 
     fun getUser(

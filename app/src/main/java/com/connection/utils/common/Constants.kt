@@ -79,7 +79,7 @@ object Constants {
     const val CONNECTION_REQUEST = "Connection Request"
 
     // Chats
-    const val FIRST_TEN_CHANNELS = "10"
+    const val FIRST_TEN_CHANNELS = 10
 
     // Posts
     const val POSTS = "posts"

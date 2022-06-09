@@ -33,43 +33,52 @@ class UserRemoteSource @Inject constructor(
     ) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { login ->
-                if (login.isSuccessful)
-                    onSuccess.invoke(login.result.user?.uid)
-                else
+                if (login.isSuccessful) {
+                    onSuccess(login.result.user?.uid)
+                } else {
+                    onFailure()
                     Timber.e("error occurred: ${login.exception?.message}")
+                }
             }
     }
 
-    override fun registerDB(user: UserData, onSuccess: (UserData) -> Unit) {
+    override fun registerDB(
+        user: UserData,
+        onSuccess: (UserData) -> Unit,
+        onFailure: () -> Unit
+    ) {
         db.getReference("/users/${auth.uid}")
             .setValue(user.toMap(auth.uid ?: EMPTY))
-            .addOnSuccessListener {
-                onSuccess.invoke(user)
-            }
+            .addOnSuccessListener { onSuccess(user) }
+            .addOnFailureListener { onFailure() }
     }
 
     override suspend fun registerAuth(
         email: String,
         password: String,
         onSuccess: (String) -> Unit,
+        onFailure: () -> Unit
     ) {
         auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener { register ->
-                onSuccess.invoke(register.user?.uid ?: EMPTY)
-            }
+            .addOnSuccessListener { onSuccess(it.user?.uid ?: EMPTY) }
+            .addOnFailureListener { onFailure() }
     }
 
     override fun isUserLoggedIn(): Boolean = auth.currentUser != null
 
-    override fun uploadImage(uri: Uri?, onSuccess: (Uri?) -> Unit) {
+    override fun uploadImage(
+        uri: Uri?,
+        onSuccess: (Uri?) -> Unit,
+        onFailure: () -> Unit
+    ) {
         uri?.let {
             storage
                 .getReference("/profile_image/${UUID.randomUUID()}")
                 .apply {
                     putFile(it).addOnSuccessListener {
-                        downloadUrl.addOnSuccessListener {
-                            onSuccess.invoke(it)
-                        }
+                        downloadUrl
+                            .addOnSuccessListener { onSuccess(it) }
+                            .addOnFailureListener { onFailure() }
                     }
                 }
         }
@@ -83,7 +92,7 @@ class UserRemoteSource @Inject constructor(
             .child(id)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    onSuccess.invoke(snapshot.getValue(UserData::class.java))
+                    onSuccess(snapshot.getValue(UserData::class.java))
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -105,7 +114,7 @@ class UserRemoteSource @Inject constructor(
                             users.add(it)
                         }
                     }
-                    onSuccess.invoke(UsersData(users))
+                    onSuccess(UsersData(users))
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -119,7 +128,7 @@ class UserRemoteSource @Inject constructor(
     // TODO ("optimize with auth.currentUser")
     override suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
         getUser(auth.currentUser?.uid ?: EMPTY) {
-            onSuccess.invoke(it)
+            onSuccess(it)
         }
     }
 
@@ -137,8 +146,6 @@ class UserRemoteSource @Inject constructor(
 
     override suspend fun logoutUser(onSuccess: () -> Unit) {
         auth.signOut()
-        SendBird.disconnect {
-            onSuccess()
-        }
+        SendBird.disconnect { onSuccess() }
     }
 }

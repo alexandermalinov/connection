@@ -42,9 +42,10 @@
     <string name="decline">Decline</string>
     <string name="sent_you_connection_request">sent you connection request</string>
     <string name="request_to_connect">request to connect by sending message</string>
-    <string name="no_connections">Oops…looks like you don\'t have connections yet</string>
+    <string name="no_connections">Looks like you do not have connections yet. Discover and connect to people on the People\'s page</string>
     <string name="discover">Discover</string>
     <string name="discover_connections">Make new connections and start communicating with other users</string>
+    <string name="empty_discover_people">Looks like there are not any people to connect with</string>
     <string name="invitations">Invitations</string>
     <string name="there_are_no_invitations_yet">There are no invitations yet</string>
     <string name="request_sent">Request to connect is sent. To start messaging it has to be approved</string>
@@ -74,4 +75,6 @@
     <string name="save">Save</string>
     <string name="all_photos">All Photos</string>
     <string name="post">Post</string>
+    <string name="no_recent_chats">There are not any chats. Discover and connect to people on the People\'s page</string>
+    <string name="no_posts">There are not any posts. It is time to create your first</string>
 </resources>

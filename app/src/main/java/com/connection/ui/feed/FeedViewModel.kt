@@ -12,7 +12,7 @@ import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
-import com.connection.ui.base.BaseViewModel
+import com.connection.ui.base.BaseSendBirdViewModel
 import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.connectiontab.ConnectionsPresenter
 import com.connection.ui.profile.posts.PostsPresenter
@@ -35,7 +35,11 @@ class FeedViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val postRepository: PostRepository,
     private val chatTabRepository: ChatTabRepository
-) : BaseViewModel(), FeedPresenter, PostsPresenter, FeedPostPresenter, ConnectionsPresenter {
+) : BaseSendBirdViewModel(chatTabRepository),
+    FeedPresenter,
+    PostsPresenter,
+    FeedPostPresenter,
+    ConnectionsPresenter {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
@@ -56,12 +60,7 @@ class FeedViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            userRepository.getLoggedUser { user ->
-                loggedUser = user
-                _uiLiveData.value = _uiLiveData.value?.copy(
-                    profilePicture = user?.picture ?: EMPTY
-                )
-            }
+            loadUser()
             loadChats()
             loadPosts()
         }
@@ -70,11 +69,21 @@ class FeedViewModel @Inject constructor(
     /* --------------------------------------------------------------------------------------------
      * Private
     ---------------------------------------------------------------------------------------------*/
+    private suspend fun loadUser() {
+        userRepository.getLoggedUser { user ->
+            loggedUser = user
+            _uiLiveData.value = FeedUiModel(profilePicture = user?.picture ?: EMPTY)
+        }
+    }
+
     private suspend fun loadPosts() {
         postRepository.getUserPosts(
             id = loggedUser?.id ?: EMPTY,
             onSuccess = { posts ->
-                _postsLiveData.value = PostsUiModel(posts.toUiModels(loggedUser?.id ?: EMPTY))
+                if (posts.posts.isNotEmpty())
+                    _postsLiveData.value = PostsUiModel(posts.toUiModels(loggedUser?.id ?: EMPTY))
+                else
+                    _uiLiveData.value = _uiLiveData.value?.copy(emptyPosts = true)
             },
             onFailure = { Timber.e("Error occurred fetching posts") }
         )
@@ -84,12 +93,18 @@ class FeedViewModel @Inject constructor(
         chatTabRepository.fetchChannels(
             ConnectionStatus.CONNECTED,
             onSuccess = { channels ->
-                _connectionsUiLiveDate.value = channels
-                    .take(FIRST_TEN_CHANNELS.toInt())
-                    .toFavouriteConnections(loggedUser?.id ?: EMPTY)
+                if (channels.isNotEmpty())
+                    _connectionsUiLiveDate.value = channels
+                        .take(FIRST_TEN_CHANNELS)
+                        .toFavouriteConnections(loggedUser?.id ?: EMPTY)
+                else
+                    _uiLiveData.value = _uiLiveData.value?.copy(emptyChats = true)
             },
             onFailure = {
-                Timber.e("Failed to fetch channels")
+                viewModelScope.launch {
+                    connectUser(loggedUser)
+                    loadChats()
+                }
             })
     }
 
@@ -161,5 +176,9 @@ class FeedViewModel @Inject constructor(
             R.id.action_feedFragment_to_imagePickerFragment,
             bundleOf(USER_ID to loggedUser?.id)
         )
+    }
+
+    override fun onDiscoverClick() {
+        _navigationLiveData.value = NavigationGraph(R.id.action_feedFragment_to_people_fragment)
     }
 }

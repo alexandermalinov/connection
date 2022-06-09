@@ -98,7 +98,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_medium"
-                    android:layout_marginTop="@dimen/margin_medium"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -106,13 +105,42 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_recent_chats"
                     tools:listitem="@layout/list_item_chat_favourite_connection" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/text_medium"
+                    android:fontFamily="@font/core_sans_regular"
+                    android:text="@string/no_recent_chats"
+                    app:visibleGone="@{model.emptyChats}" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:src="@drawable/ic_share_link"
+                    app:visibleGone="@{model.emptyChats}" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:onClick="@{() -> presenter.onDiscoverClick()}"
+                    android:text="@string/discover"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:cornerRadius="@dimen/radius_medium"
+                    app:visibleGone="@{model.emptyChats}" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.2dp"
                     android:layout_marginTop="@dimen/margin_medium"
-                    android:background="@color/dark_grey"/>
+                    android:background="@color/dark_grey" />
 
-                <!--<TextView
+                <TextView
                     android:id="@+id/text_posts_header"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -122,9 +150,7 @@
                     android:text="@string/posts"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_x_medium"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recycler_view_favourite_connections" />-->
+                    android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_posts"
@@ -135,6 +161,35 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_posts_header"
                     tools:listitem="@layout/list_item_feed_post" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/text_medium"
+                    android:fontFamily="@font/core_sans_regular"
+                    android:text="@string/no_posts"
+                    app:visibleGone="@{model.emptyPosts}" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_medium"
+                    android:src="@drawable/ic_share_link"
+                    app:visibleGone="@{model.emptyPosts}" />
+
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:onClick="@{() -> presenter.onCreatePostClick()}"
+                    android:text="@string/create_post"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:cornerRadius="@dimen/radius_medium"
+                    app:visibleGone="@{model.emptyPosts}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.core.widget.NestedScrollView>
