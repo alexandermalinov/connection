@@ -125,11 +125,11 @@
                 app:visibleGone="@{!model.accepted}" />
 
             <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
                 android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_height="36dp"
                 android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/accepted"
-                android:textAllCaps="false"
                 app:icon="@drawable/ic_accept"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

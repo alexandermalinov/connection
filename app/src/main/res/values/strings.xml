@@ -76,5 +76,8 @@
     <string name="all_photos">All Photos</string>
     <string name="post">Post</string>
     <string name="no_recent_chats">There are not any chats. Discover and connect to people on the People\'s page</string>
-    <string name="no_posts">There are not any posts. It is time to create your first</string>
+    <string name="no_posts">Looks like there are no posts to see. It is time to create your first</string>
+    <string name="no_comments">No comments yet. Start by writing a comment yourself</string>
+    <string name="comments">Comments</string>
+    <string name="write_a_comment">Write a comment</string>
 </resources>

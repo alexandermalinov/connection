@@ -2,13 +2,13 @@ package com.connection.data.repository.post
 
 import android.net.Uri
 import androidx.core.net.toUri
+import com.connection.data.api.model.post.Comment
 import com.connection.data.api.model.post.Like
 import com.connection.data.api.model.post.Post
 import com.connection.data.api.model.post.Posts
-import com.connection.data.api.model.post.toMap
+import com.connection.utils.common.Constants.COMMENTS
 import com.connection.utils.common.Constants.POSTS
 import com.connection.utils.common.Constants.POST_LIKES
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -27,7 +27,7 @@ class PostRemoteSource @Inject constructor(
      * Override
     ---------------------------------------------------------------------------------------------*/
     override fun createPost(post: Post) {
-        db.getReference("posts")
+        db.getReference(POSTS)
             .child(post.id)
             .setValue(post)
     }
@@ -50,7 +50,7 @@ class PostRemoteSource @Inject constructor(
         onFailure: () -> Unit
     ) {
         val posts = mutableListOf<Post>()
-        db.getReference("posts")
+        db.getReference(POSTS)
             .orderByChild("createAt")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -59,6 +59,38 @@ class PostRemoteSource @Inject constructor(
                     }
                     posts.sortByDescending { it.createAt }
                     onSuccess.invoke(Posts(posts))
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.e("Error occurred: ${error.message}")
+                }
+            })
+    }
+
+    override suspend fun createComment(comment: Comment) {
+        db.getReference(POSTS)
+            .child(comment.postId)
+            .child(COMMENTS)
+            .push()
+            .setValue(comment)
+    }
+
+    override suspend fun getPostComments(
+        postId: String,
+        onSuccess: (List<Comment>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        val comments = mutableListOf<Comment>()
+        db.getReference(POSTS)
+            .child(postId)
+            .child(COMMENTS)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach { post ->
+                        post.getValue(Comment::class.java)?.let { comments.add(it) }
+                    }
+                    comments.sortByDescending { it.createdAt }
+                    onSuccess.invoke(comments)
                 }
 
                 override fun onCancelled(error: DatabaseError) {

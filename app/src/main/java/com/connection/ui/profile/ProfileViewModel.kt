@@ -5,7 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
+import com.connection.data.api.model.post.Posts
 import com.connection.data.api.model.post.toUiModels
+import com.connection.data.api.model.user.UserData
 import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
@@ -38,14 +40,11 @@ class ProfileViewModel @Inject constructor(
 
     private val _uiLiveData = MutableLiveData(ProfileUiModel())
     private val _postsLiveData = MutableLiveData(PostsUiModel())
-    private var loggedUserId = EMPTY
+    private var loggedUser: UserData? = null
 
     init {
         viewModelScope.launch {
             loadUserData()
-            userRepository.getUser(loggedUserId) { user ->
-                _uiLiveData.value = user?.toUiModel()
-            }
             loadPosts()
         }
     }
@@ -54,14 +53,17 @@ class ProfileViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadUserData() {
-        loggedUserId = userRepository.getLoggedUserId()
+        userRepository.getLoggedUser {
+            loggedUser = it
+            _uiLiveData.value = it?.toUiModel()
+        }
     }
 
     private suspend fun loadPosts() {
         postRepository.getUserPosts(
             id = _uiLiveData.value?.id ?: EMPTY,
             onSuccess = { posts ->
-                _postsLiveData.value = PostsUiModel(posts.toUiModels(loggedUserId))
+                onReceivePosts(posts)
                 _uiLiveData.value = _uiLiveData.value?.copy(
                     postsCount = posts.posts.size.toString()
                 )
@@ -70,6 +72,13 @@ class ProfileViewModel @Inject constructor(
                 Timber.e("Error occurred fetching posts")
             }
         )
+    }
+
+    private fun onReceivePosts(posts: Posts) {
+        if (posts.posts.isNotEmpty())
+            _postsLiveData.value = PostsUiModel(posts.toUiModels(loggedUser))
+        else
+            _uiLiveData.value = _uiLiveData.value?.copy(emptyPosts = true)
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -87,7 +96,7 @@ class ProfileViewModel @Inject constructor(
     override fun onCreatePostClick() {
         _navigationLiveData.value = NavigationGraph(
             R.id.action_profile_fragment_to_imagePickerFragment,
-            bundleOf(USER_ID to loggedUserId)
+            bundleOf(USER_ID to loggedUser?.id)
         )
     }
 

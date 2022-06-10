@@ -157,5 +157,15 @@
         <action
             android:id="@+id/action_feedFragment_to_people_fragment"
             app:destination="@id/people_fragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_postCommentsFragment"
+            app:destination="@id/postCommentsFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_connection_chat_fragment"
+            app:destination="@id/connection_chat_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/postCommentsFragment"
+        android:name="com.connection.ui.comments.PostCommentsFragment"
+        android:label="PostCommentsFragment" />
 </navigation>

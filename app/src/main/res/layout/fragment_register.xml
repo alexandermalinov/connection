@@ -122,7 +122,8 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
             android:id="@+id/button_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -131,8 +132,6 @@
             android:onClick="@{() -> presenter.onRegisterClick()}"
             android:paddingHorizontal="@dimen/padding_large"
             android:text="@string/register"
-            android:textColor="@color/white"
-            app:cornerRadius="@dimen/radius_medium"
             app:visibleGone="@{!model.loading}" />
 
         <ProgressBar

@@ -113,8 +113,7 @@
                     android:layout_width="136dp"
                     android:layout_height="136dp"
                     android:layout_marginTop="164dp"
-                    android:elevation="2dp"
-                    android:padding="1dp"
+                    android:elevation="4dp"
                     app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                     app:glideRes="@{model.profilePicture}"
                     app:layout_constraintEnd_toEndOf="@+id/image_background_holder"
@@ -122,8 +121,6 @@
                     app:layout_constraintTop_toTopOf="@+id/image_background_holder"
                     app:layout_constraintVertical_chainStyle="packed"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                    app:strokeColor="@color/white"
-                    app:strokeWidth="2dp"
                     tools:src="@drawable/ic_profile_picture" />
 
                 <TextView
@@ -144,7 +141,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_additional_information"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_medium"
                     android:padding="@dimen/padding_medium"
@@ -156,12 +153,13 @@
                         android:id="@+id/text_connections_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_medium"
                         android:text="@{model.connectionsCount}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_x_medium"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/text_connections"
-                        app:layout_constraintStart_toStartOf="@+id/text_connections"
+                        app:layout_constraintEnd_toStartOf="@+id/view"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="7.5K" />
 
@@ -169,11 +167,11 @@
                         android:id="@+id/text_connections"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_large"
                         android:gravity="center_horizontal"
                         android:text="@string/connections"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/view"
+                        app:layout_constraintEnd_toEndOf="@+id/text_connections_count"
+                        app:layout_constraintStart_toStartOf="@+id/text_connections_count"
                         app:layout_constraintTop_toBottomOf="@+id/text_connections_count" />
 
                     <View
@@ -190,12 +188,13 @@
                         android:id="@+id/text_posts_count"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_medium"
                         android:text="@{model.postsCount}"
                         android:textColor="@color/black"
                         android:textSize="@dimen/text_x_medium"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/text_posts_header"
-                        app:layout_constraintStart_toStartOf="@+id/text_posts_header"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/view"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="7.5K" />
 
@@ -203,10 +202,10 @@
                         android:id="@+id/text_posts_header"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_large"
                         android:text="@string/posts"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/view"
+                        app:layout_constraintEnd_toEndOf="@+id/text_posts_count"
+                        app:layout_constraintStart_toStartOf="@+id/text_posts_count"
                         app:layout_constraintTop_toBottomOf="@+id/text_posts_count" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -237,6 +236,42 @@
                     app:layout_constraintTop_toBottomOf="@+id/text_posts"
                     app:spanCount="3"
                     tools:listitem="@layout/list_item_post_image" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginVertical="@dimen/margin_small"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_posts"
+                    app:visibleGone="@{model.emptyPosts}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/text_medium"
+                        android:fontFamily="@font/core_sans_regular"
+                        android:text="@string/no_posts" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_medium"
+                        android:src="@drawable/ic_share_link" />
+
+                    <Button
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:onClick="@{() -> presenter.onCreatePostClick()}"
+                        android:text="@string/create_post" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

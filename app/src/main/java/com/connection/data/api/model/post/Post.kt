@@ -1,5 +1,6 @@
 package com.connection.data.api.model.post
 
+import com.connection.data.api.model.user.UserData
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.post.PostUiModel
@@ -14,11 +15,11 @@ data class Post(
     val description: String = EMPTY,
     val picture: String = EMPTY,
     val createAt: Long = 0L,
-    val comments: List<Comment> = emptyList(),
+    val comments: Map<String, Comment> = emptyMap(),
     val likes: Map<String, String> = emptyMap()
 )
 
-fun Post.toUiModel(loggedUserId: String) = PostUiModel(
+fun Post.toUiModel(loggedUser: UserData?) = PostUiModel(
     id = id,
     creatorId = creatorId,
     creatorUsername = creatorUsername,
@@ -26,11 +27,15 @@ fun Post.toUiModel(loggedUserId: String) = PostUiModel(
     picture = picture,
     description = description,
     createdAt = DateTimeFormatter.formatDayMinutes(System.currentTimeMillis()),
-    comments = comments,
-    likes = likes
+    commentsCount = comments.values.size.toString(),
+    likes = likes,
+    isConnectVisible = isUserConnection(loggedUser)
 ).also { post ->
-    post.isLiked = likes.keys.any { it == loggedUserId }
+    post.isLiked = likes.keys.any { it == loggedUser?.id }
     post.likesCount = likes.keys.size.toString()
 }
 
-fun Posts.toUiModels(loggedUserId: String) = posts.map { posts -> posts.toUiModel(loggedUserId) }
+fun Posts.toUiModels(loggedUser: UserData?) = posts.map { posts -> posts.toUiModel(loggedUser) }
+
+private fun Post.isUserConnection(loggedUser: UserData?) = loggedUser?.connections?.keys
+    ?.none { it == creatorId } == true && loggedUser.id != creatorId

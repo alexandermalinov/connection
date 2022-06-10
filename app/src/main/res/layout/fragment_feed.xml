@@ -121,17 +121,14 @@
                     android:src="@drawable/ic_share_link"
                     app:visibleGone="@{model.emptyChats}" />
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/margin_small"
                     android:onClick="@{() -> presenter.onDiscoverClick()}"
                     android:text="@string/discover"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:cornerRadius="@dimen/radius_medium"
                     app:visibleGone="@{model.emptyChats}" />
 
                 <View
@@ -178,17 +175,14 @@
                     android:src="@drawable/ic_share_link"
                     app:visibleGone="@{model.emptyPosts}" />
 
-                <com.google.android.material.button.MaterialButton
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/margin_small"
                     android:onClick="@{() -> presenter.onCreatePostClick()}"
                     android:text="@string/create_post"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    app:cornerRadius="@dimen/radius_medium"
                     app:visibleGone="@{model.emptyPosts}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>

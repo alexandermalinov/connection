@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
 import com.connection.data.api.model.post.Like
+import com.connection.data.api.model.post.Posts
 import com.connection.data.api.model.post.toUiModels
 import com.connection.data.api.model.user.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
@@ -19,12 +20,16 @@ import com.connection.ui.profile.posts.PostsPresenter
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.FIRST_TEN_CHANNELS
 import com.connection.utils.common.Constants.HEADER_MODEL
+import com.connection.utils.common.Constants.POST
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.alltabs.FavouriteConnectionUiModel
 import com.connection.vo.alltabs.toFavouriteConnections
 import com.connection.vo.alltabs.toUiModel
 import com.connection.vo.feed.FeedUiModel
+import com.connection.vo.post.PostUiModel
 import com.connection.vo.post.PostsUiModel
+import com.connection.vo.post.toUiModel
+import com.sendbird.android.GroupChannel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -79,12 +84,7 @@ class FeedViewModel @Inject constructor(
     private suspend fun loadPosts() {
         postRepository.getUserPosts(
             id = loggedUser?.id ?: EMPTY,
-            onSuccess = { posts ->
-                if (posts.posts.isNotEmpty())
-                    _postsLiveData.value = PostsUiModel(posts.toUiModels(loggedUser?.id ?: EMPTY))
-                else
-                    _uiLiveData.value = _uiLiveData.value?.copy(emptyPosts = true)
-            },
+            onSuccess = { posts -> onReceiverPosts(posts) },
             onFailure = { Timber.e("Error occurred fetching posts") }
         )
     }
@@ -92,14 +92,7 @@ class FeedViewModel @Inject constructor(
     private suspend fun loadChats() {
         chatTabRepository.fetchChannels(
             ConnectionStatus.CONNECTED,
-            onSuccess = { channels ->
-                if (channels.isNotEmpty())
-                    _connectionsUiLiveDate.value = channels
-                        .take(FIRST_TEN_CHANNELS)
-                        .toFavouriteConnections(loggedUser?.id ?: EMPTY)
-                else
-                    _uiLiveData.value = _uiLiveData.value?.copy(emptyChats = true)
-            },
+            onSuccess = { channels -> onReceiveChats(channels) },
             onFailure = {
                 viewModelScope.launch {
                     connectUser(loggedUser)
@@ -108,13 +101,46 @@ class FeedViewModel @Inject constructor(
             })
     }
 
+    private fun onReceiverPosts(posts: Posts) {
+        if (posts.posts.isNotEmpty())
+            loggedUser?.let {
+                _postsLiveData.value = PostsUiModel(posts.toUiModels(it))
+            }
+        else
+            _uiLiveData.value = _uiLiveData.value?.copy(emptyPosts = true)
+    }
+
+    private fun onReceiveChats(channels: List<GroupChannel>) {
+        if (channels.isNotEmpty())
+            _connectionsUiLiveDate.value = channels
+                .take(FIRST_TEN_CHANNELS)
+                .toFavouriteConnections(loggedUser?.id ?: EMPTY)
+        else
+            _uiLiveData.value = _uiLiveData.value?.copy(emptyChats = true)
+    }
+
     private fun getConnectionById(id: String) = _connectionsUiLiveDate.value
         ?.favouriteConnections
         ?.first { it.id == id }
 
+    private fun updatePostLike(post: PostUiModel) {
+        post.isLiked = !post.isLiked
+        post.likesCount = if (post.isLiked)
+            (post.likesCount.toInt() + 1).toString()
+        else
+            (post.likesCount.toInt() - 1).toString()
+    }
+
+    private fun navigateToChat(post: PostUiModel) {
+        _navigationLiveData.value = NavigationGraph(
+            R.id.action_feedFragment_to_connection_chat_fragment,
+            bundleOf(HEADER_MODEL to post.toUiModel())
+        )
+    }
+
     /* --------------------------------------------------------------------------------------------
- * Override
----------------------------------------------------------------------------------------------*/
+     * Override
+     ---------------------------------------------------------------------------------------------*/
     override fun onPostClick(postId: String) {
         // TODO("Not yet implemented")
     }
@@ -124,11 +150,7 @@ class FeedViewModel @Inject constructor(
             _postsLiveData.value?.posts
                 ?.find { post -> post.id == id }
                 ?.let { post ->
-                    post.isLiked = !post.isLiked
-                    if (post.isLiked)
-                        post.likesCount = (post.likesCount.toInt() + 1).toString()
-                    else
-                        post.likesCount = (post.likesCount.toInt() - 1).toString()
+                    updatePostLike(post)
                     postRepository.like(
                         id,
                         post.isLiked,
@@ -142,23 +164,27 @@ class FeedViewModel @Inject constructor(
     }
 
     override fun onCommentsClick(id: String) {
-        /*_postsLiveData.value?.posts
+        _postsLiveData.value?.posts
             ?.find { post -> post.id == id }
             ?.let { post ->
                 _navigationLiveData.value = NavigationGraph(
-                    R.id.action_feedFragment_to_postFragment,
-                    bundleOf(POST_ID to post.id)
+                    R.id.action_feedFragment_to_postCommentsFragment,
+                    bundleOf(POST to post)
                 )
-            }*/
+            }
     }
 
     override fun onSaveClick(id: String) {
         // TODO("Not yet implemented")
     }
 
+    override fun onConnectClick(post: PostUiModel) {
+        navigateToChat(post)
+    }
+
     override fun onConnectionClick(id: String) {
         _navigationLiveData.value = NavigationGraph(
-            R.id.action_allMessagesFragment_to_connectionChatFragment,
+            R.id.action_feedFragment_to_connection_chat_fragment,
             bundleOf(
                 HEADER_MODEL to getConnectionById(id)?.toUiModel()
             )

@@ -84,4 +84,6 @@ object Constants {
     // Posts
     const val POSTS = "posts"
     const val POST_LIKES = "likes"
+    const val POST = "post"
+    const val COMMENTS = "comments"
 }

@@ -10,7 +10,8 @@ data class ProfileUiModel(
     val email: String = EMPTY,
     val password: String = EMPTY,
     val connectionsCount: String = EMPTY,
-    val postsCount: String = EMPTY
+    val postsCount: String = EMPTY,
+    val emptyPosts: Boolean = false
 )
 
 fun UserData.toUiModel() = ProfileUiModel(
