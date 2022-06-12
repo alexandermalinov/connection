@@ -4,7 +4,11 @@ import android.net.Uri
 import com.connection.data.api.model.user.UserData
 import com.connection.data.api.model.user.UsersData
 import com.connection.data.api.model.user.toMap
+import com.connection.utils.common.Constants.CONNECTIONS
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.common.Constants.SEARCH_POSTFIX
+import com.connection.utils.common.Constants.USERNAME
+import com.connection.utils.common.Constants.USERS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -88,7 +92,7 @@ class UserRemoteSource @Inject constructor(
         id: String,
         onSuccess: (UserData?) -> Unit
     ) {
-        db.getReference("users")
+        db.getReference(USERS)
             .child(id)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -106,14 +110,11 @@ class UserRemoteSource @Inject constructor(
         onFailure: () -> Unit
     ) {
         val users: MutableList<UserData> = mutableListOf()
-        db.getReference("users")
+        db.getReference(USERS)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for (user in snapshot.children) {
-                        user.getValue(UserData::class.java)?.let {
-                            users.add(it)
-                        }
-                    }
+                    for (user in snapshot.children)
+                        user.getValue(UserData::class.java)?.let { users.add(it) }
                     onSuccess(UsersData(users))
                 }
 
@@ -125,21 +126,19 @@ class UserRemoteSource @Inject constructor(
 
     override suspend fun getLoggedUserId(): String = auth.currentUser?.uid ?: EMPTY
 
-    // TODO ("optimize with auth.currentUser")
     override suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
         getUser(auth.currentUser?.uid ?: EMPTY) {
             onSuccess(it)
         }
     }
 
-    // TODO ("fix this shit")
     override fun updateUser(
         userId: String,
         connections: Map<String, String>
     ) {
-        db.getReference("users")
+        db.getReference(USERS)
             .child(userId)
-            .child("connections")
+            .child(CONNECTIONS)
             .child(connections.keys.first())
             .setValue(connections.values.first())
     }
@@ -147,5 +146,33 @@ class UserRemoteSource @Inject constructor(
     override suspend fun logoutUser(onSuccess: () -> Unit) {
         auth.signOut()
         SendBird.disconnect { onSuccess() }
+    }
+
+    /**
+     * The character \uf8ff used in the query is a very high code point in the Unicode range.
+     * Because it is after most regular characters in Unicode,
+     * the query matches all values that start with searchText.
+     */
+    override suspend fun searchUsers(
+        searchText: String,
+        onSuccess: (List<UserData>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        val users: MutableList<UserData> = mutableListOf()
+        db.getReference(USERS)
+            .orderByChild(USERNAME)
+            .startAt(searchText)
+            .endAt(searchText + SEARCH_POSTFIX)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (user in snapshot.children)
+                        user.getValue(UserData::class.java)?.let { users.add(it) }
+                    onSuccess(users)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Timber.e("Error occurred: ${error.message}")
+                }
+            })
     }
 }

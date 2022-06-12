@@ -12,7 +12,7 @@ data class PostCommentListItemUiModel(
     val creatorPicture: String = EMPTY,
     val creatorUsername: String = EMPTY,
     val comment: String = EMPTY,
-    val createdAt: String = EMPTY
+    val createdAt: String = DateTimeFormatter.formatDayMinutes(System.currentTimeMillis())
 )
 
 fun PostCommentListItemUiModel.toModel() = Comment(

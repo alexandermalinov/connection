@@ -21,7 +21,7 @@ fun Comment.toUiModel() = PostCommentListItemUiModel(
     creatorPicture = creatorPicture,
     creatorUsername = creatorUsername,
     comment = comment,
-    createdAt = DateTimeFormatter.formatDayMinutes(System.currentTimeMillis())
+    createdAt = DateTimeFormatter.formatDayMinutes(createdAt)
 )
 
 fun List<Comment>.toUiModel() = map { it.toUiModel() }

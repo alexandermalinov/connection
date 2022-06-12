@@ -68,7 +68,7 @@
             app:boxCornerRadiusTopStart="@dimen/radius_medium"
             app:counterMaxLength="100"
             app:errorEnabled="true"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_email_outlined">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
             app:boxCornerRadiusBottomStart="@dimen/radius_medium"
             app:boxCornerRadiusTopEnd="@dimen/radius_medium"
             app:boxCornerRadiusTopStart="@dimen/radius_medium"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_lock_outlined">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"

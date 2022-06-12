@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.onNextClick()}"
                 android:padding="@dimen/padding_small"
-                android:src="@drawable/ic_next"
+                android:src="@drawable/ic_back_right"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

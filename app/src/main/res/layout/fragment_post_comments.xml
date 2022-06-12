@@ -39,7 +39,7 @@
                 android:onClick="@{() -> presenter.onBackClick()}"
                 android:paddingVertical="@dimen/padding_small"
                 android:paddingEnd="@dimen/padding_small"
-                android:src="@drawable/ic_arrow"
+                android:src="@drawable/ic_back_left"
                 app:tint="@color/white" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -62,6 +62,12 @@ class UserRepository @Inject constructor(
         )
 
         suspend fun logoutUser(onSuccess: () -> Unit)
+
+        suspend fun searchUsers(
+            searchText: String,
+            onSuccess: (List<UserData>) -> Unit,
+            onFailure: () -> Unit
+        )
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -115,8 +121,6 @@ class UserRepository @Inject constructor(
         onFailure: () -> Unit
     ) = remote.getUsers(onSuccess, onFailure)
 
-    suspend fun getLoggedUserId(): String = remote.getLoggedUserId()
-
     suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
         remote.getLoggedUser(onSuccess)
     }
@@ -130,5 +134,13 @@ class UserRepository @Inject constructor(
 
     suspend fun logoutUser(onSuccess: () -> Unit) {
         remote.logoutUser(onSuccess)
+    }
+
+    suspend fun searchUsers(
+        searchText: String,
+        onSuccess: (List<UserData>) -> Unit,
+        onFailure: () -> Unit
+    ) {
+        remote.searchUsers(searchText, onSuccess, onFailure)
     }
 }

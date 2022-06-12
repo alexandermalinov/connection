@@ -23,6 +23,7 @@ class MainActivityViewModel @Inject constructor() : BaseViewModel() {
                 R.id.profile_fragment -> view.visibility = View.VISIBLE
                 R.id.people_fragment -> view.visibility = View.VISIBLE
                 R.id.feedFragment -> view.visibility = View.VISIBLE
+                R.id.searchFragment -> view.visibility = View.VISIBLE
                 else -> view.visibility = View.GONE
             }
         }

@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:background="@color/black"
             android:paddingHorizontal="@dimen/padding_medium"
-            android:paddingVertical="@dimen/padding_small"
+            android:paddingVertical="@dimen/padding_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -38,12 +38,12 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
                 android:onClick="@{() -> presenter.onBackClick()}"
-                android:src="@drawable/ic_arrow"
+                android:src="@drawable/ic_back_left"
                 app:layout_constraintBottom_toBottomOf="@+id/image_profile"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/image_profile"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                tools:src="@drawable/ic_arrow" />
+                tools:src="@drawable/ic_back_left" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_profile"
@@ -209,7 +209,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="@dimen/margin_large"
-            android:src="@drawable/ic_no_messages"
+            android:src="@drawable/ic_woman_searching"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/text_send_request"
             app:layout_constraintTop_toBottomOf="@+id/header"
             app:visibleGone="@{model.requestToConnectTextVisible}"
@@ -251,17 +253,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:visibleGone="@{model.chatBoxVisible}">
 
-            <ImageView
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/image_attachment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.onGalleryClick()}"
-                android:padding="@dimen/padding_tiny"
-                android:src="@drawable/ic_gallery"
+                app:elevation="0dp"
+                app:fabSize="mini"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_gallery" />
+                app:srcCompat="@drawable/ic_picture_filled"
+                app:tint="@color/white" />
 
             <EditText
                 android:id="@+id/editText"
@@ -289,7 +292,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/image_attachment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/image_attachment"
-                app:srcCompat="@drawable/ic_send_black"
+                app:srcCompat="@drawable/ic_send_message_outlined"
                 app:tint="@color/white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

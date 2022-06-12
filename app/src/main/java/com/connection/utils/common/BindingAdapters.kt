@@ -3,19 +3,19 @@ package com.connection.utils.common
 import android.graphics.Typeface
 import android.net.Uri
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.connection.R
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.INVALID_RES
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @BindingAdapter("visibleGone")
 fun View.setVisibility(show: Boolean) {
@@ -86,3 +86,10 @@ fun TextView.setTextBold(shouldBoldText: Boolean) {
         setTextColor(resources.getColor(R.color.black))
     }
 }
+
+@ExperimentalCoroutinesApi
+@BindingAdapter("textChanges")
+fun EditText.setTextChange(callback: TextChangesCallback) {
+    callback.textChanges(textChanges())
+}
+

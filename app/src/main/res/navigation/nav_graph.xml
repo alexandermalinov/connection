@@ -168,4 +168,8 @@
         android:id="@+id/postCommentsFragment"
         android:name="com.connection.ui.comments.PostCommentsFragment"
         android:label="PostCommentsFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.connection.ui.search.SearchFragment"
+        android:label="SearchFragment" />
 </navigation>
