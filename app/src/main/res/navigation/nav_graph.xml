@@ -116,11 +116,19 @@
     <fragment
         android:id="@+id/not_connected_people"
         android:name="com.connection.ui.people.notconnected.NotConnectedPeopleFragment"
-        android:label="NotConnectedPeople" />
+        android:label="NotConnectedPeople" >
+        <action
+            android:id="@+id/action_not_connected_people_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/invitations_fragment"
         android:name="com.connection.ui.people.invitation.InvitationsFragment"
-        android:label="InvitationsFragment" />
+        android:label="InvitationsFragment" >
+        <action
+            android:id="@+id/action_invitations_fragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/imageFragment"
         android:name="com.connection.ui.image.ImageFragment"
@@ -163,6 +171,9 @@
         <action
             android:id="@+id/action_feedFragment_to_connection_chat_fragment"
             app:destination="@id/connection_chat_fragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/postCommentsFragment"
@@ -171,5 +182,13 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.connection.ui.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.connection.ui.userprofile.UserProfileFragment"
+        android:label="UserProfileFragment" />
 </navigation>

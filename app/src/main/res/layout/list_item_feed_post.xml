@@ -27,6 +27,7 @@
             android:layout_height="48dp"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
+            android:onClick="@{() -> presenter.onUserClick(model.creatorId)}"
             app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.creatorPicture}"
             app:layout_constraintBottom_toTopOf="@+id/image_post_picture"

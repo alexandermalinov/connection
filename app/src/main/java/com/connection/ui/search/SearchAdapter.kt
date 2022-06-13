@@ -9,7 +9,7 @@ import com.connection.databinding.ListItemSearchBinding
 import com.connection.utils.DataBoundListAdapter
 import com.connection.vo.search.SearchListItemUiModel
 
-class SearchAdapter() :
+class SearchAdapter(val presenter: UserSearchPresenter) :
     DataBoundListAdapter<SearchListItemUiModel, ListItemSearchBinding>(
         object : DiffUtil.ItemCallback<SearchListItemUiModel>() {
 
@@ -44,6 +44,6 @@ class SearchAdapter() :
         item: SearchListItemUiModel
     ) {
         binding.model = item
-        //binding.presenter = presenter
+        binding.presenter = presenter
     }
 }

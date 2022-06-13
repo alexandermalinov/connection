@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.post.Like
-import com.connection.data.api.model.post.Posts
-import com.connection.data.api.model.post.toUiModels
-import com.connection.data.api.model.user.UserData
+import com.connection.data.api.remote.model.post.Like
+import com.connection.data.api.remote.model.post.Posts
+import com.connection.data.api.remote.model.post.toUiModels
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
@@ -16,7 +16,7 @@ import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseSendBirdViewModel
 import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.connectiontab.ConnectionsPresenter
-import com.connection.ui.profile.posts.PostsPresenter
+import com.connection.ui.post.PostsPresenter
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.FIRST_TEN_CHANNELS
 import com.connection.utils.common.Constants.HEADER_MODEL
@@ -83,7 +83,6 @@ class FeedViewModel @Inject constructor(
 
     private suspend fun loadPosts() {
         postRepository.getUserPosts(
-            id = loggedUser?.id ?: EMPTY,
             onSuccess = { posts -> onReceiverPosts(posts) },
             onFailure = { Timber.e("Error occurred fetching posts") }
         )
@@ -182,19 +181,22 @@ class FeedViewModel @Inject constructor(
         navigateToChat(post)
     }
 
+    override fun onUserClick(userId: String) {
+        _navigationLiveData.value = NavigationGraph(
+            R.id.action_feedFragment_to_userProfileFragment,
+            bundleOf(USER_ID to userId)
+        )
+    }
+
     override fun onConnectionClick(id: String) {
         _navigationLiveData.value = NavigationGraph(
             R.id.action_feedFragment_to_connection_chat_fragment,
-            bundleOf(
-                HEADER_MODEL to getConnectionById(id)?.toUiModel()
-            )
+            bundleOf(HEADER_MODEL to getConnectionById(id)?.toUiModel())
         )
     }
 
     override fun onProfilePictureClick() {
-        _navigationLiveData.value = NavigationGraph(
-            R.id.action_feedFragment_to_profile_fragment
-        )
+        _navigationLiveData.value = NavigationGraph(R.id.action_feedFragment_to_profile_fragment)
     }
 
     override fun onCreatePostClick() {

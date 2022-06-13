@@ -1,4 +1,4 @@
-package com.connection.ui.profile.posts
+package com.connection.ui.post
 
 interface PostsPresenter {
 

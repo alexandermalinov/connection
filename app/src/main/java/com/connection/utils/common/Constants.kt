@@ -8,8 +8,15 @@ object Constants {
     // Common Constants
     const val EMPTY = ""
     const val INVALID_ID = 0L
+    const val DEFAULT_ID = 0L
     const val INVALID_RES = 0
     const val POSITION_START = 0
+    const val ZERO = "0"
+
+    // Database
+    const val DATABASE_NAME="connection_database"
+    const val SEARCH_HISTORY = "search_history"
+    const val SEARCH_BODY = "search_body"
 
     // Delays
     const val SPLASH_SCREEN_DELAY = 1000L

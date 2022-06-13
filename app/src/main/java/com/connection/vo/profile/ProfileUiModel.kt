@@ -1,6 +1,6 @@
 package com.connection.vo.profile
 
-import com.connection.data.api.model.user.UserData
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.utils.common.Constants.EMPTY
 
 data class ProfileUiModel(
@@ -20,5 +20,5 @@ fun UserData.toUiModel() = ProfileUiModel(
     username = username,
     email = email,
     password = password,
-    connectionsCount = connections.values.size.toString()
+    connectionsCount = connections.keys.size.toString()
 )

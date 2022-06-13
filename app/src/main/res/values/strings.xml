@@ -80,7 +80,8 @@
     <string name="no_comments">No comments yet. Start by writing a comment yourself</string>
     <string name="comments">Comments</string>
     <string name="write_a_comment">Write a comment</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="find_people">Find people ...</string>
+    <string name="find_people">Find people …</string>
+    <string name="results_count">Results %s</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="user_profile">User Profile</string>
 </resources>

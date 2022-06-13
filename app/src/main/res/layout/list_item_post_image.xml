@@ -7,7 +7,7 @@
 
         <variable
             name="presenter"
-            type="com.connection.ui.profile.posts.PostsPresenter" />
+            type="com.connection.ui.post.PostsPresenter" />
 
         <variable
             name="model"

@@ -1,13 +1,11 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.model.user.UserData
-import com.connection.data.api.model.user.UsersData
-import com.connection.data.api.model.user.toMap
+import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.api.remote.model.user.UsersData
+import com.connection.data.api.remote.model.user.toMap
 import com.connection.utils.common.Constants.CONNECTIONS
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.utils.common.Constants.SEARCH_POSTFIX
-import com.connection.utils.common.Constants.USERNAME
 import com.connection.utils.common.Constants.USERS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -88,7 +86,7 @@ class UserRemoteSource @Inject constructor(
         }
     }
 
-    override fun getUser(
+    override suspend fun getUser(
         id: String,
         onSuccess: (UserData?) -> Unit
     ) {
@@ -146,33 +144,5 @@ class UserRemoteSource @Inject constructor(
     override suspend fun logoutUser(onSuccess: () -> Unit) {
         auth.signOut()
         SendBird.disconnect { onSuccess() }
-    }
-
-    /**
-     * The character \uf8ff used in the query is a very high code point in the Unicode range.
-     * Because it is after most regular characters in Unicode,
-     * the query matches all values that start with searchText.
-     */
-    override suspend fun searchUsers(
-        searchText: String,
-        onSuccess: (List<UserData>) -> Unit,
-        onFailure: () -> Unit
-    ) {
-        val users: MutableList<UserData> = mutableListOf()
-        db.getReference(USERS)
-            .orderByChild(USERNAME)
-            .startAt(searchText)
-            .endAt(searchText + SEARCH_POSTFIX)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (user in snapshot.children)
-                        user.getValue(UserData::class.java)?.let { users.add(it) }
-                    onSuccess(users)
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Timber.e("Error occurred: ${error.message}")
-                }
-            })
     }
 }

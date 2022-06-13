@@ -20,50 +20,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--        <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container_header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/padding_medium"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_medium"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/text_profile_header"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/core_sans_regular"
-                        android:text="@string/profile"
-                        android:textSize="@dimen/text_large"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/text_profile_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/core_sans_regular"
+                android:text="@string/profile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                        android:id="@+id/button_create_post"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginEnd="@dimen/margin_medium"
-                        android:onClick="@{() -> presenter.onCreatePostClick()}"
-                        android:src="@drawable/ic_add_circle"
-                        app:layout_constraintBottom_toBottomOf="@+id/text_profile_header"
-                        app:layout_constraintEnd_toStartOf="@+id/button_logout"
-                        app:layout_constraintTop_toTopOf="@+id/text_profile_header" />
+            <ImageView
+                android:id="@+id/button_create_post"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:onClick="@{() -> presenter.onCreatePostClick()}"
+                android:src="@drawable/ic_add_filled"
+                app:layout_constraintBottom_toBottomOf="@+id/text_profile_header"
+                app:layout_constraintEnd_toStartOf="@+id/button_logout"
+                app:layout_constraintTop_toTopOf="@+id/text_profile_header" />
 
-                    <ImageView
-                        android:id="@+id/button_logout"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:onClick="@{() -> presenter.onLogoutClick()}"
-                        android:src="@drawable/ic_logout"
-                        app:layout_constraintBottom_toBottomOf="@+id/button_create_post"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/button_create_post" />
+            <ImageView
+                android:id="@+id/button_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:onClick="@{() -> presenter.onLogoutClick()}"
+                app:layout_constraintBottom_toBottomOf="@+id/button_create_post"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/button_create_post"
+                android:src="@drawable/ic_logout" />
 
-                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -72,52 +74,31 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/container_header">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/button_logout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:onClick="@{() -> presenter.onLogoutClick()}"
-                    app:backgroundTint="@color/white"
-                    app:fabSize="mini"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_logout"
-                    app:tint="@color/black" />
-
-                <androidx.cardview.widget.CardView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image_background_holder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:elevation="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"
+                    android:background="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:background="@drawable/green_background" />
-
-                </androidx.cardview.widget.CardView>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image_profile"
-                    android:layout_width="136dp"
-                    android:layout_height="136dp"
-                    android:layout_marginTop="164dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:elevation="4dp"
+                    android:layout_marginTop="@dimen/margin_large"
                     app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                     app:glideRes="@{model.profilePicture}"
-                    app:layout_constraintEnd_toEndOf="@+id/image_background_holder"
-                    app:layout_constraintStart_toStartOf="@+id/image_background_holder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/image_background_holder"
                     app:layout_constraintVertical_chainStyle="packed"
                     app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"

@@ -11,4 +11,6 @@ interface FeedPostPresenter {
     fun onSaveClick(id: String)
 
     fun onConnectClick(post: PostUiModel)
+
+    fun onUserClick(userId: String)
 }

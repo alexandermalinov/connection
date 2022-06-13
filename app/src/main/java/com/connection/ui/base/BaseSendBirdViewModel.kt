@@ -1,7 +1,7 @@
 package com.connection.ui.base
 
 import androidx.lifecycle.viewModelScope
-import com.connection.data.api.model.user.UserData
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
 import kotlinx.coroutines.launch
 import timber.log.Timber

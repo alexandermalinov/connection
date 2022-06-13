@@ -1,4 +1,4 @@
-package com.connection.data.api.model.post
+package com.connection.data.api.remote.model.post
 
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY

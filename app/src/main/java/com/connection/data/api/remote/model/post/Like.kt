@@ -1,8 +1,6 @@
-package com.connection.data.api.model.post
+package com.connection.data.api.remote.model.post
 
 import com.connection.utils.common.Constants.EMPTY
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import java.util.*
 
 data class Like(

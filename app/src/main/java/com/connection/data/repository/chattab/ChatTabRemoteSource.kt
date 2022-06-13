@@ -1,12 +1,11 @@
 package com.connection.data.repository.chattab
 
-import com.connection.data.api.model.user.UserData
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.ui.base.ConnectionStatus
 import com.connection.utils.common.Constants.PAGING_LIMIT
 import com.sendbird.android.GroupChannel
 import com.sendbird.android.GroupChannelListQuery
 import com.sendbird.android.SendBird
-import com.sendbird.android.User
 import timber.log.Timber
 import javax.inject.Inject
 

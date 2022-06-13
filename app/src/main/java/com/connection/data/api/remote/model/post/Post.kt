@@ -1,6 +1,6 @@
-package com.connection.data.api.model.post
+package com.connection.data.api.remote.model.post
 
-import com.connection.data.api.model.user.UserData
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.post.PostUiModel
@@ -26,7 +26,7 @@ fun Post.toUiModel(loggedUser: UserData?) = PostUiModel(
     creatorPicture = creatorPicture,
     picture = picture,
     description = description,
-    createdAt = DateTimeFormatter.formatDayMinutes(System.currentTimeMillis()),
+    createdAt = DateTimeFormatter.formatDayMinutes(createAt),
     commentsCount = comments.values.size.toString(),
     likes = likes,
     isConnectVisible = isUserConnection(loggedUser)

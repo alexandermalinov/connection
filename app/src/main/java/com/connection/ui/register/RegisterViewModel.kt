@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.user.UserData
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.GalleryNavigation
 import com.connection.navigation.NavigationGraph

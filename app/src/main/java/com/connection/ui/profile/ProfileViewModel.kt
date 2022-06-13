@@ -5,15 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.model.post.Posts
-import com.connection.data.api.model.post.toUiModels
-import com.connection.data.api.model.user.UserData
+import com.connection.data.api.remote.model.post.Posts
+import com.connection.data.api.remote.model.post.toUiModels
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
-import com.connection.ui.profile.posts.PostsPresenter
-import com.connection.utils.common.Constants.EMPTY
+import com.connection.ui.post.PostsPresenter
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.post.PostsUiModel
 import com.connection.vo.profile.ProfileUiModel
@@ -60,8 +59,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private suspend fun loadPosts() {
-        postRepository.getUserPosts(
-            id = _uiLiveData.value?.id ?: EMPTY,
+        postRepository.getLoggedUserPosts(
             onSuccess = { posts ->
                 onReceivePosts(posts)
                 _uiLiveData.value = _uiLiveData.value?.copy(

@@ -33,7 +33,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     ---------------------------------------------------------------------------------------------*/
     private fun initPostsRecyclerView() {
         dataBinding.recyclerViewSearch.apply {
-            adapter = SearchAdapter()
+            adapter = SearchAdapter(viewModel)
             layoutManager = LinearLayoutManager(context)
         }
     }

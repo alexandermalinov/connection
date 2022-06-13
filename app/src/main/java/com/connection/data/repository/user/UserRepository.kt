@@ -1,8 +1,8 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.model.user.UserData
-import com.connection.data.api.model.user.UsersData
+import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.api.remote.model.user.UsersData
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -42,7 +42,7 @@ class UserRepository @Inject constructor(
             onFailure: () -> Unit
         )
 
-        fun getUser(
+        suspend fun getUser(
             id: String,
             onSuccess: (UserData?) -> Unit
         )
@@ -62,12 +62,6 @@ class UserRepository @Inject constructor(
         )
 
         suspend fun logoutUser(onSuccess: () -> Unit)
-
-        suspend fun searchUsers(
-            searchText: String,
-            onSuccess: (List<UserData>) -> Unit,
-            onFailure: () -> Unit
-        )
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -109,7 +103,7 @@ class UserRepository @Inject constructor(
         remote.uploadImage(uri, onSuccess, onFailure)
     }
 
-    fun getUser(
+    suspend fun getUser(
         id: String,
         onSuccess: (UserData?) -> Unit
     ) {
@@ -134,13 +128,5 @@ class UserRepository @Inject constructor(
 
     suspend fun logoutUser(onSuccess: () -> Unit) {
         remote.logoutUser(onSuccess)
-    }
-
-    suspend fun searchUsers(
-        searchText: String,
-        onSuccess: (List<UserData>) -> Unit,
-        onFailure: () -> Unit
-    ) {
-        remote.searchUsers(searchText, onSuccess, onFailure)
     }
 }

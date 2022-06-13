@@ -1,9 +1,8 @@
 package com.connection.data.repository.chattab
 
-import com.connection.data.api.model.user.UserData
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.ui.base.ConnectionStatus
 import com.sendbird.android.GroupChannel
-import com.sendbird.android.User
 import javax.inject.Inject
 
 class ChatTabRepository @Inject constructor(
