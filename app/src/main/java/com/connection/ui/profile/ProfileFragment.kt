@@ -8,8 +8,6 @@ import com.connection.R
 import com.connection.databinding.FragmentProfileBinding
 import com.connection.ui.base.BaseFragment
 import com.connection.ui.post.PostsImageAdapter
-import com.connection.utils.common.removeTransparentStatusBar
-import com.connection.utils.common.setStatusBarTransparent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,6 +44,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         observeNavigation(viewModel.navigationLiveData)
         observeUiLiveData()
         observePostsLiveData()
+        observeMenuLiveData(viewModel.popupMenuLiveData, dataBinding.buttonMenu)
     }
 
     private fun observeUiLiveData() {

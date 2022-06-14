@@ -8,10 +8,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import com.connection.menu.MenuUiModel
+import com.connection.menu.showMenu
 import com.connection.navigation.Destination
 import com.connection.navigation.navigate
 
-abstract class BaseFragment<T: ViewDataBinding> : Fragment() {
+abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
@@ -46,6 +48,15 @@ abstract class BaseFragment<T: ViewDataBinding> : Fragment() {
     protected fun observeNavigation(navigationLiveData: LiveData<Destination>) {
         navigationLiveData.observe(viewLifecycleOwner) { destination ->
             navigate(destination)
+        }
+    }
+
+    protected fun observeMenuLiveData(
+        menuLiveData: LiveData<MenuUiModel>,
+        menuIcon: View
+    ) {
+        menuLiveData.observe(viewLifecycleOwner) { menu ->
+            requireActivity().showMenu(menu, menuIcon)
         }
     }
 }

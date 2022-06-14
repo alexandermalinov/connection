@@ -102,9 +102,7 @@ class FeedViewModel @Inject constructor(
 
     private fun onReceiverPosts(posts: Posts) {
         if (posts.posts.isNotEmpty())
-            loggedUser?.let {
-                _postsLiveData.value = PostsUiModel(posts.toUiModels(it))
-            }
+            loggedUser?.let { _postsLiveData.value = PostsUiModel(posts.toUiModels(it)) }
         else
             _uiLiveData.value = _uiLiveData.value?.copy(emptyPosts = true)
     }

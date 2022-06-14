@@ -74,7 +74,7 @@ class InvitationsViewModel @Inject constructor(
     }
 
     private fun updateUserConnections(invitation: InvitationListItemUiModel) {
-        userRepository.updateUser(
+        userRepository.addConnection(
             userId = loggedUser?.id ?: EMPTY,
             connections = mapOf(Pair(invitation.otherUserId, invitation.profilePicture))
         )

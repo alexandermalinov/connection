@@ -4,8 +4,11 @@ import android.net.Uri
 import com.connection.data.api.remote.model.user.UserData
 import com.connection.data.api.remote.model.user.UsersData
 import com.connection.data.api.remote.model.user.toMap
+import com.connection.ui.base.InviteTypes
 import com.connection.utils.common.Constants.CONNECTIONS
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.common.Constants.SENT_INVITES
+import com.connection.utils.common.Constants.RECEIVED_INVITES
 import com.connection.utils.common.Constants.USERS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -130,7 +133,12 @@ class UserRemoteSource @Inject constructor(
         }
     }
 
-    override fun updateUser(
+    override suspend fun logoutUser(onSuccess: () -> Unit) {
+        auth.signOut()
+        SendBird.disconnect { onSuccess() }
+    }
+
+    override fun addConnection(
         userId: String,
         connections: Map<String, String>
     ) {
@@ -141,8 +149,15 @@ class UserRemoteSource @Inject constructor(
             .setValue(connections.values.first())
     }
 
-    override suspend fun logoutUser(onSuccess: () -> Unit) {
-        auth.signOut()
-        SendBird.disconnect { onSuccess() }
+    override fun addInvitation(
+        userId: String,
+        invite: Map<String, String>,
+        type: InviteTypes
+    ) {
+        db.getReference(USERS)
+            .child(userId)
+            .child(type.name)
+            .child(invite.keys.first())
+            .setValue(invite.values.first())
     }
 }

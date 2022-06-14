@@ -65,6 +65,8 @@ object Constants {
     const val POST_ID = "post_id"
     const val COMMENTS = "comments"
     const val CONNECTIONS = "connections"
+    const val RECEIVED_INVITES = "received_invites"
+    const val SENT_INVITES = "sent_invites"
 
     // Search
     const val SEARCH_POSTFIX = "\uf8ff"

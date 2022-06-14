@@ -3,6 +3,7 @@ package com.connection.data.repository.user
 import android.net.Uri
 import com.connection.data.api.remote.model.user.UserData
 import com.connection.data.api.remote.model.user.UsersData
+import com.connection.ui.base.InviteTypes
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -42,26 +43,19 @@ class UserRepository @Inject constructor(
             onFailure: () -> Unit
         )
 
-        suspend fun getUser(
-            id: String,
-            onSuccess: (UserData?) -> Unit
-        )
+        suspend fun getUser(id: String, onSuccess: (UserData?) -> Unit)
 
-        suspend fun getUsers(
-            onSuccess: (UsersData) -> Unit,
-            onFailure: () -> Unit
-        )
+        suspend fun getUsers(onSuccess: (UsersData) -> Unit, onFailure: () -> Unit)
 
         suspend fun getLoggedUserId(): String
 
         suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit)
 
-        fun updateUser(
-            userId: String,
-            connections: Map<String, String>
-        )
-
         suspend fun logoutUser(onSuccess: () -> Unit)
+
+        fun addConnection(userId: String, connections: Map<String, String>)
+
+        fun addInvitation(userId: String, invite: Map<String, String>, type: InviteTypes)
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -119,14 +113,18 @@ class UserRepository @Inject constructor(
         remote.getLoggedUser(onSuccess)
     }
 
-    fun updateUser(
+    suspend fun logoutUser(onSuccess: () -> Unit) {
+        remote.logoutUser(onSuccess)
+    }
+
+    fun addConnection(
         userId: String,
         connections: Map<String, String>
     ) {
-        remote.updateUser(userId, connections)
+        remote.addConnection(userId, connections)
     }
 
-    suspend fun logoutUser(onSuccess: () -> Unit) {
-        remote.logoutUser(onSuccess)
+    fun addInvitation(userId: String, invite: Map<String, String>, type: InviteTypes) {
+        remote.addInvitation(userId, invite, type)
     }
 }

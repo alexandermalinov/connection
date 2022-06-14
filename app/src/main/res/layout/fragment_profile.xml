@@ -24,8 +24,8 @@
             android:id="@+id/container_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_medium"
             android:background="@color/black"
+            android:padding="@dimen/padding_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -44,26 +44,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/button_create_post"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:onClick="@{() -> presenter.onCreatePostClick()}"
-                android:src="@drawable/ic_add_filled"
-                app:layout_constraintBottom_toBottomOf="@+id/text_profile_header"
-                app:layout_constraintEnd_toStartOf="@+id/button_logout"
-                app:layout_constraintTop_toTopOf="@+id/text_profile_header" />
-
-            <ImageView
-                android:id="@+id/button_logout"
+                android:id="@+id/button_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_small"
-                android:onClick="@{() -> presenter.onLogoutClick()}"
-                app:layout_constraintBottom_toBottomOf="@+id/button_create_post"
+                android:onClick="@{() -> presenter.onMenuClick()}"
+                android:src="@drawable/ic_menu_hamburger"
+                app:layout_constraintBottom_toBottomOf="@+id/text_profile_header"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/button_create_post"
-                android:src="@drawable/ic_logout" />
+                app:layout_constraintTop_toTopOf="@+id/text_profile_header" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -93,8 +82,8 @@
                     android:id="@+id/image_profile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:elevation="4dp"
                     android:layout_marginTop="@dimen/margin_large"
+                    android:elevation="4dp"
                     app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
                     app:glideRes="@{model.profilePicture}"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -227,7 +216,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_posts"
-                    app:visibleGone="@{model.emptyPosts}">
+                    app:visibleGone="@{model.emptyPostsState}">
 
                     <TextView
                         android:layout_width="wrap_content"

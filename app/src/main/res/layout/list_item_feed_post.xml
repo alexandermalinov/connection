@@ -23,8 +23,8 @@
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_avatar"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/profile_pre_small"
+            android:layout_height="@dimen/profile_pre_small"
             android:layout_marginStart="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
             android:onClick="@{() -> presenter.onUserClick(model.creatorId)}"
@@ -33,7 +33,6 @@
             app:layout_constraintBottom_toTopOf="@+id/image_post_picture"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.65999997"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
             tools:src="@drawable/ic_profile_picture" />
 
@@ -50,7 +49,7 @@
             android:textSize="@dimen/text_medium"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/text_create_at"
-            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintEnd_toStartOf="@+id/button_connect"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/image_avatar"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
@@ -58,18 +57,13 @@
             tools:text="Alice Henry" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button"
+            android:id="@+id/button_connect"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
-            app:cornerRadius="6dp"
+            android:layout_height="@dimen/button_small"
             android:layout_marginEnd="@dimen/margin_medium"
-            android:fontFamily="@font/core_sans_regular"
             android:onClick="@{() -> presenter.onConnectClick(model)}"
             android:text="@string/connect"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_pre_small"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_name"
             app:visibleGone="@{model.connectVisible}" />

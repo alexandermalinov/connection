@@ -13,6 +13,7 @@ import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.post.PostsPresenter
+import com.connection.menu.PopupMenuUiModel
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.post.PostsUiModel
 import com.connection.vo.profile.ProfileUiModel
@@ -76,13 +77,17 @@ class ProfileViewModel @Inject constructor(
         if (posts.posts.isNotEmpty())
             _postsLiveData.value = PostsUiModel(posts.toUiModels(loggedUser))
         else
-            _uiLiveData.value = _uiLiveData.value?.copy(emptyPosts = true)
+            _uiLiveData.value?.emptyPostsState = true
     }
 
-    /* --------------------------------------------------------------------------------------------
-     * Override
-    ---------------------------------------------------------------------------------------------*/
-    override fun onLogoutClick() {
+    private fun navigateToCreatePost() {
+        _navigationLiveData.value = NavigationGraph(
+            R.id.action_profile_fragment_to_imagePickerFragment,
+            bundleOf(USER_ID to loggedUser?.id)
+        )
+    }
+
+    private fun logout() {
         viewModelScope.launch {
             userRepository.logoutUser {
                 _navigationLiveData.value =
@@ -91,11 +96,24 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    /* --------------------------------------------------------------------------------------------
+     * Override
+    ---------------------------------------------------------------------------------------------*/
     override fun onCreatePostClick() {
-        _navigationLiveData.value = NavigationGraph(
-            R.id.action_profile_fragment_to_imagePickerFragment,
-            bundleOf(USER_ID to loggedUser?.id)
-        )
+        navigateToCreatePost()
+    }
+
+    override fun onMenuClick() {
+        _popupMenuLiveData.value = PopupMenuUiModel(R.menu.menu_profile) {
+            when (it) {
+                R.id.action_create_post -> {
+                    navigateToCreatePost()
+                }
+                R.id.action_logout -> {
+                    logout()
+                }
+            }
+        }
     }
 
     override fun onPostClick(postId: String) {

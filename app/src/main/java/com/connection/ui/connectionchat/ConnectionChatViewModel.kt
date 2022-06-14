@@ -225,7 +225,7 @@ class ConnectionChatViewModel @Inject constructor(
         _uiLiveData.value?.connectionStatus == ConnectionStatus.NOT_CONNECTED
 
     private fun updateUsers() {
-        userRepository.updateUser(
+        userRepository.addConnection(
             userId = loggedUser?.id ?: EMPTY,
             connections = mapOf(
                 Pair(
@@ -234,7 +234,7 @@ class ConnectionChatViewModel @Inject constructor(
                 )
             )
         )
-        userRepository.updateUser(
+        userRepository.addConnection(
             userId = senderUserId,
             connections = mapOf(
                 Pair(
