@@ -3,17 +3,17 @@
     <style name="Theme.Connection" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/pastel_yellow</item>
-        <item name="colorPrimaryVariant">@color/pastel_yellow</item>
+        <item name="colorPrimary">@color/dark_charcoal</item>
+        <item name="colorPrimaryVariant">@color/dark_charcoal</item>
         <item name="colorOnPrimary">@color/white</item>
 
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/pastel_yellow</item>
-        <item name="colorSecondaryVariant">@color/pastel_yellow</item>
+        <item name="colorSecondary">@color/dark_charcoal</item>
+        <item name="colorSecondaryVariant">@color/dark_charcoal</item>
         <item name="colorOnSecondary">@color/black</item>
 
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
     </style>

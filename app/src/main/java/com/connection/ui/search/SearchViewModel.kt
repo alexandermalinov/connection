@@ -121,4 +121,16 @@ class SearchViewModel @Inject constructor(
             )
         }
     }
+
+    override fun onRemoveClick(id: String) {
+        viewModelScope.launch {
+            _uiLiveData.value?.searchList
+                ?.find { it.userId == id }
+                ?.let {
+                    _uiLiveData.value = _uiLiveData.value
+                        ?.copy(searchList = _uiLiveData.value?.searchList?.minus(it) ?: emptyList())
+                }
+            searchRepository.removeSearchSuggestion(id)
+        }
+    }
 }

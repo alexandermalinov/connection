@@ -15,6 +15,10 @@ class SearchLocalSource @Inject constructor(
         searchHistoryDao.insert(searchHistory)
     }
 
+    override suspend fun removeSearchSuggestion(userId: String) {
+        searchHistoryDao.delete(userId)
+    }
+
     override suspend fun getSearchHistory(userId: String): List<SearchHistory> =
         searchHistoryDao.getUserSearchHistory(userId)
 }

@@ -17,6 +17,8 @@ class SearchRepository @Inject constructor(
         suspend fun addSearchSuggestion(searchHistory: SearchHistory)
 
         suspend fun getSearchHistory(userId: String): List<SearchHistory>
+
+        suspend fun removeSearchSuggestion(userId: String)
     }
 
     interface RemoteSource {
@@ -38,6 +40,10 @@ class SearchRepository @Inject constructor(
 
     suspend fun addSearchSuggestion(searchHistory: SearchHistory) {
         localSource.addSearchSuggestion(searchHistory)
+    }
+
+    suspend fun removeSearchSuggestion(userId: String) {
+        localSource.removeSearchSuggestion(userId)
     }
 
     suspend fun getSearchHistory(userId: String) = localSource.getSearchHistory(userId)

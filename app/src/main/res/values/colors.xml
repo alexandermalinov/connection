@@ -11,6 +11,9 @@
     <color name="black_500">#212121</color>
     <color name="black_700">#000000</color>
 
+    <color name="dark_charcoal">#313132</color>
+    <color name="light_silver">#d6d6d6</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
