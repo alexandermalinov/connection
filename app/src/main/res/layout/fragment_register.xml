@@ -165,7 +165,7 @@
                 android:elevation="@dimen/button_elevation"
                 android:onClick="@{() -> presenter.onLoginClick()}"
                 android:text="@string/sign_in"
-                android:textColor="@color/pastel_yellow"
+                android:textColor="@color/ateneo_blue"
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

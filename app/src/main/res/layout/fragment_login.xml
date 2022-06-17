@@ -122,7 +122,7 @@
                 android:elevation="@dimen/button_elevation"
                 android:onClick="@{() -> presenter.onRegisterClick()}"
                 android:text="@string/sign_up"
-                android:textColor="@color/pastel_yellow"
+                android:textColor="@color/ateneo_blue"
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

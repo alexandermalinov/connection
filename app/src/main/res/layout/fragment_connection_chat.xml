@@ -71,7 +71,7 @@
                 app:layout_constraintTop_toTopOf="@+id/image_profile"
                 app:layout_constraintVertical_bias="1.0"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
-                app:strokeColor="@color/pastel_yellow"
+                app:strokeColor="@color/ateneo_blue"
                 app:strokeWidth="2dp"
                 app:visibleGone="@{model.header.online}" />
 
@@ -189,7 +189,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button_accept"
             app:layout_constraintTop_toTopOf="@+id/button_accept"
-            app:strokeColor="@color/pastel_yellow"
+            app:strokeColor="@color/ateneo_blue"
             app:visibleGone="@{model.requestButtonVisible}" />
 
         <TextView
