@@ -187,6 +187,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
+                    android:visibility="gone"
                     app:layout_constraintTop_toBottomOf="@+id/container_additional_information">
 
                     <com.google.android.material.button.MaterialButton
