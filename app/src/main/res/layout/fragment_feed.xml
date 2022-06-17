@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_search_outlined"
                     app:tint="@color/white"
-                    android:onClick="@{() -> presenter.onCreatePostClick()}"
+                    android:onClick="@{() -> presenter.onSearchClick()}"
                     android:layout_marginEnd="@dimen/margin_medium"
                     app:layout_constraintBottom_toBottomOf="@+id/image_profile"
                     app:layout_constraintEnd_toStartOf="@+id/image_profile"
@@ -103,6 +103,17 @@
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/loading_bar_recent_chats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/container_message_box"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/header"
+                    app:visibleGone="@{model.loadingRecentChats}" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_favourite_connections"
@@ -159,6 +170,17 @@
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_x_medium"
                     android:textStyle="bold" />
+
+                <ProgressBar
+                    android:id="@+id/loading_posts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/container_message_box"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/header"
+                    app:visibleGone="@{model.loadingPosts}" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_posts"

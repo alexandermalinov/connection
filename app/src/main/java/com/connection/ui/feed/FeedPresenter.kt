@@ -6,5 +6,7 @@ interface FeedPresenter {
 
     fun onCreatePostClick()
 
+    fun onSearchClick()
+
     fun onDiscoverClick()
 }

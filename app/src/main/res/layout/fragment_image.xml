@@ -35,6 +35,7 @@
                 android:id="@+id/image_arrow_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/padding_tiny"
                 android:background="?attr/selectableItemBackground"
                 android:onClick="@{() -> presenter.onBackClick()}"
                 android:src="@drawable/ic_back_left"
@@ -79,13 +80,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginVertical="@dimen/margin_pre_x_medium"
-            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
-            app:glideRes="@{model.url}"
+            app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+            app:glideRess="@{model.url}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header"
-            tools:src="@drawable/detected_light"/>
+            tools:src="@drawable/vertical_wallpaper"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
