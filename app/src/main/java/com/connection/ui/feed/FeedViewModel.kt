@@ -82,16 +82,24 @@ class FeedViewModel @Inject constructor(
     }
 
     private suspend fun loadPosts() {
+        _uiLiveData.value?.loadingPosts = true
         postRepository.getUserPosts(
-            onSuccess = { posts -> onReceiverPosts(posts) },
+            onSuccess = { posts ->
+                onReceiverPosts(posts)
+                _uiLiveData.value?.loadingPosts = false
+            },
             onFailure = { Timber.e("Error occurred fetching posts") }
         )
     }
 
     private suspend fun loadChats() {
+        _uiLiveData.value?.loadingRecentChats = true
         chatTabRepository.fetchChannels(
             ConnectionStatus.CONNECTED,
-            onSuccess = { channels -> onReceiveChats(channels) },
+            onSuccess = { channels ->
+                onReceiveChats(channels)
+                _uiLiveData.value?.loadingRecentChats = false
+            },
             onFailure = {
                 viewModelScope.launch {
                     connectUser(loggedUser)
@@ -202,6 +210,10 @@ class FeedViewModel @Inject constructor(
             R.id.action_feedFragment_to_imagePickerFragment,
             bundleOf(USER_ID to loggedUser?.id)
         )
+    }
+
+    override fun onSearchClick() {
+        _navigationLiveData.value = NavigationGraph(R.id.action_feedFragment_to_searchFragment)
     }
 
     override fun onDiscoverClick() {

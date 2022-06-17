@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium"
                 android:background="@drawable/sp_edit_text"
-                android:drawableEnd="@drawable/ic_decline"
                 android:hint="@string/find_people"
                 android:padding="@dimen/padding_small"
                 android:textColor="@color/black"

@@ -20,7 +20,8 @@
         android:id="@+id/container_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small">
+        android:layout_margin="@dimen/margin_small"
+        android:onClick="@{() -> presenter.onImageOpenClick(model.id)}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_profile"
@@ -28,8 +29,6 @@
             android:layout_height="36dp"
             app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.senderPicture}"
-            app:layout_constraintEnd_toStartOf="@+id/image_message"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -37,21 +36,34 @@
             app:visibleGone="@{model.pictureVisible}"
             tools:src="@drawable/ic_profile_picture" />
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/image_message"
+        <RelativeLayout
+            android:id="@+id/image_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_small"
-            android:onClick="@{() -> presenter.onImageOpenClick(model.id)}"
-            android:src="@drawable/detected_light"
-            app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
-            app:glideRess="@{model.senderMessage}"
-            app:layout_constrainedWidth="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="400dp"
+            app:layout_constraintHorizontal_bias="0.18"
             app:layout_constraintStart_toEndOf="@+id/image_profile"
-            app:layout_constraintTop_toTopOf="@+id/image_profile"
-            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeTwelve"
-            tools:src="@drawable/detected_light" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="300dp">
+
+            <ProgressBar
+                android:id="@+id/image_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+                app:glideRess="@{model.senderMessage}"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeTwelve"
+                tools:src="@drawable/vertical_wallpaper" />
+        </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,8 +71,8 @@
             android:text="@{model.sendAt}"
             android:textSize="@dimen/text_pre_small"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/image_message"
-            app:layout_constraintTop_toBottomOf="@+id/image_message"
+            app:layout_constraintStart_toStartOf="@+id/image_container"
+            app:layout_constraintTop_toBottomOf="@+id/image_container"
             tools:text="22:45" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
