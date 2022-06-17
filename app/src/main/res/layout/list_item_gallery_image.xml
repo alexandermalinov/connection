@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.gallery.GalleryPresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.gallery.GalleryImageListItemUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container_connection"
+        android:layout_width="100dp"
+        android:layout_height="100dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="1dp"
+            android:onClick="@{() -> presenter.onImageClick(model.id)}"
+            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+            app:glideRes="@{model.image}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_gallery" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@color/black"
+            android:padding="@dimen/padding_tiny"
+            android:src="@drawable/ic_accept"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibleGone="@{model.selected}"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

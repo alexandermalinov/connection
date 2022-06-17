@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/edit_text_shape.xml" value="0.14" />
+        <entry key="app/src/main/res/drawable/ic_accept.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_account_filled.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_account_outlined.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.223" />
+        <entry key="app/src/main/res/drawable/ic_add_circle.xml" value="0.176" />
+        <entry key="app/src/main/res/drawable/ic_add_connection.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_add_filled.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_add_message.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_add_outlined.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_arrow.xml" value="0.255" />
+        <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_attach_file.xml" value="0.255" />
+        <entry key="app/src/main/res/drawable/ic_background_gradient.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_background_navigation_menu.xml" value="0.3005" />
+        <entry key="app/src/main/res/drawable/ic_bookmark.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_bookmark_outlined.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_camera.xml" value="0.2745" />
+        <entry key="app/src/main/res/drawable/ic_chat.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_chat_filled.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_chat_outlined.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_check.xml" value="0.2455" />
+        <entry key="app/src/main/res/drawable/ic_circle.xml" value="0.2745" />
+        <entry key="app/src/main/res/drawable/ic_circle_add_new.xml" value="0.1665" />
+        <entry key="app/src/main/res/drawable/ic_clock.xml" value="0.255" />
+        <entry key="app/src/main/res/drawable/ic_comment.xml" value="0.207" />
+        <entry key="app/src/main/res/drawable/ic_comment_outlined.xml" value="0.2005" />
+        <entry key="app/src/main/res/drawable/ic_comment_rounded.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_decline.xml" value="0.1845" />
+        <entry key="app/src/main/res/drawable/ic_default_avatar.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.2455" />
+        <entry key="app/src/main/res/drawable/ic_email.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_expand_more.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_favorite.xml" value="0.237" />
+        <entry key="app/src/main/res/drawable/ic_favourite.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_favourite_filled.xml" value="0.207" />
+        <entry key="app/src/main/res/drawable/ic_gallery.xml" value="0.2455" />
+        <entry key="app/src/main/res/drawable/ic_globe.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_home_filled.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_home_outlined.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_human_moon.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_like_filled.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_like_outlined.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_lock.xml" value="0.176" />
+        <entry key="app/src/main/res/drawable/ic_lock_filled.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_lock_outlined.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_logout.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_love.xml" value="0.207" />
+        <entry key="app/src/main/res/drawable/ic_menu_hamburger.xml" value="0.2005" />
+        <entry key="app/src/main/res/drawable/ic_next.xml" value="0.3185" />
+        <entry key="app/src/main/res/drawable/ic_no_messages.xml" value="0.215" />
+        <entry key="app/src/main/res/drawable/ic_notifications_black.xml" value="0.3175" />
+        <entry key="app/src/main/res/drawable/ic_options.xml" value="0.2195" />
+        <entry key="app/src/main/res/drawable/ic_oval.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_people.xml" value="0.263" />
+        <entry key="app/src/main/res/drawable/ic_people_black.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/ic_people_filled.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_people_outlined.xml" value="0.1965" />
+        <entry key="app/src/main/res/drawable/ic_phone_women.xml" value="0.213" />
+        <entry key="app/src/main/res/drawable/ic_profile_picture.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_red_circle.xml" value="0.3285" />
+        <entry key="app/src/main/res/drawable/ic_register_background.xml" value="0.2" />
+        <entry key="app/src/main/res/drawable/ic_rounded_rectangle.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_rounded_rectangle_colored.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_rounded_rectangle_grey.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.2505" />
+        <entry key="app/src/main/res/drawable/ic_search_black.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_search_white.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_send.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_send_black.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_send_message_outlined.xml" value="0.2005" />
+        <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_share_link.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/ic_verified.xml" value="0.2235" />
+        <entry key="app/src/main/res/drawable/ic_wave.xml" value="0.3285" />
+        <entry key="app/src/main/res/drawable/ic_wave__3_.xml" value="0.2195" />
+        <entry key="app/src/main/res/drawable/ic_wave_bottom.xml" value="0.3285" />
+        <entry key="app/src/main/res/drawable/ic_wave_top.xml" value="0.2195" />
+        <entry key="app/src/main/res/drawable/ic_woman_searching.xml" value="0.1795" />
+        <entry key="app/src/main/res/drawable/sl_account.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/sl_chat.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/sl_create_post.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/sl_favourite.xml" value="0.207" />
+        <entry key="app/src/main/res/drawable/sl_home.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/sl_people.xml" value="0.1985" />
+        <entry key="app/src/main/res/drawable/sl_search.xml" value="0.2005" />
+        <entry key="app/src/main/res/drawable/sp_bottom_navigation.xml" value="0.149" />
+        <entry key="app/src/main/res/drawable/sp_edit_text.xml" value="0.2005" />
+        <entry key="app/src/main/res/drawable/tab_layout_bg.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/tabs_selector.xml" value="0.198" />
+        <entry key="app/src/main/res/layout-v29/activity_main.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_all_messages.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/layout/fragment_all_tabs.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_connected_people.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_connection_chat.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_create_post.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_feed.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_image.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_image_picker.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_invitations.xml" value="0.3179347826086957" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_not_connected_people.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_people.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_post_comments.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_search.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_user_profile.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_chat_date.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/list_item_chat_favourite_connection.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/list_item_chat_user.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_comment.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_connected_user.xml" value="0.2872788542544229" />
+        <entry key="app/src/main/res/layout/list_item_feed_post.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_gallery_image.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/list_item_image_message_logged_user.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/list_item_image_message_sender_user.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/list_item_invitation.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/list_item_message.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_message_logged_used.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/layout/list_item_message_logged_user.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_message_sender_user.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/list_item_not_connected_user.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_post_image.xml" value="0.3296875" />
+        <entry key="app/src/main/res/layout/list_item_search.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_sender_message_sender_user.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/list_item_user.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/menu/menu_profile.xml" value="0.32461538461538464" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

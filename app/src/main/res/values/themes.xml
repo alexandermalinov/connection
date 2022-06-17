@@ -1,0 +1,20 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Connection" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/ateneo_blue</item>
+        <item name="colorPrimaryVariant">@color/ateneo_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/ateneo_blue</item>
+        <item name="colorSecondaryVariant">@color/ateneo_blue</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@android:color/black</item>
+        <!-- Customize your theme here. -->
+
+    </style>
+</resources>

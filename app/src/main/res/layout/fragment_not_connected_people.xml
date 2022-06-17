@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.people.base.PeoplesPresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.people.PeopleUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_large"
+            android:src="@drawable/ic_share_link"
+            app:visibleGone="@{model.emptyState}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/core_sans_regular"
+            android:text="@string/empty_discover_people"
+            app:visibleGone="@{model.emptyState}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_peoples"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            tools:listitem="@layout/list_item_not_connected_user" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>

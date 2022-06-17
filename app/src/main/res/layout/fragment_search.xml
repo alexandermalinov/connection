@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.base.search.BaseSearchPresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.search.SearchUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/container_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:padding="@dimen/padding_medium">
+
+            <TextView
+                android:id="@+id/text_feed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/core_sans_regular"
+                android:text="@string/search"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_large"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:background="@drawable/sp_edit_text"
+                android:drawableEnd="@drawable/ic_decline"
+                android:hint="@string/find_people"
+                android:padding="@dimen/padding_small"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@+id/text_feed"
+                app:textChanges="@{(flow) -> presenter.onSearchChanged(flow)}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/text_results_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:fontFamily="@font/core_sans_regular"
+            android:textStyle="bold"
+            app:textFormatted="@{model.resultsCount}"
+            app:visibleGone="@{!model.recentSearchesSate}"
+            tools:text="Results 100" />
+
+        <TextView
+            android:id="@+id/text_recent_searches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:fontFamily="@font/core_sans_regular"
+            android:text="@string/recent_searches"
+            android:textStyle="bold"
+            app:visibleGone="@{model.recentSearchesSate}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/padding_medium"
+            tools:listitem="@layout/list_item_search" />
+
+        <ImageView
+            android:id="@+id/image_empty_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_woman_searching"
+            app:visibleGone="@{model.emptySearchResultState}" />
+
+        <TextView
+            android:id="@+id/text_empty_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:gravity="center_horizontal"
+            android:text="@string/no_connections"
+            android:textColor="@color/black"
+            app:visibleGone="@{model.emptySearchResultState}" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

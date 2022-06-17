@@ -1,0 +1,88 @@
+<resources>
+    <string name="app_name">Connection</string>
+
+    <string name="connection">Connection</string>
+    <string name="connection_supporting_text">Your Connections,\nYour Chats</string>
+
+    // Register and Login
+    <string name="register">Register</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="email">email</string>
+    <string name="login">Login</string>
+    <string name="don_t_have_account_yet_sign_up">Don\'t have account yet?</string>
+    <string name="already_have_account">Already have account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+
+    <string name="search">Search</string>
+    <string name="groups">Groups</string>
+    <string name="connections">Connections</string>
+
+    // Bottom Navigation
+    <string name="profile">Profile</string>
+    <string name="chats">Chats</string>
+    <string name="people">People</string>
+    <string name="settings">Settings</string>
+    <string name="feed">Feed</string>
+    <string name="home">Home</string>
+
+    // Input errors
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_username">Invalid username</string>
+    <string name="invalid_password">Invalid password</string>
+
+    <string name="connect">Connect</string>
+    <string name="message">Message</string>
+    <string name="send_button_description">Send Button</string>
+    <string name="online">Online</string>
+    <string name="options_menu">options menu</string>
+    <string name="favourites">Favourites</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
+    <string name="sent_you_connection_request">sent you connection request</string>
+    <string name="request_to_connect">request to connect by sending message</string>
+    <string name="no_connections">Looks like you do not have connections yet. Discover and connect to people on the People\'s page</string>
+    <string name="discover">Discover</string>
+    <string name="discover_connections">Make new connections and start communicating with other users</string>
+    <string name="empty_discover_people">Looks like there are not any people to connect with</string>
+    <string name="invitations">Invitations</string>
+    <string name="there_are_no_invitations_yet">There are no invitations yet</string>
+    <string name="request_sent">Request to connect is sent. To start messaging it has to be approved</string>
+    <string name="logout">Logout</string>
+    <string name="wishes_to_connect_with_you">Wishes to connect\n with you</string>
+    <string name="waits_you_to_send_message">Waits you to send a message</string>
+    <string name="connections_count">mutual connections \nand %s others</string>
+    <string name="connection_count">%s mutual connection</string>
+    <string name="no_connections_count">The user hasn\'t connections yet</string>
+    <string name="connect_to_start_chatting">Connect to start chatting</string>
+    <string name="accepted">Accepted</string>
+    <string name="declined">Declined</string>
+    <string name="add_new">Add new</string>
+    <string name="send_image">Send Image</string>
+
+    <string name="choose_image">Choose Image</string>
+    <string name="gallery">Gallery</string>
+    <string name="create_post">Create Post</string>
+    <string name="enter_title">Enter Post Title</string>
+    <string name="enter_description">Enter Post Description</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="selected_image">Selected Image</string>
+    <string name="post_creator">Post Creator</string>
+    <string name="posts">Posts</string>
+    <string name="recent_chats">Recent Chats</string>
+    <string name="save">Save</string>
+    <string name="all_photos">All Photos</string>
+    <string name="post">Post</string>
+    <string name="no_recent_chats">There are not any chats. Discover and connect to people on the People\'s page</string>
+    <string name="no_posts">Looks like there are no posts to see. It is time to create your first</string>
+    <string name="no_comments">No comments yet. Start by writing a comment yourself</string>
+    <string name="comments">Comments</string>
+    <string name="write_a_comment">Write a comment</string>
+    <string name="find_people">Find people …</string>
+    <string name="results_count">Results %s</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="user_profile">User Profile</string>
+    <string name="invite_sent">Invite sent</string>
+</resources>

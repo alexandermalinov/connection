@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.connection.vo.people.PeopleUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/text_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:fontFamily="@font/core_sans_regular"
+            android:text="@string/people"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_large"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="People" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            app:tabIndicatorColor="@color/white"
+            app:tabTextColor="@color/white"
+            android:paddingHorizontal="@dimen/padding_tiny"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_header"
+            app:tabIndicatorFullWidth="false"
+            app:tabIndicatorHeight="3dp"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabLayoutStyle">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/connections" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/discover" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/invitations" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/container_view_people"
+            android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabs" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
