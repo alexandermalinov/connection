@@ -23,7 +23,7 @@
         android:orientation="vertical"
         tools:context=".ui.register.RegisterFragment">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_large"
@@ -33,26 +33,33 @@
                 android:id="@+id/image_profile_picture"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:tint="@color/light_silver"
                 android:layout_gravity="center_vertical"
                 android:onClick="@{() -> presenter.onProfileImageClick()}"
                 android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
                 app:uriRes="@{model.profilePicture}"
-                tools:src="@drawable/ic_profile_picture" />
+                tools:src="@drawable/ic_account_filled" />
 
             <TextView
                 android:id="@+id/text_header_sign_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_medium"
                 android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_medium"
                 android:fontFamily="@font/core_sans_regular"
                 android:text="@string/sign_up"
                 android:textColor="@color/black"
                 android:textSize="48sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/image_profile_picture"
+                app:layout_constraintStart_toEndOf="@+id/image_profile_picture"
+                app:layout_constraintTop_toTopOf="@+id/image_profile_picture" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_email"
@@ -122,9 +129,9 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_register"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -165,7 +172,7 @@
                 android:elevation="@dimen/button_elevation"
                 android:onClick="@{() -> presenter.onLoginClick()}"
                 android:text="@string/sign_in"
-                android:textColor="@color/ateneo_blue"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -41,17 +41,4 @@ class ImageFragment : BaseFragment<FragmentImageBinding>() {
             dataBinding.model = uiLiveData
         }
     }
-
-    /* --------------------------------------------------------------------------------------------
-     * Override
-    ---------------------------------------------------------------------------------------------*/
-    override fun onResume() {
-        super.onResume()
-        setStatusBarColor(R.color.black)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setStatusBarColor(R.color.ateneo_blue)
-    }
 }
