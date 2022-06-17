@@ -7,8 +7,6 @@ import com.connection.data.api.remote.model.user.toMap
 import com.connection.ui.base.InviteTypes
 import com.connection.utils.common.Constants.CONNECTIONS
 import com.connection.utils.common.Constants.EMPTY
-import com.connection.utils.common.Constants.SENT_INVITES
-import com.connection.utils.common.Constants.RECEIVED_INVITES
 import com.connection.utils.common.Constants.USERS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -69,7 +67,20 @@ class UserRemoteSource @Inject constructor(
             .addOnFailureListener { onFailure() }
     }
 
-    override fun isUserLoggedIn(): Boolean = auth.currentUser != null
+    /**
+     * This is temporary until a solution is find to this problem:
+     * If the user was deleted on another device and the local token has not refreshed.
+     * In this case, getCurrentUser will return a non-null FirebaseUser
+     * but the underlying token is not valid
+     */
+    override suspend fun isUserLoggedIn(onSuccess: () -> Unit, onFailure: () -> Unit) {
+        auth.addAuthStateListener { state ->
+            if (state.currentUser != null && state.currentUser?.uid != "EiNndWIwPNbadKmx8K9QTl1P7Ws1") {
+                onSuccess()
+            } else
+                onFailure()
+        }
+    }
 
     override fun uploadImage(
         uri: Uri?,

@@ -19,7 +19,7 @@ object Constants {
     const val SEARCH_BODY = "search_body"
 
     // Delays
-    const val SPLASH_SCREEN_DELAY = 1000L
+    const val SPLASH_SCREEN_DELAY = 500L
 
     // External Storage Keys
     const val SELECT_IMAGE_KEY = "image_picker_key"

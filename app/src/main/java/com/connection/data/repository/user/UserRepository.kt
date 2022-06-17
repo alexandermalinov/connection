@@ -35,7 +35,7 @@ class UserRepository @Inject constructor(
             onFailure: () -> Unit
         )
 
-        fun isUserLoggedIn(): Boolean
+        suspend fun isUserLoggedIn(onSuccess: () -> Unit, onFailure: () -> Unit)
 
         fun uploadImage(
             uri: Uri?,
@@ -87,7 +87,9 @@ class UserRepository @Inject constructor(
         remote.registerDB(user, onSuccess, onFailure)
     }
 
-    fun isUserLoggedIn() = remote.isUserLoggedIn()
+    suspend fun isUserLoggedIn(onSuccess: () -> Unit, onFailure: () -> Unit) {
+        remote.isUserLoggedIn(onSuccess, onFailure)
+    }
 
     fun uploadImage(
         uri: Uri?,
