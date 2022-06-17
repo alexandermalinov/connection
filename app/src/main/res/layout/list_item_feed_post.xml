@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="com.connection.ui.feed.FeedPostPresenter" />
+
+        <variable
+            name="model"
+            type="com.connection.vo.post.PostUiModel" />
+
+        <import type="com.connection.R" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_medium">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="@dimen/profile_pre_small"
+            android:layout_height="@dimen/profile_pre_small"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:onClick="@{() -> presenter.onUserClick(model.creatorId)}"
+            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+            app:glideRes="@{model.creatorPicture}"
+            app:layout_constraintBottom_toTopOf="@+id/image_post_picture"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
+            tools:src="@drawable/ic_profile_picture" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:ellipsize="end"
+            android:fontFamily="@font/core_sans_regular"
+            android:maxLines="2"
+            android:text="@{model.creatorUsername}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_medium"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/text_create_at"
+            app:layout_constraintEnd_toStartOf="@+id/button_connect"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/image_avatar"
+            app:layout_constraintTop_toTopOf="@+id/image_avatar"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Alice Henry" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_connect"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_small"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:onClick="@{() -> presenter.onConnectClick(model)}"
+            android:text="@string/connect"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_name"
+            app:visibleGone="@{model.connectVisible}" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_post_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:scaleType="centerCrop"
+            app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+            app:glideRess="@{model.picture}"
+            app:layout_constraintBottom_toTopOf="@+id/button_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="400dp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_avatar"
+            tools:src="@drawable/green_background" />
+
+        <ImageView
+            android:id="@+id/button_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:onClick="@{() -> presenter.onLikeClick(model.id)}"
+            android:src="@{model.liked ? @drawable/ic_like_filled : @drawable/ic_like_outlined}"
+            app:layout_constraintBottom_toTopOf="@+id/text_description"
+            app:layout_constraintStart_toStartOf="@+id/image_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/image_post_picture"
+            tools:src="@drawable/ic_like_filled" />
+
+        <TextView
+            android:id="@+id/text_likes_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@{model.likesCount}"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/button_like"
+            app:layout_constraintStart_toEndOf="@+id/button_like"
+            app:layout_constraintTop_toTopOf="@id/button_like"
+            tools:text="130" />
+
+        <ImageView
+            android:id="@+id/button_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:onClick="@{() -> presenter.onCommentsClick(model.id)}"
+            android:src="@drawable/ic_comment_outlined"
+            app:layout_constraintBottom_toBottomOf="@+id/button_like"
+            app:layout_constraintStart_toEndOf="@+id/text_likes_count"
+            app:layout_constraintTop_toTopOf="@+id/button_like"
+            app:tint="@color/black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small"
+            android:text="@{model.commentsCount}"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/button_comments"
+            app:layout_constraintStart_toEndOf="@id/button_comments"
+            app:layout_constraintTop_toTopOf="@id/button_comments"
+            tools:text="100" />
+
+        <ImageView
+            android:id="@+id/button_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:onClick="@{() -> presenter.onSaveClick(model.id)}"
+            android:src="@drawable/ic_bookmark_outlined"
+            app:layout_constraintBottom_toBottomOf="@+id/button_like"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_like"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/text_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:text="@{model.description}"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/image_avatar"
+            app:layout_constraintTop_toBottomOf="@+id/button_like"
+            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum." />
+
+        <TextView
+            android:id="@+id/text_create_at"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{model.createdAt}"
+            android:textSize="@dimen/text_pre_small"
+            app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
+            app:layout_constraintEnd_toEndOf="@+id/text_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/text_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_name"
+            tools:text="12:45" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

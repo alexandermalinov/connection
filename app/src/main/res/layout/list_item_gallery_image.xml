@@ -19,13 +19,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container_connection"
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:padding="0.5dp">
+        android:layout_height="100dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_message"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="1dp"
             android:onClick="@{() -> presenter.onImageClick(model.id)}"
             app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
             app:glideRes="@{model.image}"

@@ -21,21 +21,31 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_large"
+            android:src="@drawable/ic_share_link"
+            app:visibleGone="@{model.emptyState}" />
+
         <TextView
             android:id="@+id/text_discover"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_medium"
+            android:fontFamily="@font/core_sans_regular"
+            android:gravity="center_horizontal"
             android:text="@string/discover_connections"
             app:visibleGone="@{model.emptyState}" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_discover"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            app:cornerRadius="@dimen/radius_medium"
             android:layout_marginTop="@dimen/margin_medium"
             android:onClick="@{() -> presenter.onDiscoverClick()}"
             android:text="@string/discover"

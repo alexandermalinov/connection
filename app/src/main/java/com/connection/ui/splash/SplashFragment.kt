@@ -29,14 +29,4 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_splash
-
-    override fun onResume() {
-        super.onResume()
-        setStatusBarColor(R.color.white)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setStatusBarColor(R.color.pastel_yellow)
-    }
 }

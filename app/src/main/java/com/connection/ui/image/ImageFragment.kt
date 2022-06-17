@@ -1,6 +1,5 @@
 package com.connection.ui.image
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -53,6 +52,6 @@ class ImageFragment : BaseFragment<FragmentImageBinding>() {
 
     override fun onPause() {
         super.onPause()
-        setStatusBarColor(R.color.pastel_yellow)
+        setStatusBarColor(R.color.ateneo_blue)
     }
 }

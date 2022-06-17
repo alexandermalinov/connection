@@ -19,11 +19,21 @@ class MainActivityViewModel @Inject constructor() : BaseViewModel() {
     ) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.all_messages_fragment -> view.visibility = View.VISIBLE
-                R.id.profile_fragment -> view.visibility = View.VISIBLE
-                R.id.people_fragment -> view.visibility = View.VISIBLE
+                R.id.all_messages_fragment
+                        ,R.id.profile_fragment
+                        ,R.id.people_fragment
+                        ,R.id.feedFragment
+                        ,R.id.searchFragment
+                        ,R.id.userProfileFragment -> view.makeVisible()
                 else -> view.visibility = View.GONE
             }
         }
+    }
+
+    /* --------------------------------------------------------------------------------------------
+     * Private
+    ---------------------------------------------------------------------------------------------*/
+    private fun View.makeVisible() {
+        visibility = View.VISIBLE
     }
 }

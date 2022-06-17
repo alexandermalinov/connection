@@ -25,8 +25,8 @@
             android:id="@+id/image_profile_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/core_sans_regular"
             android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/core_sans_regular"
             android:text="@string/sign_in"
             android:textColor="@color/black"
             android:textSize="48sp"
@@ -44,7 +44,7 @@
             app:boxCornerRadiusBottomStart="@dimen/radius_medium"
             app:boxCornerRadiusTopEnd="@dimen/radius_medium"
             app:boxCornerRadiusTopStart="@dimen/radius_medium"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_email_outlined">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -66,7 +66,7 @@
             app:boxCornerRadiusBottomStart="@dimen/radius_medium"
             app:boxCornerRadiusTopEnd="@dimen/radius_medium"
             app:boxCornerRadiusTopStart="@dimen/radius_medium"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_lock_outlined">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -76,18 +76,15 @@
                 app:inputError="@{model.passwordError}" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/button_login"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="@dimen/padding_large"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_medium"
             android:onClick="@{() -> presenter.onLoginClick()}"
             android:text="@string/login"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:cornerRadius="@dimen/radius_medium"
             app:visibleGone="@{!model.loading}" />
 
         <ProgressBar
@@ -105,8 +102,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_pre_medium"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_pre_medium"
             android:orientation="horizontal">
 
             <TextView
@@ -125,7 +122,7 @@
                 android:elevation="@dimen/button_elevation"
                 android:onClick="@{() -> presenter.onRegisterClick()}"
                 android:text="@string/sign_up"
-                android:textColor="@color/pastel_yellow"
+                android:textColor="@color/ateneo_blue"
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

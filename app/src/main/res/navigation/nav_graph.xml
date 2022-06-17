@@ -9,7 +9,7 @@
         android:id="@+id/splash_fragment"
         android:name="com.connection.ui.splash.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_registerFragment"
             app:destination="@id/register_fragment" />
@@ -21,12 +21,15 @@
             android:id="@+id/action_splashFragment_to_allMessagesFragment"
             app:destination="@id/all_messages_fragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splash_fragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
     <fragment
         android:id="@+id/register_fragment"
         android:name="com.connection.ui.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_allMessagesFragment"
             app:destination="@id/all_messages_fragment" />
@@ -36,23 +39,29 @@
         <action
             android:id="@+id/action_registerFragment_to_allMessagesFragment2"
             app:destination="@id/all_messages_fragment" />
+        <action
+            android:id="@+id/action_register_fragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
     <fragment
         android:id="@+id/login_fragment"
         android:name="com.connection.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_allMessagesFragment"
             app:destination="@id/all_messages_fragment" />
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/register_fragment" />
+        <action
+            android:id="@+id/action_login_fragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
     <fragment
         android:id="@+id/all_messages_fragment"
         android:name="com.connection.ui.alltabs.AllTabsFragment"
-        android:label="AllMessagesFragment" >
+        android:label="AllMessagesFragment">
         <action
             android:id="@+id/action_allMessagesFragment_to_profileFragment"
             app:destination="@id/profile_fragment" />
@@ -63,15 +72,18 @@
     <fragment
         android:id="@+id/profile_fragment"
         android:name="com.connection.ui.profile.ProfileFragment"
-        android:label="ProfileFragment" >
+        android:label="ProfileFragment">
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_profile_fragment_to_imagePickerFragment"
+            app:destination="@id/imagePickerFragment" />
     </fragment>
     <fragment
         android:id="@+id/people_fragment"
         android:name="com.connection.ui.people.base.PeopleFragment"
-        android:label="PeopleFragment" >
+        android:label="PeopleFragment">
         <action
             android:id="@+id/action_peopleFragment_to_connectionChatFragment"
             app:destination="@id/connection_chat_fragment" />
@@ -88,7 +100,7 @@
     <fragment
         android:id="@+id/connection_chat_fragment"
         android:name="com.connection.ui.connectionchat.ConnectionChatFragment"
-        android:label="ConnectionChatFragment" >
+        android:label="ConnectionChatFragment">
         <action
             android:id="@+id/action_connection_chat_fragment_to_imageFragment"
             app:destination="@id/imageFragment" />
@@ -96,7 +108,7 @@
     <fragment
         android:id="@+id/connectedPeopleFragment"
         android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
-        android:label="ConnectedPeopleFragment" >
+        android:label="ConnectedPeopleFragment">
         <action
             android:id="@+id/action_connectedPeopleFragment_to_connection_chat_fragment"
             app:destination="@id/connection_chat_fragment" />
@@ -104,13 +116,79 @@
     <fragment
         android:id="@+id/not_connected_people"
         android:name="com.connection.ui.people.notconnected.NotConnectedPeopleFragment"
-        android:label="NotConnectedPeople" />
+        android:label="NotConnectedPeople" >
+        <action
+            android:id="@+id/action_not_connected_people_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/invitations_fragment"
         android:name="com.connection.ui.people.invitation.InvitationsFragment"
-        android:label="InvitationsFragment" />
+        android:label="InvitationsFragment" >
+        <action
+            android:id="@+id/action_invitations_fragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/imageFragment"
         android:name="com.connection.ui.image.ImageFragment"
         android:label="ImageFragment" />
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.connection.ui.post.createpost.CreatePostFragment"
+        android:label="CreatePostFragment" >
+        <action
+            android:id="@+id/action_createPostFragment_to_profile_fragment"
+            app:destination="@id/profile_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imagePickerFragment"
+        android:name="com.connection.ui.post.imagepicker.ImagePickerFragment"
+        android:label="ImagePickerFragment" >
+        <action
+            android:id="@+id/action_imagePickerFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
+        <action
+            android:id="@+id/action_imagePickerFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.connection.ui.feed.FeedFragment"
+        android:label="FeedFragment" >
+        <action
+            android:id="@+id/action_feedFragment_to_imagePickerFragment"
+            app:destination="@id/imagePickerFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_profile_fragment"
+            app:destination="@id/profile_fragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_people_fragment"
+            app:destination="@id/people_fragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_postCommentsFragment"
+            app:destination="@id/postCommentsFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_connection_chat_fragment"
+            app:destination="@id/connection_chat_fragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/postCommentsFragment"
+        android:name="com.connection.ui.comments.PostCommentsFragment"
+        android:label="PostCommentsFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.connection.ui.search.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.connection.ui.userprofile.UserProfileFragment"
+        android:label="UserProfileFragment" />
 </navigation>

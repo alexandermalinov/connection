@@ -90,9 +90,7 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>(),
 
     private fun observeGalleryLiveData() {
         viewModel.galleryLiveData.observe(viewLifecycleOwner) { galleryLiveData ->
-            dataBinding.apply {
-                (recyclerGallery.adapter as GalleryAdapter).submitList(galleryLiveData)
-            }
+            (dataBinding.recyclerGallery.adapter as GalleryAdapter).submitList(galleryLiveData)
         }
     }
 

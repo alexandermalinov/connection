@@ -1,8 +1,9 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.model.UserData
-import com.connection.data.api.model.UsersData
+import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.api.remote.model.user.UsersData
+import com.connection.ui.base.InviteTypes
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -24,41 +25,37 @@ class UserRepository @Inject constructor(
         suspend fun registerAuth(
             email: String,
             password: String,
-            onSuccess: (String) -> Unit
+            onSuccess: (String) -> Unit,
+            onFailure: () -> Unit
         )
 
         fun registerDB(
             user: UserData,
-            onSuccess: (UserData) -> Unit
+            onSuccess: (UserData) -> Unit,
+            onFailure: () -> Unit
         )
 
-        fun isUserLoggedIn(): Boolean
+        suspend fun isUserLoggedIn(onSuccess: () -> Unit, onFailure: () -> Unit)
 
         fun uploadImage(
             uri: Uri?,
-            onSuccess: (Uri?) -> Unit
-        )
-
-        fun getUser(
-            id: String,
-            onSuccess: (UserData?) -> Unit
-        )
-
-        suspend fun getUsers(
-            onSuccess: (UsersData) -> Unit,
+            onSuccess: (Uri?) -> Unit,
             onFailure: () -> Unit
         )
+
+        suspend fun getUser(id: String, onSuccess: (UserData?) -> Unit)
+
+        suspend fun getUsers(onSuccess: (UsersData) -> Unit, onFailure: () -> Unit)
 
         suspend fun getLoggedUserId(): String
 
         suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit)
 
-        fun updateUser(
-            userId: String,
-            connections: Map<String, String>
-        )
-
         suspend fun logoutUser(onSuccess: () -> Unit)
+
+        fun addConnection(userId: String, connections: Map<String, String>)
+
+        fun addInvitation(userId: String, invite: Map<String, String>, type: InviteTypes)
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -76,28 +73,33 @@ class UserRepository @Inject constructor(
     suspend fun registerAuth(
         email: String,
         password: String,
-        onSuccess: (String) -> Unit
+        onSuccess: (String) -> Unit,
+        onFailure: () -> Unit
     ) {
-        remote.registerAuth(email, password, onSuccess)
+        remote.registerAuth(email, password, onSuccess, onFailure)
     }
 
     fun registerDB(
         user: UserData,
-        onSuccess: (UserData) -> Unit
+        onSuccess: (UserData) -> Unit,
+        onFailure: () -> Unit
     ) {
-        remote.registerDB(user, onSuccess)
+        remote.registerDB(user, onSuccess, onFailure)
     }
 
-    fun isUserLoggedIn() = remote.isUserLoggedIn()
+    suspend fun isUserLoggedIn(onSuccess: () -> Unit, onFailure: () -> Unit) {
+        remote.isUserLoggedIn(onSuccess, onFailure)
+    }
 
     fun uploadImage(
         uri: Uri?,
-        onSuccess: (Uri?) -> Unit
+        onSuccess: (Uri?) -> Unit,
+        onFailure: () -> Unit
     ) {
-        remote.uploadImage(uri, onSuccess)
+        remote.uploadImage(uri, onSuccess, onFailure)
     }
 
-    fun getUser(
+    suspend fun getUser(
         id: String,
         onSuccess: (UserData?) -> Unit
     ) {
@@ -109,20 +111,22 @@ class UserRepository @Inject constructor(
         onFailure: () -> Unit
     ) = remote.getUsers(onSuccess, onFailure)
 
-    suspend fun getLoggedUserId(): String = remote.getLoggedUserId()
-
     suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
         remote.getLoggedUser(onSuccess)
     }
 
-    fun updateUser(
+    suspend fun logoutUser(onSuccess: () -> Unit) {
+        remote.logoutUser(onSuccess)
+    }
+
+    fun addConnection(
         userId: String,
         connections: Map<String, String>
     ) {
-        remote.updateUser(userId, connections)
+        remote.addConnection(userId, connections)
     }
 
-    suspend fun logoutUser(onSuccess: () -> Unit) {
-        remote.logoutUser(onSuccess)
+    fun addInvitation(userId: String, invite: Map<String, String>, type: InviteTypes) {
+        remote.addInvitation(userId, invite, type)
     }
 }

@@ -15,14 +15,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/pastel_yellow">
+        android:background="@color/black">
 
         <TextView
             android:id="@+id/text_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_medium"
             android:fontFamily="@font/core_sans_regular"
             android:text="@string/people"
             android:textColor="@color/white"
@@ -36,17 +36,17 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/pastel_yellow"
+            android:background="@color/black"
+            app:tabIndicatorColor="@color/white"
+            app:tabTextColor="@color/white"
             android:paddingHorizontal="@dimen/padding_tiny"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_header"
-            app:tabIndicatorColor="@color/white"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="3dp"
             app:tabMode="scrollable"
-            app:tabTextAppearance="@style/TabLayoutStyle"
-            app:tabTextColor="@color/white">
+            app:tabTextAppearance="@style/TabLayoutStyle">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"
@@ -67,10 +67,10 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/container_view_people"
+            android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
-            android:name="com.connection.ui.people.connected.ConnectedPeopleFragment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

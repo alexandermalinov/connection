@@ -35,9 +35,27 @@
     <dimen name="margin_huge">64dp</dimen>
 
     // Radius
+    <dimen name="radius_small">6dp</dimen>
     <dimen name="radius_medium">12dp</dimen>
     <dimen name="radius_large">24dp</dimen>
 
     // Elevation
     <dimen name="button_elevation">8dp</dimen>
+
+    // Card
+    <dimen name="card_height">224dp</dimen>
+    <dimen name="card_width">180dp</dimen>
+
+    // Image
+    <dimen name="profile_small">36dp</dimen>
+    <dimen name="profile_pre_small">48dp</dimen>
+    <dimen name="profile_pre_x_small">54dp</dimen>
+    <dimen name="profile_medium">64dp</dimen>
+    <dimen name="profile_large">100dp</dimen>
+
+    // Online Indicator
+    <dimen name="online_indicator_size">16dp</dimen>
+
+    // Button
+    <dimen name="button_small">36dp</dimen>
 </resources>

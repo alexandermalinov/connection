@@ -1,9 +1,8 @@
 package com.connection.data.repository.chattab
 
-import com.connection.data.api.model.UserData
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.ui.base.ConnectionStatus
 import com.sendbird.android.GroupChannel
-import com.sendbird.android.User
 import javax.inject.Inject
 
 class ChatTabRepository @Inject constructor(
@@ -17,7 +16,6 @@ class ChatTabRepository @Inject constructor(
 
         fun connectUser(
             user: UserData,
-            onSuccess: (User) -> Unit,
             onFailure: () -> Unit
         )
 
@@ -41,9 +39,8 @@ class ChatTabRepository @Inject constructor(
 
     fun connectUser(
         user: UserData,
-        onSuccess: (User) -> Unit,
         onFailure: () -> Unit
     ) {
-        remote.connectUser(user, onSuccess, onFailure)
+        remote.connectUser(user, onFailure)
     }
 }

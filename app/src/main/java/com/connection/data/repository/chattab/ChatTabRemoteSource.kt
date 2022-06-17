@@ -1,12 +1,11 @@
 package com.connection.data.repository.chattab
 
-import com.connection.data.api.model.UserData
+import com.connection.data.api.remote.model.user.UserData
 import com.connection.ui.base.ConnectionStatus
 import com.connection.utils.common.Constants.PAGING_LIMIT
 import com.sendbird.android.GroupChannel
 import com.sendbird.android.GroupChannelListQuery
 import com.sendbird.android.SendBird
-import com.sendbird.android.User
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -48,7 +47,6 @@ class ChatTabRemoteSource @Inject constructor() : ChatTabRepository.RemoteSource
 
     override fun connectUser(
         user: UserData,
-        onSuccess: (User) -> Unit,
         onFailure: () -> Unit
     ) {
         SendBird.connect(user.id) { connectedUser, error ->
@@ -57,11 +55,8 @@ class ChatTabRemoteSource @Inject constructor() : ChatTabRepository.RemoteSource
                     SendBird.updateCurrentUserInfo(user.username, user.picture) { error ->
                         if (error == null) {
                             SendBird.setChannelInvitationPreference(false) { preferenceError ->
-                                if (preferenceError == null) {
-                                    onSuccess(it)
-                                } else {
+                                if (preferenceError != null)
                                     onFailure()
-                                }
                             }
                         } else {
                             onFailure()
