@@ -122,8 +122,8 @@
             android:id="@+id/text_request_sender_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_medium"
             android:text="@{model.header.username}"
             android:textColor="@color/black"
             android:textSize="@dimen/text_xx_medium"
@@ -150,8 +150,8 @@
             android:id="@+id/text_send_request"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
             android:text="@string/request_to_connect"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -255,7 +255,7 @@
             app:layout_constraintTop_toBottomOf="@+id/header"
             app:layout_constraintVertical_bias="1.0"
             tools:listitem="@layout/list_item_message_logged_user"
-            tools:visibility="gone" />
+            tools:visibility="visible" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_message_box"
@@ -268,7 +268,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:visibleGone="@{model.chatBoxVisible}"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/image_attachment"
@@ -342,6 +342,67 @@
                 android:textSize="@dimen/text_medium"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/image_initial_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_woman_searching"
+                app:visibleGone="@{model.initialState}" />
+
+            <TextView
+                android:id="@+id/text_initial_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                android:gravity="center_horizontal"
+                android:text="@string/grant_permission_gallery"
+                app:visibleGone="@{model.initialState}" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_initial_state"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> presenter.onChangeClick()}"
+                android:text="@string/change"
+                app:visibleGone="@{model.initialState}" />
+
+            <ImageView
+                android:id="@+id/image_denied_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_sad"
+                app:visibleGone="@{model.deniedState}" />
+
+            <TextView
+                android:id="@+id/text_denied_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_small"
+                android:gravity="center_horizontal"
+                android:text="@string/denied_permission_gallery"
+                app:visibleGone="@{model.deniedState}" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_denied_state"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:onClick="@{() -> presenter.onSettingsClick()}"
+                android:text="@string/settings"
+                app:visibleGone="@{model.deniedState}" />
+
+            <ProgressBar
+                android:id="@+id/loading_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_medium"
+                app:visibleGone="@{model.loadingState}" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_gallery"
                 android:layout_width="match_parent"
@@ -349,6 +410,7 @@
                 android:layout_marginTop="@dimen/margin_small"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="4"
+                app:visibleGone="@{model.grantedState}"
                 tools:listitem="@layout/list_item_gallery_image" />
 
             <com.google.android.material.button.MaterialButton
@@ -360,7 +422,8 @@
                 android:text="@string/send_image"
                 android:textSize="@dimen/text_pre_xx_small"
                 android:textStyle="bold"
-                app:cornerRadius="@dimen/radius_medium" />
+                app:cornerRadius="@dimen/radius_medium"
+                app:visibleGone="@{model.grantedState}" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

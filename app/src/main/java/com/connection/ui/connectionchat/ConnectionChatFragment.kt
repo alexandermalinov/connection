@@ -8,18 +8,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.connection.R
 import com.connection.databinding.FragmentConnectionChatBinding
 import com.connection.navigation.External
-import com.connection.ui.base.BaseFragment
+import com.connection.ui.base.BasePermissionFragment
 import com.connection.ui.gallery.GalleryAdapter
 import com.connection.ui.message.MessageAdapter
 import com.connection.utils.common.Constants.POSITION_START
 import com.connection.utils.common.grantReadUriPermission
 import com.connection.utils.image.ActivityResultHandler
 import com.connection.utils.image.SelectImageObserver
+import com.connection.utils.permissions.PermissionStateHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>(),
+class ConnectionChatFragment : BasePermissionFragment<FragmentConnectionChatBinding>(),
     ActivityResultHandler {
 
     /* --------------------------------------------------------------------------------------------
@@ -35,15 +36,15 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>(),
         super.onViewCreated(view, savedInstanceState)
         initChatRecyclerView()
         initGalleryRecyclerView()
-        selectImage()
-        setObservers()
+        //selectImage()
         observeLiveData()
-        observeNavigation(viewModel.navigationLiveData)
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_connection_chat
 
     override fun provideObserver(destination: External) = selectImageObserver
+
+    override fun providePermissionStateHandler() = viewModel
 
     /* --------------------------------------------------------------------------------------------
      * Private
@@ -68,6 +69,10 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>(),
 
     private fun observeLiveData() {
         dataBinding.presenter = viewModel
+        addObservers()
+        observeNavigation(viewModel.navigationLiveData)
+        observeDialogLiveData(viewModel.dialogLiveData)
+        observePermissionData(viewModel.permissionLiveData)
         observeUiLiveData()
         observeMessagesLiveData()
         observeGalleryLiveData()
@@ -103,9 +108,10 @@ class ConnectionChatFragment : BaseFragment<FragmentConnectionChatBinding>(),
         }
     }
 
-    private fun setObservers() {
+    private fun addObservers() {
         with(viewLifecycleOwner.lifecycle) {
-            addObserver(selectImageObserver)
+            addObserver(viewModel)
+            //addObserver(selectImageObserver)
         }
     }
 }

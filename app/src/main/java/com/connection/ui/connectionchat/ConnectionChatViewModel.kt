@@ -1,23 +1,25 @@
 package com.connection.ui.connectionchat
 
+import android.Manifest
 import android.app.Application
 import android.net.Uri
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.connection.R
 import com.connection.data.remote.response.user.UserData
 import com.connection.data.repository.chatmessage.ChatMessageRepository
+import com.connection.data.repository.chattab.ChatTabRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.navigation.PopBackStack
+import com.connection.navigation.SettingsNavigation
+import com.connection.ui.base.BaseSendBirdViewModel
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.base.ConnectionStatus
 import com.connection.ui.gallery.GalleryLoader
 import com.connection.ui.gallery.GalleryPresenter
+import com.connection.utils.SingleLiveEvent
 import com.connection.utils.common.Constants.CONNECTION_CHANNEL_LISTENER
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.HEADER_MODEL
@@ -25,8 +27,10 @@ import com.connection.utils.common.Constants.PICTURE
 import com.connection.utils.common.Constants.USERNAME
 import com.connection.utils.common.Constants.USER_PICTURE
 import com.connection.utils.createFile
+import com.connection.utils.permissions.*
 import com.connection.vo.connectionchat.ConnectionChatUiModel
 import com.connection.vo.connectionchat.HeaderUiModel
+import com.connection.vo.dialogs.TitleMessageDialog
 import com.connection.vo.gallery.GalleryImageListItemUiModel
 import com.connection.vo.gallery.toUiModel
 import com.connection.vo.message.MessageListUiModel
@@ -45,8 +49,13 @@ class ConnectionChatViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val chatMessageRepository: ChatMessageRepository,
     private val savedStateHandle: SavedStateHandle,
-    private val application: Application
-) : BaseViewModel(), ConnectionChatPresenter, GalleryPresenter {
+    private val application: Application,
+    private val permissionChecker: PermissionChecker
+) : BaseViewModel(),
+    ConnectionChatPresenter,
+    GalleryPresenter,
+    LifecycleObserver,
+    PermissionStateHandler {
 
     /* --------------------------------------------------------------------------------------------
     * Properties
@@ -60,6 +69,9 @@ class ConnectionChatViewModel @Inject constructor(
     val galleryLiveData: LiveData<List<GalleryImageListItemUiModel>>
         get() = _galleryLiveData
 
+    val permissionLiveData: LiveData<Permission>
+        get() = _permissionLiveData
+
     private val _uiLiveData = MutableLiveData(ConnectionChatUiModel()).apply {
         savedStateHandle.get<HeaderUiModel>(HEADER_MODEL)?.let { headerModel ->
             value = ConnectionChatUiModel(headerModel)
@@ -68,6 +80,7 @@ class ConnectionChatViewModel @Inject constructor(
 
     private val _messagesLiveData = MutableLiveData(MessageUiModel())
     private val _galleryLiveData = MutableLiveData<List<GalleryImageListItemUiModel>>(emptyList())
+    private val _permissionLiveData = SingleLiveEvent<Permission>()
     private var loggedUser: UserData? = null
     private var senderUser: Member? = null
     private var currentChannel: GroupChannel? = null
@@ -75,7 +88,7 @@ class ConnectionChatViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            setupUsers()
+            loadUsers()
         }
     }
 
@@ -91,17 +104,17 @@ class ConnectionChatViewModel @Inject constructor(
     /* --------------------------------------------------------------------------------------------
      * Private
     ---------------------------------------------------------------------------------------------*/
-    private suspend fun setupUsers() {
+    private suspend fun loadUsers() {
         userRepository.getLoggedUser { user ->
             loggedUser = user
             senderUserId = savedStateHandle.get<HeaderUiModel>(HEADER_MODEL)?.senderId ?: EMPTY
             viewModelScope.launch {
-                setupChat()
+                loadChat()
             }
         }
     }
 
-    private suspend fun setupChat() {
+    private suspend fun loadChat() {
         chatMessageRepository.getChannel(
             _uiLiveData.value?.header?.channelUrl ?: EMPTY, { channel ->
                 currentChannel = channel
@@ -116,6 +129,11 @@ class ConnectionChatViewModel @Inject constructor(
         )
     }
 
+    private fun loadGallery() {
+        _uiLiveData.value?.setLoadingState()
+        _galleryLiveData.value = GalleryLoader(application).loadGallery().toUiModel()
+        _uiLiveData.value?.setGrantedState()
+    }
 
     private fun initChatHistory(channel: GroupChannel?) {
         loadingChat(true)
@@ -252,6 +270,27 @@ class ConnectionChatViewModel @Inject constructor(
         updateUsers()
     }
 
+    private fun requestPermission() {
+        _permissionLiveData.value =
+            PermissionRequest(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+    }
+
+    private fun setShowRationaleState() {
+        _dialogLiveData.value = TitleMessageDialog(
+            message = R.string.grant_permission_gallery,
+            positiveButtonClickListener = { requestPermission() },
+            negativeButtonClickListener = { _uiLiveData.value?.setInitialState() }
+        )
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    private fun updateUiState() {
+        if (permissionChecker.isPermissionGranted().not())
+            _uiLiveData.value?.setInitialState()
+        else
+            requestPermission()
+    }
+
     /* --------------------------------------------------------------------------------------------
      * Override
     ---------------------------------------------------------------------------------------------*/
@@ -285,20 +324,22 @@ class ConnectionChatViewModel @Inject constructor(
             currentChannel?.let { channel ->
                 chatMessageRepository.declineInvite(
                     channel = channel,
-                    onSuccess = {
-                        _navigationLiveData.value = PopBackStack
-                    },
-                    onFailure = {
-                        Timber.e("error occurred declining invite")
-                    }
+                    onSuccess = { _navigationLiveData.value = PopBackStack },
+                    onFailure = { Timber.e("error occurred declining invite") }
                 )
             }
         }
     }
 
     override fun onGalleryClick() {
-        _galleryLiveData.value = GalleryLoader(application).loadGallery().toUiModel()
-        _uiLiveData.value?.shouldOpenGallery = _uiLiveData.value?.shouldOpenGallery == false
+        _uiLiveData.value?.apply {
+            shouldOpenGallery = shouldOpenGallery == false
+            if (permissionChecker.isPermissionGranted()) {
+                loadGallery()
+            } else {
+                setInitialState()
+            }
+        }
     }
 
     override fun onImageClick(id: UUID) {
@@ -320,8 +361,9 @@ class ConnectionChatViewModel @Inject constructor(
                         channel,
                         application.createFile(it.image.toUri()),
                         onSuccess = { fileMessage ->
-                            _messagesLiveData.value =
-                                addNewMessage(fileMessage.toUiModel(loggedUser?.id))
+                            _messagesLiveData.value = addNewMessage(
+                                fileMessage.toUiModel(loggedUser?.id)
+                            )
                         },
                         onFailure = {
                             Timber.e("error occurred sending message")
@@ -344,5 +386,26 @@ class ConnectionChatViewModel @Inject constructor(
                     )
                 )
             }
+    }
+
+    override fun onChangeClick() {
+        requestPermission()
+    }
+
+    override fun onSettingsClick() {
+        _navigationLiveData.value = SettingsNavigation
+    }
+
+    override fun onPermissionState(state: PermissionState) {
+        _uiLiveData.value?.apply {
+            when (state) {
+                is GrantedState -> loadGallery()
+                is DeniedState -> setDeniedState()
+                else -> {
+                    setInitialState()
+                    setShowRationaleState()
+                }
+            }
+        }
     }
 }

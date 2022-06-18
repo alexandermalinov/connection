@@ -114,9 +114,6 @@ data class ConnectionChatUiModel(
                 isRequestToConnectTextVisible = true
                 isRequestSent = false
             }
-            else -> {
-
-            }
         }
     }
 
@@ -126,4 +123,60 @@ data class ConnectionChatUiModel(
             field = value
             notifyPropertyChanged(BR.shouldOpenGallery)
         }
+
+    @get:Bindable
+    var isInitialState: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.initialState)
+        }
+
+    @get:Bindable
+    var isLoadingState: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.loadingState)
+        }
+
+    @get:Bindable
+    var isGrantedState: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.grantedState)
+        }
+
+    @get:Bindable
+    var isDeniedState: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.deniedState)
+        }
+
+    fun setInitialState() {
+        isInitialState = true
+        isLoadingState = false
+        isGrantedState = false
+        isDeniedState = false
+    }
+
+    fun setLoadingState() {
+        isInitialState = false
+        isLoadingState = true
+        isGrantedState = false
+        isDeniedState = false
+    }
+
+    fun setGrantedState() {
+        isInitialState = false
+        isLoadingState = false
+        isGrantedState = true
+        isDeniedState = false
+    }
+
+    fun setDeniedState() {
+        isInitialState = false
+        isLoadingState = false
+        isGrantedState = false
+        isDeniedState = true
+    }
 }

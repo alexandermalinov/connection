@@ -58,11 +58,12 @@
                 android:id="@+id/image_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:scaleType="centerCrop"
-                app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+                app:defaultGlideRess="@{R.drawable.ic_error_outfilled}"
                 app:glideRess="@{model.senderMessage}"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeTwelve"
-                tools:src="@drawable/vertical_wallpaper" />
+                tools:src="@drawable/ic_error_outfilled" />
         </RelativeLayout>
 
         <TextView
