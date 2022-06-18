@@ -5,9 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.remote.model.post.Posts
-import com.connection.data.api.remote.model.post.toUiModels
-import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.remote.response.post.Posts
+import com.connection.data.remote.response.post.toUiModels
+import com.connection.data.remote.response.user.UserData
 import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph

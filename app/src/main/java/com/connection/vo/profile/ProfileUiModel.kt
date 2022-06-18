@@ -3,7 +3,7 @@ package com.connection.vo.profile
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.connection.BR
-import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.remote.response.user.UserData
 import com.connection.utils.common.Constants.EMPTY
 
 data class ProfileUiModel(

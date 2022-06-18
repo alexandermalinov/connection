@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.connection.data.api.remote.model.post.Comment
-import com.connection.data.api.remote.model.post.toUiModel
-import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.remote.response.post.Comment
+import com.connection.data.remote.response.post.toUiModel
+import com.connection.data.remote.response.user.UserData
 import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.PopBackStack

@@ -1,18 +1,18 @@
 package com.connection.ui.post.imagepicker
 
+import android.Manifest
 import android.app.Application
 import androidx.core.os.bundleOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.*
 import com.connection.R
 import com.connection.navigation.NavigationGraph
-import com.connection.navigation.PopBackStack
+import com.connection.navigation.SettingsNavigation
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.gallery.GalleryLoader
-import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.SingleLiveEvent
 import com.connection.utils.common.Constants.PICTURE
-import com.connection.utils.common.Constants.USER_ID
+import com.connection.utils.permissions.*
+import com.connection.vo.dialogs.TitleMessageDialog
 import com.connection.vo.gallery.toUiModel
 import com.connection.vo.post.imagepicker.ImagePickerUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,8 +21,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ImagePickerViewModel @Inject constructor(
-    private val application: Application
-) : BaseViewModel(), ImagePickerPresenter {
+    private val application: Application,
+    private val permissionChecker: PermissionChecker
+) : BaseViewModel(), ImagePickerPresenter, PermissionStateHandler, LifecycleObserver {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
@@ -30,19 +31,48 @@ class ImagePickerViewModel @Inject constructor(
     val uiLiveData: LiveData<ImagePickerUiModel>
         get() = _uiLiveData
 
+    val permissionLiveData: LiveData<Permission>
+        get() = _permissionLiveData
+
     private val _uiLiveData = MutableLiveData(ImagePickerUiModel())
+    private val _permissionLiveData = SingleLiveEvent<Permission>()
 
     init {
-        loadGallery()
+        if (permissionChecker.isPermissionGranted()) {
+            _uiLiveData.value?.setLoadingState()
+            loadGallery()
+        } else
+            _uiLiveData.value?.setDeniedState()
     }
 
     /* --------------------------------------------------------------------------------------------
      * Private
     ---------------------------------------------------------------------------------------------*/
     private fun loadGallery() {
-        _uiLiveData.value = _uiLiveData.value?.copy(
-            galleryPictures = GalleryLoader(application).loadGallery().toUiModel()
+        _uiLiveData.value = _uiLiveData.value
+            ?.copy(galleryPictures = GalleryLoader(application).loadGallery().toUiModel())
+            ?.apply { setGrantedState() }
+    }
+
+    private fun setShowRationaleState() {
+        _dialogLiveData.value = TitleMessageDialog(
+            message = R.string.grant_permission_gallery,
+            positiveButtonClickListener = { requestPermission() },
+            negativeButtonClickListener = { _uiLiveData.value?.setInitialState() }
         )
+    }
+
+    private fun requestPermission() {
+        _permissionLiveData.value =
+            PermissionRequest(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    private fun updateUiState() {
+        if (permissionChecker.isPermissionGranted().not())
+            _uiLiveData.value?.setInitialState()
+        else
+            requestPermission()
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -63,5 +93,26 @@ class ImagePickerViewModel @Inject constructor(
 
     override fun onDiscardClick() {
         _navigationLiveData.value = NavigationGraph(R.id.action_imagePickerFragment_to_feedFragment)
+    }
+
+    override fun onChangeClick() {
+        requestPermission()
+    }
+
+    override fun onSettingsClick() {
+        _navigationLiveData.value = SettingsNavigation
+    }
+
+    override fun onPermissionState(state: PermissionState) {
+        _uiLiveData.value?.apply {
+            when (state) {
+                is GrantedState -> loadGallery()
+                is DeniedState -> setDeniedState()
+                else -> {
+                    setInitialState()
+                    setShowRationaleState()
+                }
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.connection.data.api.local.searchhistory
+package com.connection.data.local.searchhistory
 
 import androidx.room.*
 

@@ -1,4 +1,4 @@
-package com.connection.data.api.remote.model.user
+package com.connection.data.remote.response.user
 
 import com.connection.utils.common.Constants.EMPTY
 
