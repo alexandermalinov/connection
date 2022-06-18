@@ -1,6 +1,6 @@
-package com.connection.data.api.remote.model.post
+package com.connection.data.remote.response.post
 
-import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.remote.response.user.UserData
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.post.PostUiModel

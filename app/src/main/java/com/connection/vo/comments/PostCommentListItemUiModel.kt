@@ -1,6 +1,6 @@
 package com.connection.vo.comments
 
-import com.connection.data.api.remote.model.post.Comment
+import com.connection.data.remote.response.post.Comment
 import com.connection.utils.DateTimeFormatter
 import com.connection.utils.common.Constants.EMPTY
 import java.util.*

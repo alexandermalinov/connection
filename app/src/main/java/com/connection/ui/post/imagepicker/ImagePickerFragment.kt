@@ -6,12 +6,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.connection.R
 import com.connection.databinding.FragmentImagePickerBinding
-import com.connection.ui.base.BaseFragment
+import com.connection.ui.base.BasePermissionFragment
 import com.connection.ui.gallery.GalleryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ImagePickerFragment : BaseFragment<FragmentImagePickerBinding>() {
+class ImagePickerFragment : BasePermissionFragment<FragmentImagePickerBinding>() {
 
     /* --------------------------------------------------------------------------------------------
      * Properties
@@ -29,6 +29,8 @@ class ImagePickerFragment : BaseFragment<FragmentImagePickerBinding>() {
 
     override fun getLayoutId() = R.layout.fragment_image_picker
 
+    override fun providePermissionStateHandler() = viewModel
+
     /* --------------------------------------------------------------------------------------------
      * Private
     ---------------------------------------------------------------------------------------------*/
@@ -41,7 +43,10 @@ class ImagePickerFragment : BaseFragment<FragmentImagePickerBinding>() {
 
     private fun observeLiveData() {
         dataBinding.presenter = viewModel
+        viewLifecycleOwner.lifecycle.addObserver(viewModel)
         observeNavigation(viewModel.navigationLiveData)
+        observeDialogLiveData(viewModel.dialogLiveData)
+        observePermissionData(viewModel.permissionLiveData)
         observeUiLiveData()
     }
 

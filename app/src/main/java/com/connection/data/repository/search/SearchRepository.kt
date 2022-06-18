@@ -1,7 +1,7 @@
 package com.connection.data.repository.search
 
-import com.connection.data.api.local.searchhistory.SearchHistory
-import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.local.searchhistory.SearchHistory
+import com.connection.data.remote.response.user.UserData
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(

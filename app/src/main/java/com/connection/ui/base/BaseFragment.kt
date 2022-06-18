@@ -12,6 +12,8 @@ import com.connection.menu.MenuUiModel
 import com.connection.menu.showMenu
 import com.connection.navigation.Destination
 import com.connection.navigation.navigate
+import com.connection.ui.dialogs.showDialog
+import com.connection.vo.dialogs.Dialog
 
 abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
 
@@ -57,6 +59,12 @@ abstract class BaseFragment<T : ViewDataBinding> : Fragment() {
     ) {
         menuLiveData.observe(viewLifecycleOwner) { menu ->
             requireActivity().showMenu(menu, menuIcon)
+        }
+    }
+
+    protected fun observeDialogLiveData(dialogLiveData: LiveData<Dialog>) {
+        dialogLiveData.observe(viewLifecycleOwner) { dialog ->
+            requireActivity().showDialog(dialog)
         }
     }
 }

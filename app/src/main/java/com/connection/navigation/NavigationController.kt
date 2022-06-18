@@ -1,16 +1,18 @@
 package com.connection.navigation
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.navigation.fragment.findNavController
 import com.connection.ui.people.connected.ConnectedPeopleFragment
 import com.connection.ui.people.invitation.InvitationsFragment
 import com.connection.ui.people.notconnected.NotConnectedPeopleFragment
-import com.connection.utils.image.ActivityResultHandler
 import com.connection.utils.common.Constants.FRAGMENT_CONNECTED_PEOPLE
-import com.connection.utils.common.Constants.FRAGMENT_NOT_CONNECTED_PEOPLE
 import com.connection.utils.common.Constants.FRAGMENT_INVITATION_PEOPLE
-import java.lang.IllegalArgumentException
+import com.connection.utils.common.Constants.FRAGMENT_NOT_CONNECTED_PEOPLE
+import com.connection.utils.image.ActivityResultHandler
 
 /* --------------------------------------------------------------------------------------------
  * Exposed
@@ -53,6 +55,9 @@ private fun Fragment.handleExternalNavigation(destination: External) {
         is GalleryNavigation -> {
             if (this is ActivityResultHandler)
                 provideObserver(destination).launch()
+        }
+        is SettingsNavigation -> {
+            startActivity(Intent(Settings.ACTION_APPLICATION_SETTINGS))
         }
     }
 }

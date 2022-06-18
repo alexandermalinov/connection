@@ -1,9 +1,9 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.remote.model.user.UserData
-import com.connection.data.api.remote.model.user.UsersData
-import com.connection.data.api.remote.model.user.toMap
+import com.connection.data.remote.response.user.UserData
+import com.connection.data.remote.response.user.UsersData
+import com.connection.data.remote.response.user.toMap
 import com.connection.ui.base.InviteTypes
 import com.connection.utils.common.Constants.CONNECTIONS
 import com.connection.utils.common.Constants.EMPTY

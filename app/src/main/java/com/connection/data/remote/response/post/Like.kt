@@ -1,4 +1,4 @@
-package com.connection.data.api.remote.model.post
+package com.connection.data.remote.response.post
 
 import com.connection.utils.common.Constants.EMPTY
 import java.util.*

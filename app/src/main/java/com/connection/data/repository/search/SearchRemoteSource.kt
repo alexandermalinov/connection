@@ -1,6 +1,6 @@
 package com.connection.data.repository.search
 
-import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.remote.response.user.UserData
 import com.connection.utils.common.Constants
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

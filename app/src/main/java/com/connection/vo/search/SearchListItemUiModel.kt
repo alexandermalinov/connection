@@ -1,7 +1,7 @@
 package com.connection.vo.search
 
-import com.connection.data.api.local.searchhistory.SearchHistory
-import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.local.searchhistory.SearchHistory
+import com.connection.data.remote.response.user.UserData
 import com.connection.utils.common.Constants.EMPTY
 
 data class SearchListItemUiModel(

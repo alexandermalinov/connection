@@ -1,8 +1,8 @@
 package com.connection.data.repository.user
 
 import android.net.Uri
-import com.connection.data.api.remote.model.user.UserData
-import com.connection.data.api.remote.model.user.UsersData
+import com.connection.data.remote.response.user.UserData
+import com.connection.data.remote.response.user.UsersData
 import com.connection.ui.base.InviteTypes
 import javax.inject.Inject
 

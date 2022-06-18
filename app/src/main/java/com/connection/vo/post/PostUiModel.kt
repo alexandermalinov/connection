@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.connection.BR
-import com.connection.data.api.remote.model.post.Post
+import com.connection.data.remote.response.post.Post
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.connectionchat.HeaderUiModel
 import kotlinx.serialization.Serializable

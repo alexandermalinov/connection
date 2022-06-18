@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
-import com.connection.data.api.local.searchhistory.toUiModels
-import com.connection.data.api.remote.model.user.UserData
+import com.connection.data.local.searchhistory.toUiModels
+import com.connection.data.remote.response.user.UserData
 import com.connection.data.repository.search.SearchRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
