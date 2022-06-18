@@ -81,7 +81,11 @@ class ImagePickerViewModel @Inject constructor(
     override fun onImageClick(id: UUID) {
         _uiLiveData.value?.galleryPictures
             ?.find { picture -> picture.id == id }
-            ?.let { _uiLiveData.value = _uiLiveData.value?.copy(selectedPicture = it.image) }
+            ?.let {
+                _uiLiveData.value = _uiLiveData.value
+                    ?.copy(selectedPicture = it.image)
+                    ?.also { model -> model.setGrantedState() }
+            }
     }
 
     override fun onNextClick() {

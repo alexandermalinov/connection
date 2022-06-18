@@ -37,8 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.onDiscardClick()}"
-                android:paddingVertical="@dimen/padding_small"
-                android:paddingEnd="@dimen/padding_small"
+                android:padding="@dimen/padding_small"
                 android:src="@drawable/ic_decline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,7 +120,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_woman_searching"
-            app:layout_constraintTop_toBottomOf="@+id/text_gallery"
+            app:layout_constraintBottom_toTopOf="@+id/text_initial_state"
+            app:layout_constraintTop_toBottomOf="@+id/container_header"
+            app:layout_constraintVertical_chainStyle="packed"
             app:visibleGone="@{model.initialState}" />
 
         <TextView
@@ -132,9 +133,24 @@
             android:layout_marginTop="@dimen/margin_small"
             android:gravity="center_horizontal"
             android:text="@string/grant_permission_gallery"
+            app:layout_constraintBottom_toTopOf="@id/button_initial_state"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_initial_state"
+            app:visibleGone="@{model.initialState}" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_initial_state"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> presenter.onChangeClick()}"
+            android:text="@string/change"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_initial_state"
             app:visibleGone="@{model.initialState}" />
 
         <ImageView
@@ -179,18 +195,6 @@
             app:layout_constraintTop_toBottomOf="@+id/text_denied_state"
             app:visibleGone="@{model.deniedState}" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_initial_state"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> presenter.onChangeClick()}"
-            android:text="@string/change"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_initial_state"
-            app:visibleGone="@{model.initialState}" />
-
         <ProgressBar
             android:id="@+id/loading_bar"
             android:layout_width="wrap_content"
@@ -205,7 +209,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_gallery"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
