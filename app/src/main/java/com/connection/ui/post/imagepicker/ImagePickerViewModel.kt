@@ -9,7 +9,7 @@ import com.connection.navigation.NavigationGraph
 import com.connection.navigation.SettingsNavigation
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.gallery.GalleryLoader
-import com.connection.utils.SingleLiveEvent
+import com.connection.utils.livedata.SingleLiveEvent
 import com.connection.utils.common.Constants.PICTURE
 import com.connection.utils.permissions.*
 import com.connection.vo.dialogs.TitleMessageDialog

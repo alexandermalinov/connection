@@ -1,6 +1,5 @@
-package com.connection.utils
+package com.connection.utils.livedata
 
-import android.util.Log
 import androidx.annotation.MainThread
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
