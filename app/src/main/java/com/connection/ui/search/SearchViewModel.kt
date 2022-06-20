@@ -12,14 +12,15 @@ import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.search.BaseSearchViewModel
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.common.Constants.INVALID_RES
 import com.connection.utils.common.Constants.USER_ID
+import com.connection.utils.responsehandler.HttpError
 import com.connection.vo.search.SearchUiModel
 import com.connection.vo.search.toModel
 import com.connection.vo.search.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -56,11 +57,15 @@ class SearchViewModel @Inject constructor(
     }
 
     private suspend fun loadUsers(searchText: String) {
-        searchRepository.searchUsers(
-            searchText,
-            onSuccess = { users -> onReceiveUsers(users) },
-            onFailure = { Timber.e("Error occurred while searching for users") }
-        )
+        _uiLiveData.value?.loadingState = true
+        searchRepository.searchUsers(searchText) { either ->
+            either.fold({ error ->
+                loadErrorState(error)
+            }, { users ->
+                onReceiveUsers(users)
+                _uiLiveData.value?.loadingState = false
+            })
+        }
     }
 
     private suspend fun loadRecentSearches() {
@@ -73,18 +78,29 @@ class SearchViewModel @Inject constructor(
         )
     }
 
+    private fun loadErrorState(error: HttpError) {
+        _uiLiveData.value = SearchUiModel(
+            searchList = emptyList(),
+            emptySearchResultState = true,
+            recentSearchesSate = false,
+            errorTextRes = error.errorMessageRes ?: INVALID_RES
+        )
+    }
+
     private fun onReceiveUsers(users: List<UserData>) {
         _uiLiveData.value = if (users.isNotEmpty())
             SearchUiModel(
                 searchList = users.toUiModel(),
                 emptySearchResultState = false,
-                recentSearchesSate = false
+                recentSearchesSate = false,
+                errorTextRes = INVALID_RES
             )
         else
             SearchUiModel(
                 searchList = emptyList(),
                 emptySearchResultState = true,
-                recentSearchesSate = false
+                recentSearchesSate = false,
+                errorTextRes = R.string.no_connections
             )
     }
 

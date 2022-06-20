@@ -90,4 +90,8 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="change">Change</string>
+
+    <!-- Api Responses Errors -->
+    <string name="error_something_went_wrong">Something went wrong</string>
+    <string name="error_network">Please check your network connection</string>
 </resources>

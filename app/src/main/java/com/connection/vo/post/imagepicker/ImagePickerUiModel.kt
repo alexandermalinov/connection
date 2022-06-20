@@ -6,10 +6,14 @@ import com.connection.BR
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.vo.gallery.GalleryImageListItemUiModel
 
-data class ImagePickerUiModel(
-    val selectedPicture: String = EMPTY,
-    val galleryPictures: List<GalleryImageListItemUiModel> = emptyList()
-) : BaseObservable() {
+class ImagePickerUiModel : BaseObservable() {
+
+    @get:Bindable
+    var selectedPicture: String = EMPTY
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.selectedPicture)
+        }
 
     @get:Bindable
     var isInitialState: Boolean = false
@@ -26,7 +30,7 @@ data class ImagePickerUiModel(
         }
 
     @get:Bindable
-    var isGrantedState: Boolean = false
+    var isGrantedState: Boolean = true
         set(value) {
             field = value
             notifyPropertyChanged(BR.grantedState)

@@ -9,10 +9,12 @@ import com.connection.navigation.NavigationGraph
 import com.connection.navigation.SettingsNavigation
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.gallery.GalleryLoader
-import com.connection.utils.SingleLiveEvent
+import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.PICTURE
+import com.connection.utils.livedata.SingleLiveEvent
 import com.connection.utils.permissions.*
 import com.connection.vo.dialogs.TitleMessageDialog
+import com.connection.vo.gallery.GalleryImageListItemUiModel
 import com.connection.vo.gallery.toUiModel
 import com.connection.vo.post.imagepicker.ImagePickerUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,10 +33,14 @@ class ImagePickerViewModel @Inject constructor(
     val uiLiveData: LiveData<ImagePickerUiModel>
         get() = _uiLiveData
 
+    val galleryLiveData: LiveData<List<GalleryImageListItemUiModel>>
+        get() = _galleryLiveData
+
     val permissionLiveData: LiveData<Permission>
         get() = _permissionLiveData
 
     private val _uiLiveData = MutableLiveData(ImagePickerUiModel())
+    private val _galleryLiveData = MutableLiveData(emptyList<GalleryImageListItemUiModel>())
     private val _permissionLiveData = SingleLiveEvent<Permission>()
 
     init {
@@ -49,9 +55,13 @@ class ImagePickerViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private fun loadGallery() {
-        _uiLiveData.value = _uiLiveData.value
-            ?.copy(galleryPictures = GalleryLoader(application).loadGallery().toUiModel())
-            ?.apply { setGrantedState() }
+        GalleryLoader(application).loadGallery().toUiModel().let { images ->
+            _galleryLiveData.value = images
+            _uiLiveData.value?.apply {
+                selectedPicture = images?.first()?.image ?: EMPTY
+                setGrantedState()
+            }
+        }
     }
 
     private fun setShowRationaleState() {
@@ -79,13 +89,9 @@ class ImagePickerViewModel @Inject constructor(
      * Override
     ---------------------------------------------------------------------------------------------*/
     override fun onImageClick(id: UUID) {
-        _uiLiveData.value?.galleryPictures
+        _galleryLiveData.value
             ?.find { picture -> picture.id == id }
-            ?.let {
-                _uiLiveData.value = _uiLiveData.value
-                    ?.copy(selectedPicture = it.image)
-                    ?.also { model -> model.setGrantedState() }
-            }
+            ?.let { _uiLiveData.value?.selectedPicture = it.image }
     }
 
     override fun onNextClick() {

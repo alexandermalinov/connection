@@ -48,12 +48,18 @@ class ImagePickerFragment : BasePermissionFragment<FragmentImagePickerBinding>()
         observeDialogLiveData(viewModel.dialogLiveData)
         observePermissionData(viewModel.permissionLiveData)
         observeUiLiveData()
+        observeGalleryLiveData()
     }
 
     private fun observeUiLiveData() {
         viewModel.uiLiveData.observe(viewLifecycleOwner) { uiLiveData ->
             dataBinding.model = uiLiveData
-            (dataBinding.recyclerGallery.adapter as GalleryAdapter).submitList(uiLiveData.galleryPictures)
+        }
+    }
+
+    private fun observeGalleryLiveData() {
+        viewModel.galleryLiveData.observe(viewLifecycleOwner) { galleryLiveData ->
+            (dataBinding.recyclerGallery.adapter as GalleryAdapter).submitList(galleryLiveData)
         }
     }
 }

@@ -2,11 +2,13 @@ package com.connection.data.repository.search
 
 import com.connection.data.remote.response.user.UserData
 import com.connection.utils.common.Constants
+import com.connection.utils.responsehandler.Either
+import com.connection.utils.responsehandler.HttpError
+import com.connection.utils.responsehandler.toHttpError
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import timber.log.Timber
 import javax.inject.Inject
 
 class SearchRemoteSource @Inject constructor(
@@ -24,8 +26,7 @@ class SearchRemoteSource @Inject constructor(
      */
     override suspend fun searchUsers(
         searchText: String,
-        onSuccess: (List<UserData>) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, List<UserData>>) -> Unit
     ) {
         val users: MutableList<UserData> = mutableListOf()
         db.getReference(Constants.USERS)
@@ -34,13 +35,18 @@ class SearchRemoteSource @Inject constructor(
             .endAt(searchText + Constants.SEARCH_POSTFIX)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for (user in snapshot.children)
-                        user.getValue(UserData::class.java)?.let { users.add(it) }
-                    onSuccess(users)
+                    block.invoke(
+                        if (snapshot.exists()) {
+                            for (user in snapshot.children)
+                                user.getValue(UserData::class.java)?.let { users.add(it) }
+                            Either.right(users)
+                        } else
+                            Either.left(HttpError())
+                    )
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Timber.e("Error occurred: ${error.message}")
+                    Either.left(error.toHttpError())
                 }
             })
     }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.connection.menu.MenuUiModel
 import com.connection.navigation.Destination
-import com.connection.utils.SingleLiveEvent
+import com.connection.utils.livedata.SingleLiveEvent
 import com.connection.vo.dialogs.Dialog
 
 open class BaseViewModel : ViewModel() {

@@ -58,37 +58,20 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/text_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_medium"
-            android:fontFamily="@font/core_sans_regular"
-            android:text="@string/choose_image"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_x_medium"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/container_header"
-            app:visibleGone="@{model.grantedState}" />
-
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_selected"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_small"
-            android:scaleType="centerCrop"
-            app:defaultGlideRess="@{R.drawable.vertical_wallpaper}"
-            app:glideRess="@{model.selectedPicture}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:defaultGlideRes="@{R.drawable.ic_aircraft}"
+            app:glideRes="@{model.selectedPicture}"
             app:layout_constraintBottom_toTopOf="@+id/text_gallery"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="400dp"
+            app:layout_constraintHeight_max="350dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_header"
+            app:layout_constraintTop_toBottomOf="@+id/container_header"
             app:visibleGone="@{model.grantedState}"
-            tools:src="@drawable/vertical_wallpaper" />
+            tools:src="@drawable/ic_aircraft" />
 
         <TextView
             android:id="@+id/text_gallery"
