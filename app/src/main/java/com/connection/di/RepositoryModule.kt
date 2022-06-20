@@ -1,6 +1,6 @@
 package com.connection.di
 
-import com.connection.data.api.local.searchhistory.SearchHistoryDao
+import com.connection.data.local.searchhistory.SearchHistoryDao
 import com.connection.data.repository.chatmessage.ChatMessageRemoteSource
 import com.connection.data.repository.chatmessage.ChatMessageRepository
 import com.connection.data.repository.chattab.ChatTabRemoteSource

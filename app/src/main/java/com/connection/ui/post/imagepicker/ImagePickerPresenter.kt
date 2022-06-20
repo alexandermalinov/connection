@@ -7,4 +7,8 @@ interface ImagePickerPresenter : GalleryPresenter {
     fun onNextClick()
 
     fun onDiscardClick()
+
+    fun onChangeClick()
+
+    fun onSettingsClick()
 }

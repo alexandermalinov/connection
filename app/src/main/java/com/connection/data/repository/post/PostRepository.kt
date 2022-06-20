@@ -1,11 +1,10 @@
 package com.connection.data.repository.post
 
 import android.net.Uri
-import com.connection.data.api.remote.model.post.Comment
-import com.connection.data.api.remote.model.post.Like
-import com.connection.data.api.remote.model.post.Post
-import com.connection.data.api.remote.model.post.Posts
-import com.connection.utils.common.Constants
+import com.connection.data.remote.response.post.Comment
+import com.connection.data.remote.response.post.Like
+import com.connection.data.remote.response.post.Post
+import com.connection.data.remote.response.post.Posts
 import com.connection.utils.common.Constants.EMPTY
 import javax.inject.Inject
 

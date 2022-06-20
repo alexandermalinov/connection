@@ -37,8 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> presenter.onDiscardClick()}"
-                android:paddingVertical="@dimen/padding_small"
-                android:paddingEnd="@dimen/padding_small"
+                android:padding="@dimen/padding_small"
                 android:src="@drawable/ic_decline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,34 +58,20 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/text_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_large"
-            android:fontFamily="@font/core_sans_regular"
-            android:text="@string/choose_image"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_xx_medium"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/container_header" />
-
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_selected"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin_pre_x_medium"
-            app:defaultGlideRes="@{R.drawable.ic_profile_picture}"
+            android:layout_height="wrap_content"
+            app:defaultGlideRes="@{R.drawable.ic_aircraft}"
             app:glideRes="@{model.selectedPicture}"
             app:layout_constraintBottom_toTopOf="@+id/text_gallery"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="400dp"
+            app:layout_constraintHeight_max="350dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_header"
-            tools:src="@drawable/detected_light" />
+            app:layout_constraintTop_toBottomOf="@+id/container_header"
+            app:visibleGone="@{model.grantedState}"
+            tools:src="@drawable/ic_aircraft" />
 
         <TextView
             android:id="@+id/text_gallery"
@@ -100,7 +85,8 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/recycler_gallery"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_selected" />
+            app:layout_constraintTop_toBottomOf="@+id/image_selected"
+            app:visibleGone="@{model.grantedState}" />
 
         <ImageView
             android:id="@+id/image_expand_more"
@@ -111,6 +97,97 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_gallery"
             app:layout_constraintStart_toEndOf="@+id/text_gallery"
             app:layout_constraintTop_toTopOf="@+id/text_gallery" />
+
+        <ImageView
+            android:id="@+id/image_initial_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_woman_searching"
+            app:layout_constraintBottom_toTopOf="@+id/text_initial_state"
+            app:layout_constraintTop_toBottomOf="@+id/container_header"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:visibleGone="@{model.initialState}" />
+
+        <TextView
+            android:id="@+id/text_initial_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="center_horizontal"
+            android:text="@string/grant_permission_gallery"
+            app:layout_constraintBottom_toTopOf="@id/button_initial_state"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_initial_state"
+            app:visibleGone="@{model.initialState}" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_initial_state"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> presenter.onChangeClick()}"
+            android:text="@string/change"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_initial_state"
+            app:visibleGone="@{model.initialState}" />
+
+        <ImageView
+            android:id="@+id/image_denied_state"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_sad"
+            app:layout_constraintBottom_toTopOf="@+id/text_denied_state"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_header"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:visibleGone="@{model.deniedState}" />
+
+        <TextView
+            android:id="@+id/text_denied_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_small"
+            android:gravity="center_horizontal"
+            android:text="@string/denied_permission_gallery"
+            app:layout_constraintBottom_toTopOf="@+id/button_denied_state"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_denied_state"
+            app:visibleGone="@{model.deniedState}" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_denied_state"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:onClick="@{() -> presenter.onSettingsClick()}"
+            android:text="@string/settings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_denied_state"
+            app:visibleGone="@{model.deniedState}" />
+
+        <ProgressBar
+            android:id="@+id/loading_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_gallery"
+            app:visibleGone="@{model.loadingState}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_gallery"
@@ -123,6 +200,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_gallery"
             app:spanCount="4"
+            app:visibleGone="@{model.grantedState}"
             tools:listitem="@layout/list_item_gallery_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

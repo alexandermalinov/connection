@@ -32,3 +32,5 @@ class NestedFragmentGraph(
  * External
 ---------------------------------------------------------------------------------------------*/
 object GalleryNavigation : External()
+
+object SettingsNavigation: External()

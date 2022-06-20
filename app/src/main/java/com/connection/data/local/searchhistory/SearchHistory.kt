@@ -1,9 +1,8 @@
-package com.connection.data.api.local.searchhistory
+package com.connection.data.local.searchhistory
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.connection.utils.common.Constants.DEFAULT_ID
 import com.connection.vo.search.SearchListItemUiModel
 
 @Entity(tableName = "search_history")

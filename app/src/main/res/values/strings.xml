@@ -85,4 +85,13 @@
     <string name="recent_searches">Recent searches</string>
     <string name="user_profile">User Profile</string>
     <string name="invite_sent">Invite sent</string>
+    <string name="grant_permission_gallery">External Storage permission is necessary to get gallery pictures</string>
+    <string name="denied_permission_gallery">Permission Permanently Denied!</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="change">Change</string>
+
+    <!-- Api Responses Errors -->
+    <string name="error_something_went_wrong">Something went wrong</string>
+    <string name="error_network">Please check your network connection</string>
 </resources>
