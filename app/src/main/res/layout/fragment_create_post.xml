@@ -129,16 +129,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:layout_marginHorizontal="@dimen/margin_medium"
                     android:scaleType="centerCrop"
-                    app:defaultGlideRess="@{R.drawable.ic_profile_picture}"
+                    app:defaultGlideRess="@{R.drawable.ic_aircraft}"
                     app:glideRess="@{model.picture}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHeight_max="400dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_selected_image_header"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeThree"
-                    tools:src="@drawable/green_background" />
+                    tools:src="@drawable/ic_aircraft" />
 
                 <TextView
                     android:id="@+id/text_description_header"

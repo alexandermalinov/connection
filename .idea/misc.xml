@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/edit_text_shape.xml" value="0.14" />
+        <entry key="app/src/main/res/drawable/ic__aircraft.xml" value="0.201" />
         <entry key="app/src/main/res/drawable/ic_accept.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_account.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/ic_account_filled.xml" value="0.1965" />
@@ -74,6 +75,7 @@
         <entry key="app/src/main/res/drawable/ic_sad.xml" value="0.201" />
         <entry key="app/src/main/res/drawable/ic_search.xml" value="0.2505" />
         <entry key="app/src/main/res/drawable/ic_search_black.xml" value="0.198" />
+        <entry key="app/src/main/res/drawable/ic_search_filled.xml" value="0.201" />
         <entry key="app/src/main/res/drawable/ic_search_white.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.198" />
         <entry key="app/src/main/res/drawable/ic_send_black.xml" value="0.198" />

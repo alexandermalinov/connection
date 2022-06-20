@@ -2,6 +2,8 @@ package com.connection.data.repository.search
 
 import com.connection.data.local.searchhistory.SearchHistory
 import com.connection.data.remote.response.user.UserData
+import com.connection.utils.responsehandler.Either
+import com.connection.utils.responsehandler.HttpError
 import javax.inject.Inject
 
 class SearchRepository @Inject constructor(
@@ -25,18 +27,14 @@ class SearchRepository @Inject constructor(
 
         suspend fun searchUsers(
             searchText: String,
-            onSuccess: (List<UserData>) -> Unit,
-            onFailure: () -> Unit
+            block: (Either<HttpError, List<UserData>>) -> Unit
         )
     }
 
     suspend fun searchUsers(
         searchText: String,
-        onSuccess: (List<UserData>) -> Unit,
-        onFailure: () -> Unit
-    ) {
-        remoteSource.searchUsers(searchText, onSuccess, onFailure)
-    }
+        block: (Either<HttpError, List<UserData>>) -> Unit
+    ) = remoteSource.searchUsers(searchText, block)
 
     suspend fun addSearchSuggestion(searchHistory: SearchHistory) {
         localSource.addSearchSuggestion(searchHistory)

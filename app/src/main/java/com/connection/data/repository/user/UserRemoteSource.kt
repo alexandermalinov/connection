@@ -5,6 +5,7 @@ import com.connection.data.remote.response.user.UserData
 import com.connection.data.remote.response.user.UsersData
 import com.connection.data.remote.response.user.toMap
 import com.connection.ui.base.InviteTypes
+import com.connection.utils.common.Constants.CACHED_USER_ID
 import com.connection.utils.common.Constants.CONNECTIONS
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.USERS
@@ -75,7 +76,7 @@ class UserRemoteSource @Inject constructor(
      */
     override suspend fun isUserLoggedIn(onSuccess: () -> Unit, onFailure: () -> Unit) {
         auth.addAuthStateListener { state ->
-            if (state.currentUser != null && state.currentUser?.uid != "EiNndWIwPNbadKmx8K9QTl1P7Ws1") {
+            if (state.currentUser != null && state.currentUser?.uid != CACHED_USER_ID) {
                 onSuccess()
             } else
                 onFailure()

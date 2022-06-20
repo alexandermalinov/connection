@@ -70,4 +70,6 @@ object Constants {
 
     // Search
     const val SEARCH_POSTFIX = "\uf8ff"
+
+    const val CACHED_USER_ID = "EiNndWIwPNbadKmx8K9QTl1P7Ws1"
 }

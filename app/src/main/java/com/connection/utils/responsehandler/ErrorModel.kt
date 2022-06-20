@@ -2,6 +2,8 @@ package com.connection.utils.responsehandler
 
 import androidx.annotation.StringRes
 import com.connection.R
+import com.google.firebase.database.DatabaseError
+import com.sendbird.android.SendBirdException
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -49,4 +51,14 @@ fun ErrorResponseModel.toApiError(errorCode: Int?) = HttpError(
     errorMessage = errorMessage,
     serverMessage = error,
     errorCode = errorCode
+)
+
+fun SendBirdException.toHttpError() = HttpError(
+    serverMessage = message,
+    errorCode = code
+)
+
+fun DatabaseError.toHttpError() = HttpError(
+    serverMessage = message,
+    errorCode = code
 )
