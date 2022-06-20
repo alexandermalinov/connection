@@ -72,15 +72,14 @@ class AllTabsViewModel @Inject constructor(
 
     private suspend fun fetchChannels() {
         _uiLiveData.value?.loadingConnections = true
-        chatTabRepository.fetchChannels(
-            ConnectionStatus.CONNECTED,
-            onSuccess = { channels ->
+        chatTabRepository.fetchChannels(ConnectionStatus.CONNECTED) { either ->
+            either.fold({ error ->
+                Timber.e("Failed to fetch channels: $error")
+            }, { channels ->
                 setupChannelsUiData(channels)
-            },
-            onFailure = {
-                Timber.e("Failed to fetch channels")
+                _uiLiveData.value?.loadingConnections = false
             })
-        _uiLiveData.value?.loadingConnections = false
+        }
     }
 
     private fun setupChannelsUiData(channels: List<GroupChannel>) {

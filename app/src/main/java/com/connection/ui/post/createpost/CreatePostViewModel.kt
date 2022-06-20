@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.connection.R
+import com.connection.data.remote.response.post.Post
 import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
@@ -62,11 +63,27 @@ class CreatePostViewModel @Inject constructor(
 
     private fun getSelectedImage() = savedStateHandle.get(PICTURE) ?: EMPTY
 
-    private suspend fun createPost() {
+    private suspend fun handleOnSave() {
         _uiLiveData.value?.let {
-            postRepository.savePostPicture(it.picture) { picture ->
-                postRepository.createPost(it.toPost(picture))
+            postRepository.savePostPicture(it.picture) { either ->
+                viewModelScope.launch {
+                    either.foldSuspend({ error ->
+                        Timber.e("Error occurred saving post picture: $error")
+                    }, { picture ->
+                        createPost(it.toPost(picture))
+                    })
+                }
             }
+        }
+    }
+
+    private suspend fun createPost(post: Post) {
+        postRepository.createPost(post) { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred while creating post: $error")
+            }, {
+                navigateToProfile()
+            })
         }
     }
 
@@ -85,8 +102,7 @@ class CreatePostViewModel @Inject constructor(
 
     override fun onSaveClick() {
         viewModelScope.launch {
-            createPost()
-            navigateToProfile()
+            handleOnSave()
         }
     }
 }

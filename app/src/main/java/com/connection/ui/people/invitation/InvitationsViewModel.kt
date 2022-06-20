@@ -44,15 +44,14 @@ class InvitationsViewModel @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadInvitations() {
         _uiLiveData.value?.loading = true
-        chatTabRepository.fetchChannels(
-            ConnectionStatus.INVITE_RECEIVED,
-            onSuccess = { channels ->
+        chatTabRepository.fetchChannels(ConnectionStatus.INVITE_RECEIVED) { either ->
+            either.fold({ error ->
+                Timber.e("Failed to fetch channels: $error")
+            }, { channels ->
                 onChannelsObtained(channels)
-            },
-            onFailure = {
-                Timber.e("Failed to fetch channels")
+                _uiLiveData.value?.loading = false
             })
-        _uiLiveData.value?.loading = false
+        }
     }
 
     private fun onChannelsObtained(channels: List<GroupChannel>) {

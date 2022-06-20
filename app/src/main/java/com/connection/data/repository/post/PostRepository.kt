@@ -4,8 +4,10 @@ import android.net.Uri
 import com.connection.data.remote.response.post.Comment
 import com.connection.data.remote.response.post.Like
 import com.connection.data.remote.response.post.Post
-import com.connection.data.remote.response.post.Posts
 import com.connection.utils.common.Constants.EMPTY
+import com.connection.utils.responsehandler.Either
+import com.connection.utils.responsehandler.HttpError
+import com.connection.utils.responsehandler.ResponseResultOk
 import javax.inject.Inject
 
 class PostRepository @Inject constructor(
@@ -17,22 +19,26 @@ class PostRepository @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     interface RemoteSource {
 
-        fun createPost(post: Post)
+        suspend fun createPost(
+            post: Post,
+            block: (Either<HttpError, ResponseResultOk>) -> Unit
+        )
 
-        suspend fun savePostPicture(picture: String, onSuccess: (Uri?) -> Unit)
+        suspend fun savePostPicture(
+            picture: String,
+            block: (Either<HttpError, Uri?>) -> Unit
+        )
 
         suspend fun getUserPosts(
             id: String = EMPTY,
-            onSuccess: (Posts) -> Unit,
-            onFailure: () -> Unit
+            block: (Either<HttpError, List<Post>>) -> Unit
         )
 
         suspend fun createComment(comment: Comment)
 
         suspend fun getPostComments(
             postId: String,
-            onSuccess: (List<Comment>) -> Unit,
-            onFailure: () -> Unit
+            block: (Either<HttpError, List<Comment>>) -> Unit
         )
 
         suspend fun like(
@@ -41,40 +47,75 @@ class PostRepository @Inject constructor(
             like: Like
         )
 
-        suspend fun getLoggedUserPosts(onSuccess: (Posts) -> Unit, onFailure: () -> Unit)
+        suspend fun getLoggedUserPosts(block: (Either<HttpError, List<Post>>) -> Unit)
     }
 
     /* --------------------------------------------------------------------------------------------
      * Exposed
      ---------------------------------------------------------------------------------------------*/
-    fun createPost(post: Post) {
-        remote.createPost(post)
+    /**
+     * Creates post in Firebase Realtime Database.
+     * @param post is the post to be created
+     * @param block returns either [HttpError] or [ResponseResultOk]. If result is [ResponseResultOk]
+     * proceed executing ui logic
+     */
+    suspend fun createPost(
+        post: Post,
+        block: (Either<HttpError, ResponseResultOk>) -> Unit
+    ) {
+        remote.createPost(post, block)
     }
 
-    suspend fun savePostPicture(picture: String, onSuccess: (Uri?) -> Unit) {
-        remote.savePostPicture(picture, onSuccess)
+    /**
+     * Saves the post's picture passed as an argument in Firebase Storage.
+     * @param picture is the picture uri that will be saved in the storage
+     * @param block returns either [HttpError] or the picture's url.
+     */
+    suspend fun savePostPicture(
+        picture: String,
+        block: (Either<HttpError, Uri?>) -> Unit
+    ) {
+        remote.savePostPicture(picture, block)
     }
 
+    /**
+     * Finds the user by the id and returns user all posts
+     * @param id is the wanted user id
+     * @param block returns either [HttpError] or user all posts.
+     */
     suspend fun getUserPosts(
         id: String = EMPTY,
-        onSuccess: (Posts) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, List<Post>>) -> Unit
     ) {
-        remote.getUserPosts(id, onSuccess, onFailure)
+        remote.getUserPosts(id, block)
     }
 
+    /**
+     * Creates comment in Firebase Realtime Database.
+     * @param comment is the comment to be created
+     */
     suspend fun createComment(comment: Comment) {
         remote.createComment(comment)
     }
 
+    /**
+     * Finds the post by id and returns all of it's comments
+     * @param postId is the post id that has to be found
+     * @param block returns either [HttpError] or all post comment.
+     */
     suspend fun getPostComments(
         postId: String,
-        onSuccess: (List<Comment>) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, List<Comment>>) -> Unit
     ) {
-        remote.getPostComments(postId, onSuccess, onFailure)
+        remote.getPostComments(postId, block)
     }
 
+    /**
+     * Likes post that is found by id.
+     * @param postId is the post id
+     * @param isLiked checks whether the post has to be liked or not
+     * @param like is object containing likeId, userId and userProfileImage
+     */
     suspend fun like(
         postId: String,
         isLiked: Boolean,
@@ -83,7 +124,11 @@ class PostRepository @Inject constructor(
         remote.like(postId, isLiked, like)
     }
 
-    suspend fun getLoggedUserPosts(onSuccess: (Posts) -> Unit, onFailure: () -> Unit) {
-        remote.getLoggedUserPosts(onSuccess, onFailure)
+    /**
+     * Returns the logged in user all posts
+     * @param block returns either [HttpError] or list of the logged in user all posts
+     */
+    suspend fun getLoggedUserPosts(block: (Either<HttpError, List<Post>>) -> Unit) {
+        remote.getLoggedUserPosts(block)
     }
 }

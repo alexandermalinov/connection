@@ -33,11 +33,11 @@ class UserRemoteSource @Inject constructor(
     override suspend fun loginAuth(
         email: String,
         password: String,
-        block: (Either<HttpError, String>) -> Unit
+        block: (Either<HttpError, ResponseResultOk>) -> Unit
     ) {
         auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { login ->
-                block.invoke(Either.right(login.result.user?.uid ?: EMPTY))
+            .addOnCompleteListener {
+                block.invoke(Either.right(ResponseResultOk))
             }
             .addOnFailureListener { error ->
                 block.invoke(Either.left(HttpError(serverMessage = error.message)))
@@ -131,21 +131,20 @@ class UserRemoteSource @Inject constructor(
             })
     }
 
-    override suspend fun getLoggedUserId(): String = auth.currentUser?.uid ?: EMPTY
-
     override suspend fun getLoggedUser(block: (Either<HttpError, UserData?>) -> Unit) {
         getUser(auth.currentUser?.uid ?: EMPTY) { either ->
             either.fold({ error ->
-                block.invoke(Either.left(HttpError()))
+                block.invoke(Either.left(HttpError(serverMessage = error.serverMessage)))
             }, { user ->
                 block.invoke(Either.right(user))
             })
         }
     }
 
-    override suspend fun logoutUser(onSuccess: () -> Unit) {
+    override suspend fun logoutUser(block: (Either<HttpError, ResponseResultOk>) -> Unit) {
         auth.signOut()
-        SendBird.disconnect { onSuccess() }
+        SendBird.disconnect { block.invoke(Either.right(ResponseResultOk)) }
+        if (auth.currentUser != null) block.invoke(Either.left(HttpError()))
     }
 
     override fun addConnection(

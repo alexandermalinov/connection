@@ -30,9 +30,9 @@ class SplashViewModel @Inject constructor(
             viewModelScope.launch {
                 delay(SPLASH_SCREEN_DELAY)
                 either.foldSuspend({
-                    navigateToFeed()
-                }, {
                     navigateToLogin()
+                }, {
+                    navigateToFeed()
                 })
             }
         }

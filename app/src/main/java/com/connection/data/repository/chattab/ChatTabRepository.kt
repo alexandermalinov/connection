@@ -2,6 +2,8 @@ package com.connection.data.repository.chattab
 
 import com.connection.data.remote.response.user.UserData
 import com.connection.ui.base.ConnectionStatus
+import com.connection.utils.responsehandler.Either
+import com.connection.utils.responsehandler.HttpError
 import com.sendbird.android.GroupChannel
 import javax.inject.Inject
 
@@ -14,15 +16,14 @@ class ChatTabRepository @Inject constructor(
      ---------------------------------------------------------------------------------------------*/
     interface RemoteSource {
 
-        fun connectUser(
+        suspend fun connectUser(
             user: UserData,
             onFailure: () -> Unit
         )
 
         suspend fun fetchChannels(
             filter: ConnectionStatus,
-            onSuccess: (List<GroupChannel>) -> Unit,
-            onFailure: () -> Unit
+            block: (Either<HttpError, List<GroupChannel>>) -> Unit
         )
     }
 
@@ -31,13 +32,12 @@ class ChatTabRepository @Inject constructor(
      ---------------------------------------------------------------------------------------------*/
     suspend fun fetchChannels(
         filter: ConnectionStatus,
-        onSuccess: (List<GroupChannel>) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, List<GroupChannel>>) -> Unit
     ) {
-        remote.fetchChannels(filter, onSuccess, onFailure)
+        remote.fetchChannels(filter, block)
     }
 
-    fun connectUser(
+    suspend fun connectUser(
         user: UserData,
         onFailure: () -> Unit
     ) {

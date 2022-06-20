@@ -35,7 +35,7 @@ fun Post.toUiModel(loggedUser: UserData?) = PostUiModel(
     post.likesCount = likes.keys.size.toString()
 }
 
-fun Posts.toUiModels(loggedUser: UserData?) = posts.map { posts -> posts.toUiModel(loggedUser) }
+fun List<Post>.toUiModels(loggedUser: UserData?) = map { posts -> posts.toUiModel(loggedUser) }
 
 private fun Post.isUserConnection(loggedUser: UserData?) = loggedUser?.connections?.keys
     ?.none { it == creatorId } == true && loggedUser.id != creatorId

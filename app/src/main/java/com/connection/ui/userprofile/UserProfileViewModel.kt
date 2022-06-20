@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.connection.data.remote.response.post.Posts
+import com.connection.data.remote.response.post.Post
 import com.connection.data.remote.response.post.toUiModels
 import com.connection.data.remote.response.user.UserData
 import com.connection.data.repository.post.PostRepository
@@ -66,22 +66,20 @@ class UserProfileViewModel @Inject constructor(
     private fun getUserIdByArgs() = savedStateHandle.get<String>(USER_ID) ?: EMPTY
 
     private suspend fun loadPosts() {
-        postRepository.getUserPosts(
-            id = getUserIdByArgs(),
-            onSuccess = { posts ->
+        postRepository.getUserPosts(getUserIdByArgs()) { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred fetching posts: $error")
+            }, { posts ->
                 onReceivePosts(posts)
                 _uiLiveData.value = _uiLiveData.value?.copy(
-                    postsCount = posts.posts.size.toString()
+                    postsCount = posts.size.toString()
                 )
-            },
-            onFailure = {
-                Timber.e("Error occurred fetching posts")
-            }
-        )
+            })
+        }
     }
 
-    private fun onReceivePosts(posts: Posts) {
-        if (posts.posts.isNotEmpty())
+    private fun onReceivePosts(posts: List<Post>) {
+        if (posts.isNotEmpty())
             _postsLiveData.value = PostsUiModel(posts.toUiModels(user))
         else
             _uiLiveData.value = _uiLiveData.value?.copy(emptyPostsState = true)

@@ -64,26 +64,31 @@ class PostCommentsViewModel @Inject constructor(
 
     private suspend fun loadUser() {
         userRepository.getLoggedUser { either ->
-            either.fold(
-                { error -> Timber.e("Error occurred while fetching user data: $error") },
-                { user -> loggedUser = user }
-            )
+            either.fold({ error ->
+                Timber.e("Error occurred while fetching user data: $error")
+            }, { user ->
+                loggedUser = user
+            })
         }
     }
 
     private suspend fun loadComments() {
-        postRepository.getPostComments(
-            postId = _uiLiveData.value?.postId ?: EMPTY,
-            onSuccess = { posts -> onReceiverComments(posts) },
-            onFailure = { Timber.e("Error occurred fetching posts") }
-        )
+        postRepository.getPostComments(postId = _uiLiveData.value?.postId ?: EMPTY) { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred fetching posts: $error")
+            }, { comments ->
+                onReceiverComments(comments)
+            })
+        }
     }
 
     private fun onReceiverComments(comments: List<Comment>) {
         if (comments.isNotEmpty())
-            _uiLiveData.value = _uiLiveData.value?.copy(comments = comments.toUiModel())
+            _uiLiveData.value = _uiLiveData.value
+                ?.copy(comments = comments.toUiModel())
+                ?.also { it.emptyComments = false }
         else
-            _uiLiveData.value = _uiLiveData.value?.copy(emptyComments = true)
+            _uiLiveData.value?.emptyComments = true
     }
 
     private fun getLoadedComments() = _uiLiveData.value?.comments ?: emptyList()
@@ -98,7 +103,6 @@ class PostCommentsViewModel @Inject constructor(
                 comment = it.commentText
             )
         }
-        ?: PostCommentListItemUiModel()
 
     /* --------------------------------------------------------------------------------------------
      * Override
@@ -109,10 +113,10 @@ class PostCommentsViewModel @Inject constructor(
 
     override fun postComment() {
         viewModelScope.launch {
-            createComment().let {
-                _uiLiveData.value = _uiLiveData.value?.copy(
-                    comments = listOf(it).plus(getLoadedComments())
-                )
+            createComment()?.let {
+                _uiLiveData.value = _uiLiveData.value
+                    ?.copy(comments = listOf(it).plus(getLoadedComments()))
+                    ?.also { comments -> comments.emptyComments = false }
                 postRepository.createComment(it.toModel())
             }
         }
