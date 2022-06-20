@@ -47,15 +47,14 @@ class ConnectedPeopleViewModel @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadPeople() {
         _uiLiveData.value?.loading = true
-        chatTabRepository.fetchChannels(
-            ConnectionStatus.CONNECTED,
-            onSuccess = { channels ->
+        chatTabRepository.fetchChannels(ConnectionStatus.CONNECTED) { either ->
+            either.fold({ error ->
+                Timber.e("Failed to fetch channels: $error")
+            }, { channels ->
                 onInvitationsObtained(channels)
-            },
-            onFailure = {
-                Timber.e("Failed to fetch channels")
+                _uiLiveData.value?.loading = false
             })
-        _uiLiveData.value?.loading = false
+        }
     }
 
     private fun onInvitationsObtained(channels: List<GroupChannel>) {

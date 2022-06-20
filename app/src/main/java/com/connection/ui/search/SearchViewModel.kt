@@ -21,6 +21,7 @@ import com.connection.vo.search.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,10 +49,14 @@ class SearchViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadLoggedUser() {
-        userRepository.getLoggedUser {
-            loggedUser = it
+        userRepository.getLoggedUser { either ->
             viewModelScope.launch {
-                loadRecentSearches()
+                either.foldSuspend({ error ->
+                    Timber.e("Error occurred while fetching user data: $error")
+                }, { user ->
+                    loggedUser = user
+                    loadRecentSearches()
+                })
             }
         }
     }

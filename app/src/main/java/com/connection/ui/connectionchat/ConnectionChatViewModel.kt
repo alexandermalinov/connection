@@ -91,12 +91,21 @@ class ConnectionChatViewModel @Inject constructor(
     /* --------------------------------------------------------------------------------------------
      * Private
     ---------------------------------------------------------------------------------------------*/
+    private fun getSenderUserIdByArgs() = savedStateHandle
+        .get<HeaderUiModel>(HEADER_MODEL)
+        ?.senderId
+        ?: EMPTY
+
     private suspend fun setupUsers() {
-        userRepository.getLoggedUser { user ->
-            loggedUser = user
-            senderUserId = savedStateHandle.get<HeaderUiModel>(HEADER_MODEL)?.senderId ?: EMPTY
+        userRepository.getLoggedUser { either ->
             viewModelScope.launch {
-                setupChat()
+                either.foldSuspend({ error ->
+                    Timber.e("Error occurred while fetching user data: $error")
+                }, { user ->
+                    loggedUser = user
+                    senderUserId = getSenderUserIdByArgs()
+                    setupChat()
+                })
             }
         }
     }
@@ -312,6 +321,7 @@ class ConnectionChatViewModel @Inject constructor(
     }
 
     override fun onSendImageClick() {
+        _uiLiveData.value?.loadingImageSending = true
         _galleryLiveData.value
             ?.firstOrNull { image -> image.isSelected }
             ?.let {
@@ -320,10 +330,13 @@ class ConnectionChatViewModel @Inject constructor(
                         channel,
                         application.createFile(it.image.toUri()),
                         onSuccess = { fileMessage ->
-                            _messagesLiveData.value =
-                                addNewMessage(fileMessage.toUiModel(loggedUser?.id))
+                            _uiLiveData.value?.loadingImageSending = false
+                            _messagesLiveData.value = addNewMessage(
+                                fileMessage.toUiModel(loggedUser?.id)
+                            )
                         },
                         onFailure = {
+                            _uiLiveData.value?.loadingImageSending = false
                             Timber.e("error occurred sending message")
                         }
                     )

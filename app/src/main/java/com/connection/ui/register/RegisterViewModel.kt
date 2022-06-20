@@ -46,42 +46,47 @@ class RegisterViewModel @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     private suspend fun register() {
         _uiLiveData.value?.let { uiData ->
-            userRepository.registerAuth(
-                uiData.email,
-                uiData.password,
-                onFailure = { onFailedValidation() },
-                onSuccess = { id -> uploadUserPicture(id, uiData) }
-            )
-        }
-    }
-
-    private fun uploadUserPicture(id: String, uiData: RegisterUiModel) {
-        userRepository.uploadImage(
-            uiData.profilePicture,
-            onFailure = { onFailedValidation() },
-            onSuccess = {
-                getUser(id, it)?.let { user ->
-                    userRepository.registerDB(
-                        user = user,
-                        onSuccess = { navigate() },
-                        onFailure = { onFailedValidation() }
+            userRepository.registerAuth(uiData.email, uiData.password) { either ->
+                viewModelScope.launch {
+                    either.foldSuspend(
+                        { onFailedValidation() },
+                        { id -> uploadUserPicture(id, uiData) }
                     )
                 }
             }
-        )
+        }
     }
 
-    private fun getUser(
+    private suspend fun uploadUserPicture(id: String, uiData: RegisterUiModel) {
+        userRepository.uploadImage(uiData.profilePicture) { either ->
+            viewModelScope.launch {
+                either.foldSuspend(
+                    { onFailedValidation() },
+                    { image -> createUser(id, image) }
+                )
+            }
+        }
+    }
+
+    private suspend fun createUser(
         id: String?,
         profileImage: Uri?
-    ) = _uiLiveData.value?.let {
-        UserData(
-            id = id ?: EMPTY,
-            email = it.email,
-            username = it.username,
-            password = it.password,
-            picture = profileImage.toString()
-        )
+    ) {
+        _uiLiveData.value?.apply {
+            val user = UserData(
+                id = id ?: EMPTY,
+                email = email,
+                username = username,
+                password = password,
+                picture = profileImage.toString()
+            )
+            userRepository.registerDB(user = user) { either ->
+                either.fold(
+                    { onFailedValidation() },
+                    { navigate() }
+                )
+            }
+        }
     }
 
     private fun navigate() {

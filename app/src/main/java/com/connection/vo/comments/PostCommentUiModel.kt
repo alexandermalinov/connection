@@ -12,8 +12,7 @@ data class PostCommentUiModel(
     val postId: String = EMPTY,
     val postCreatedAt: String = EMPTY,
     val postDescription: String = EMPTY,
-    val comments: List<PostCommentListItemUiModel> = emptyList(),
-    val emptyComments: Boolean = false
+    val comments: List<PostCommentListItemUiModel> = emptyList()
 ) : BaseObservable() {
 
     @get:Bindable
@@ -29,5 +28,12 @@ data class PostCommentUiModel(
         set(value) {
             field = value
             notifyPropertyChanged(BR.postButtonEnabled)
+        }
+
+    @get:Bindable
+    var emptyComments: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.emptyComments)
         }
 }

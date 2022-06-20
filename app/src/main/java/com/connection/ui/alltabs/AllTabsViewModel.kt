@@ -57,26 +57,29 @@ class AllTabsViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun initData() {
-        userRepository.getLoggedUser { user ->
+        userRepository.getLoggedUser { either ->
             viewModelScope.launch {
-                loggedUser = user
-                _uiLiveData.value = AllTabsUiModel(user?.picture ?: EMPTY)
-                fetchChannels()
+                either.foldSuspend({ error ->
+                    Timber.e("Error occurred while fetching user data: $error")
+                }, { user ->
+                    loggedUser = user
+                    _uiLiveData.value = AllTabsUiModel(user?.picture ?: EMPTY)
+                    fetchChannels()
+                })
             }
         }
     }
 
     private suspend fun fetchChannels() {
         _uiLiveData.value?.loadingConnections = true
-        chatTabRepository.fetchChannels(
-            ConnectionStatus.CONNECTED,
-            onSuccess = { channels ->
+        chatTabRepository.fetchChannels(ConnectionStatus.CONNECTED) { either ->
+            either.fold({ error ->
+                Timber.e("Failed to fetch channels: $error")
+            }, { channels ->
                 setupChannelsUiData(channels)
-            },
-            onFailure = {
-                Timber.e("Failed to fetch channels")
+                _uiLiveData.value?.loadingConnections = false
             })
-        _uiLiveData.value?.loadingConnections = false
+        }
     }
 
     private fun setupChannelsUiData(channels: List<GroupChannel>) {
@@ -99,9 +102,7 @@ class AllTabsViewModel @Inject constructor(
     override fun onConnectionClick(id: String) {
         _navigationLiveData.value = NavigationGraph(
             R.id.action_allMessagesFragment_to_connectionChatFragment,
-            bundleOf(
-                HEADER_MODEL to getConnectionById(id)?.toUiModel()
-            )
+            bundleOf(HEADER_MODEL to getConnectionById(id)?.toUiModel())
         )
     }
 }

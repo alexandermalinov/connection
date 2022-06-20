@@ -3,10 +3,11 @@ package com.connection.data.repository.chattab
 import com.connection.data.remote.response.user.UserData
 import com.connection.ui.base.ConnectionStatus
 import com.connection.utils.common.Constants.PAGING_LIMIT
+import com.connection.utils.responsehandler.Either
+import com.connection.utils.responsehandler.HttpError
 import com.sendbird.android.GroupChannel
 import com.sendbird.android.GroupChannelListQuery
 import com.sendbird.android.SendBird
-import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -32,20 +33,18 @@ class ChatTabRemoteSource @Inject constructor() : ChatTabRepository.RemoteSource
      ---------------------------------------------------------------------------------------------*/
     override suspend fun fetchChannels(
         filter: ConnectionStatus,
-        onSuccess: (List<GroupChannel>) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, List<GroupChannel>>) -> Unit
     ) {
         listQuery(filter).next { channels, error ->
             if (channels != null) {
-                onSuccess(channels)
+                block.invoke(Either.right(channels))
             } else {
-                Timber.e("error occurred fetching channels: ${error.message}")
-                onFailure()
+                block.invoke(Either.left(HttpError(serverMessage = error.message)))
             }
         }
     }
 
-    override fun connectUser(
+    override suspend fun connectUser(
         user: UserData,
         onFailure: () -> Unit
     ) {
@@ -53,14 +52,11 @@ class ChatTabRemoteSource @Inject constructor() : ChatTabRepository.RemoteSource
             if (error == null) {
                 connectedUser?.let {
                     SendBird.updateCurrentUserInfo(user.username, user.picture) { error ->
-                        if (error == null) {
-                            SendBird.setChannelInvitationPreference(false) { preferenceError ->
-                                if (preferenceError != null)
-                                    onFailure()
+                        error?.let {
+                            SendBird.setChannelInvitationPreference(false) {
+                                it?.let { onFailure() }
                             }
-                        } else {
-                            onFailure()
-                        }
+                        } ?: onFailure()
                     }
                 }
             } else onFailure()

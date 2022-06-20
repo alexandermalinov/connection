@@ -122,8 +122,8 @@
             android:id="@+id/text_request_sender_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_medium"
             android:text="@{model.header.username}"
             android:textColor="@color/black"
             android:textSize="@dimen/text_xx_medium"
@@ -150,8 +150,8 @@
             android:id="@+id/text_send_request"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_medium"
             android:layout_marginHorizontal="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_medium"
             android:text="@string/request_to_connect"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -324,7 +324,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:visibleGone="@{model.shouldOpenGallery}"
-            tools:visibility="gone">
+            tools:visibility="visible">
 
             <View
                 android:id="@+id/view_gallery_top_line"
@@ -352,6 +352,7 @@
                 tools:listitem="@layout/list_item_gallery_image" />
 
             <com.google.android.material.button.MaterialButton
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton.Black"
                 android:id="@+id/button_send_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -360,7 +361,17 @@
                 android:text="@string/send_image"
                 android:textSize="@dimen/text_pre_xx_small"
                 android:textStyle="bold"
-                app:cornerRadius="@dimen/radius_medium" />
+                app:cornerRadius="@dimen/radius_medium"
+                app:visibleGone="@{!model.loadingImageSending}" />
+
+            <ProgressBar
+                android:id="@+id/loading_image_sending"
+                style="@android:style/Widget.ProgressBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginVertical="@dimen/margin_medium"
+                app:visibleGone="@{model.loadingImageSending}" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

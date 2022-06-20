@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
 import com.connection.data.remote.response.post.Like
-import com.connection.data.remote.response.post.Posts
+import com.connection.data.remote.response.post.Post
 import com.connection.data.remote.response.post.toUiModels
 import com.connection.data.remote.response.user.UserData
 import com.connection.data.repository.chattab.ChatTabRepository
@@ -75,41 +75,45 @@ class FeedViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadUser() {
-        userRepository.getLoggedUser { user ->
-            loggedUser = user
-            _uiLiveData.value = FeedUiModel(profilePicture = user?.picture ?: EMPTY)
+        userRepository.getLoggedUser { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred while fetching user data: $error")
+            }, { user ->
+                loggedUser = user
+                _uiLiveData.value = FeedUiModel(profilePicture = user?.picture ?: EMPTY)
+            })
         }
     }
 
     private suspend fun loadPosts() {
         _uiLiveData.value?.loadingPosts = true
-        postRepository.getUserPosts(
-            onSuccess = { posts ->
+        postRepository.getUserPosts() { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred fetching posts: $error")
+            }, { posts ->
                 onReceiverPosts(posts)
                 _uiLiveData.value?.loadingPosts = false
-            },
-            onFailure = { Timber.e("Error occurred fetching posts") }
-        )
+            })
+        }
     }
 
     private suspend fun loadChats() {
         _uiLiveData.value?.loadingRecentChats = true
-        chatTabRepository.fetchChannels(
-            ConnectionStatus.CONNECTED,
-            onSuccess = { channels ->
-                onReceiveChats(channels)
-                _uiLiveData.value?.loadingRecentChats = false
-            },
-            onFailure = {
-                viewModelScope.launch {
+        chatTabRepository.fetchChannels(ConnectionStatus.CONNECTED) { either ->
+            viewModelScope.launch {
+                either.foldSuspend({ error ->
                     connectUser(loggedUser)
                     loadChats()
-                }
-            })
+                }, { channels ->
+                    onReceiveChats(channels)
+                    _uiLiveData.value?.loadingRecentChats = false
+                })
+            }
+        }
     }
 
-    private fun onReceiverPosts(posts: Posts) {
-        if (posts.posts.isNotEmpty())
+    private fun onReceiverPosts(posts: List<Post>) {
+        if (posts.isNotEmpty())
             loggedUser?.let { _postsLiveData.value = PostsUiModel(posts.toUiModels(it)) }
         else
             _uiLiveData.value = _uiLiveData.value?.copy(emptyPosts = true)
@@ -143,6 +147,16 @@ class FeedViewModel @Inject constructor(
         )
     }
 
+    private suspend fun like(id: String, isLiked: Boolean) {
+        loggedUser?.let {
+            postRepository.like(
+                id,
+                isLiked,
+                Like(userId = it.id, userProfilePicture = it.picture)
+            )
+        }
+    }
+
     /* --------------------------------------------------------------------------------------------
      * Override
      ---------------------------------------------------------------------------------------------*/
@@ -156,14 +170,7 @@ class FeedViewModel @Inject constructor(
                 ?.find { post -> post.id == id }
                 ?.let { post ->
                     updatePostLike(post)
-                    postRepository.like(
-                        id,
-                        post.isLiked,
-                        Like(
-                            userId = loggedUser?.id ?: EMPTY,
-                            userProfilePicture = loggedUser?.picture ?: EMPTY
-                        )
-                    )
+                    like(id, post.isLiked)
                 }
         }
     }

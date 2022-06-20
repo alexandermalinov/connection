@@ -37,6 +37,13 @@ data class PostUiModel(
             field = value
             notifyPropertyChanged(BR.likesCount)
         }
+
+    @get:Bindable
+    var loadingCreatePost: Boolean = false
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR.loadingCreatePost)
+        }
 }
 
 fun PostUiModel.toPost(picture: Uri?) = Post(

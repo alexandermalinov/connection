@@ -84,6 +84,14 @@ data class ConnectionChatUiModel(
             notifyPropertyChanged(BR.loadingChatHistory)
         }
 
+    @get:Bindable
+    var loadingImageSending = false
+        set(value) {
+            field = value
+            field = value
+            notifyPropertyChanged(BR.loadingImageSending)
+        }
+
     private fun handleConnectionStatus(status: ConnectionStatus) {
         when (status) {
             ConnectionStatus.CONNECTED -> {

@@ -32,12 +32,13 @@ class LoginViewModel @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     private suspend fun login(email: String, password: String) {
         _uiLiveData.value?.loading = true
-        userRepository.login(
-            email = email,
-            password = password,
-            onSuccess = { navigateHome() },
-            onFailure = { showError() }
-        )
+        userRepository.login(email = email, password = password) { either ->
+            either.fold({
+                showError()
+            }, {
+                navigateHome()
+            })
+        }
     }
 
     private fun showError() {

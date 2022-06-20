@@ -13,8 +13,8 @@ import com.connection.ui.base.BaseViewModel
 import com.connection.utils.common.Constants.CONNECTED_PEOPLE_TAB_POSITION
 import com.connection.utils.common.Constants.EMPTY
 import com.connection.utils.common.Constants.FRAGMENT_CONNECTED_PEOPLE
-import com.connection.utils.common.Constants.FRAGMENT_NOT_CONNECTED_PEOPLE
 import com.connection.utils.common.Constants.FRAGMENT_INVITATION_PEOPLE
+import com.connection.utils.common.Constants.FRAGMENT_NOT_CONNECTED_PEOPLE
 import com.connection.utils.common.Constants.HEADER_MODEL
 import com.connection.utils.common.Constants.INVITED_PEOPLE_TAB_POSITION
 import com.connection.utils.common.Constants.NOT_CONNECTED_PEOPLE_TAB_POSITION
@@ -22,6 +22,7 @@ import com.connection.vo.people.PeopleListItemUiModel
 import com.connection.vo.people.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -62,8 +63,12 @@ open class PeopleViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun initUserData() {
-        userRepository.getLoggedUser() {
-            loggedUser = it
+        userRepository.getLoggedUser() { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred while fetching user data: $error")
+            }, { user ->
+                loggedUser = user
+            })
         }
     }
 
