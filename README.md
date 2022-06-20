@@ -9,4 +9,4 @@ Connection is a social media android app, that enables users to share and descri
 Screenshots will be uploaded
 
 ## Installation
-The chat feature is implemented with SendBird SDK developer plan. Because of that it can not be uploaded yet to Google Play Store. In order to install the app, please download the APK file and install it on your phone.
+Soon the app will be available in Google Play.
