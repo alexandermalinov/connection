@@ -91,12 +91,21 @@ class ConnectionChatViewModel @Inject constructor(
     /* --------------------------------------------------------------------------------------------
      * Private
     ---------------------------------------------------------------------------------------------*/
+    private fun getSenderUserIdByArgs() = savedStateHandle
+        .get<HeaderUiModel>(HEADER_MODEL)
+        ?.senderId
+        ?: EMPTY
+
     private suspend fun setupUsers() {
-        userRepository.getLoggedUser { user ->
-            loggedUser = user
-            senderUserId = savedStateHandle.get<HeaderUiModel>(HEADER_MODEL)?.senderId ?: EMPTY
+        userRepository.getLoggedUser { either ->
             viewModelScope.launch {
-                setupChat()
+                either.foldSuspend({ error ->
+                    Timber.e("Error occurred while fetching user data: $error")
+                }, { user ->
+                    loggedUser = user
+                    senderUserId = getSenderUserIdByArgs()
+                    setupChat()
+                })
             }
         }
     }

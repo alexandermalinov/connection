@@ -10,10 +10,10 @@ import com.connection.data.remote.response.post.toUiModels
 import com.connection.data.remote.response.user.UserData
 import com.connection.data.repository.post.PostRepository
 import com.connection.data.repository.user.UserRepository
+import com.connection.menu.PopupMenuUiModel
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.base.BaseViewModel
 import com.connection.ui.post.PostsPresenter
-import com.connection.menu.PopupMenuUiModel
 import com.connection.utils.common.Constants.USER_ID
 import com.connection.vo.post.PostsUiModel
 import com.connection.vo.profile.ProfileUiModel
@@ -53,9 +53,13 @@ class ProfileViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadUserData() {
-        userRepository.getLoggedUser {
-            loggedUser = it
-            _uiLiveData.value = it?.toUiModel()
+        userRepository.getLoggedUser { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred while fetching user data: $error")
+            }, { user ->
+                loggedUser = user
+                _uiLiveData.value = user?.toUiModel()
+            })
         }
     }
 

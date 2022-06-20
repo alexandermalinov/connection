@@ -53,9 +53,13 @@ class UserProfileViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadUserData() {
-        userRepository.getUser(getUserIdByArgs()) {
-            user = it
-            _uiLiveData.value = it?.toUserProfileUiModel(it.id)
+        userRepository.getUser(getUserIdByArgs()) { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred while fetching user data: $error")
+            }, { loggedUser ->
+                user = loggedUser
+                _uiLiveData.value = loggedUser?.toUserProfileUiModel(loggedUser.id)
+            })
         }
     }
 

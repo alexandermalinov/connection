@@ -26,20 +26,16 @@ class SplashViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun navigateUser() {
-        userRepository.isUserLoggedIn(
-            onSuccess = {
-                viewModelScope.launch {
-                    delay(SPLASH_SCREEN_DELAY)
+        userRepository.isUserLoggedIn() { either ->
+            viewModelScope.launch {
+                delay(SPLASH_SCREEN_DELAY)
+                either.foldSuspend({
                     navigateToFeed()
-                }
-            },
-            onFailure = {
-                viewModelScope.launch {
-                    delay(SPLASH_SCREEN_DELAY)
+                }, {
                     navigateToLogin()
-                }
+                })
             }
-        )
+        }
     }
 
     private fun navigateToFeed() {

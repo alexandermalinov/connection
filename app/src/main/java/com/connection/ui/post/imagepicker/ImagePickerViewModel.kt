@@ -58,7 +58,7 @@ class ImagePickerViewModel @Inject constructor(
         GalleryLoader(application).loadGallery().toUiModel().let { images ->
             _galleryLiveData.value = images
             _uiLiveData.value?.apply {
-                selectedPicture = images?.first()?.image ?: EMPTY
+                selectedPicture = images.takeIf { it.isNotEmpty() }?.first()?.image ?: EMPTY
                 setGrantedState()
             }
         }

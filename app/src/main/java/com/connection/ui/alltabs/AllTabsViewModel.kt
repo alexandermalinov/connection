@@ -57,11 +57,15 @@ class AllTabsViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun initData() {
-        userRepository.getLoggedUser { user ->
+        userRepository.getLoggedUser { either ->
             viewModelScope.launch {
-                loggedUser = user
-                _uiLiveData.value = AllTabsUiModel(user?.picture ?: EMPTY)
-                fetchChannels()
+                either.foldSuspend({ error ->
+                    Timber.e("Error occurred while fetching user data: $error")
+                }, { user ->
+                    loggedUser = user
+                    _uiLiveData.value = AllTabsUiModel(user?.picture ?: EMPTY)
+                    fetchChannels()
+                })
             }
         }
     }

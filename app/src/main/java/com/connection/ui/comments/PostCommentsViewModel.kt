@@ -63,8 +63,11 @@ class PostCommentsViewModel @Inject constructor(
     }
 
     private suspend fun loadUser() {
-        userRepository.getLoggedUser { user ->
-            loggedUser = user
+        userRepository.getLoggedUser { either ->
+            either.fold(
+                { error -> Timber.e("Error occurred while fetching user data: $error") },
+                { user -> loggedUser = user }
+            )
         }
     }
 

@@ -75,9 +75,13 @@ class FeedViewModel @Inject constructor(
      * Private
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadUser() {
-        userRepository.getLoggedUser { user ->
-            loggedUser = user
-            _uiLiveData.value = FeedUiModel(profilePicture = user?.picture ?: EMPTY)
+        userRepository.getLoggedUser { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred while fetching user data: $error")
+            }, { user ->
+                loggedUser = user
+                _uiLiveData.value = FeedUiModel(profilePicture = user?.picture ?: EMPTY)
+            })
         }
     }
 

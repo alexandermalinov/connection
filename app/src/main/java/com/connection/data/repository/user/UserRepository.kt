@@ -4,6 +4,9 @@ import android.net.Uri
 import com.connection.data.remote.response.user.UserData
 import com.connection.data.remote.response.user.UsersData
 import com.connection.ui.base.InviteTypes
+import com.connection.utils.responsehandler.Either
+import com.connection.utils.responsehandler.HttpError
+import com.connection.utils.responsehandler.ResponseResultOk
 import javax.inject.Inject
 
 class UserRepository @Inject constructor(
@@ -18,38 +21,37 @@ class UserRepository @Inject constructor(
         suspend fun loginAuth(
             email: String,
             password: String,
-            onSuccess: (String?) -> Unit,
-            onFailure: () -> Unit
+            block: (Either<HttpError, String>) -> Unit
         )
 
         suspend fun registerAuth(
             email: String,
             password: String,
-            onSuccess: (String) -> Unit,
-            onFailure: () -> Unit
+            block: (Either<HttpError, String>) -> Unit
         )
 
-        fun registerDB(
+        suspend fun registerDB(
             user: UserData,
-            onSuccess: (UserData) -> Unit,
-            onFailure: () -> Unit
+            block: (Either<HttpError, ResponseResultOk>) -> Unit
         )
 
-        suspend fun isUserLoggedIn(onSuccess: () -> Unit, onFailure: () -> Unit)
+        suspend fun isUserLoggedIn(block: (Either<HttpError, ResponseResultOk>) -> Unit)
 
-        fun uploadImage(
+        suspend fun uploadImage(
             uri: Uri?,
-            onSuccess: (Uri?) -> Unit,
-            onFailure: () -> Unit
+            block: (Either<HttpError, Uri?>) -> Unit
         )
 
-        suspend fun getUser(id: String, onSuccess: (UserData?) -> Unit)
+        suspend fun getUser(
+            id: String,
+            block: (Either<HttpError, UserData?>) -> Unit
+        )
 
-        suspend fun getUsers(onSuccess: (UsersData) -> Unit, onFailure: () -> Unit)
+        suspend fun getUsers(block: (Either<HttpError, List<UserData>>) -> Unit)
 
         suspend fun getLoggedUserId(): String
 
-        suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit)
+        suspend fun getLoggedUser(block: (Either<HttpError, UserData?>) -> Unit)
 
         suspend fun logoutUser(onSuccess: () -> Unit)
 
@@ -64,56 +66,49 @@ class UserRepository @Inject constructor(
     suspend fun login(
         email: String,
         password: String,
-        onSuccess: (String?) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, String>) -> Unit
     ) {
-        remote.loginAuth(email, password, onSuccess, onFailure)
+        remote.loginAuth(email, password, block)
     }
 
     suspend fun registerAuth(
         email: String,
         password: String,
-        onSuccess: (String) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, String>) -> Unit
     ) {
-        remote.registerAuth(email, password, onSuccess, onFailure)
+        remote.registerAuth(email, password, block)
     }
 
-    fun registerDB(
+    suspend fun registerDB(
         user: UserData,
-        onSuccess: (UserData) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, ResponseResultOk>) -> Unit
     ) {
-        remote.registerDB(user, onSuccess, onFailure)
+        remote.registerDB(user, block)
     }
 
-    suspend fun isUserLoggedIn(onSuccess: () -> Unit, onFailure: () -> Unit) {
-        remote.isUserLoggedIn(onSuccess, onFailure)
+    suspend fun isUserLoggedIn(block: (Either<HttpError, ResponseResultOk>) -> Unit) {
+        remote.isUserLoggedIn(block)
     }
 
-    fun uploadImage(
+    suspend fun uploadImage(
         uri: Uri?,
-        onSuccess: (Uri?) -> Unit,
-        onFailure: () -> Unit
+        block: (Either<HttpError, Uri?>) -> Unit
     ) {
-        remote.uploadImage(uri, onSuccess, onFailure)
+        remote.uploadImage(uri, block)
     }
 
     suspend fun getUser(
         id: String,
-        onSuccess: (UserData?) -> Unit
-    ) {
-        remote.getUser(id, onSuccess)
-    }
+        block: (Either<HttpError, UserData?>) -> Unit
+    ) = remote.getUser(id, block)
 
     suspend fun getUsers(
-        onSuccess: (UsersData) -> Unit,
-        onFailure: () -> Unit
-    ) = remote.getUsers(onSuccess, onFailure)
+        block: (Either<HttpError, List<UserData>>) -> Unit
+    ) = remote.getUsers(block)
 
-    suspend fun getLoggedUser(onSuccess: (UserData?) -> Unit) {
-        remote.getLoggedUser(onSuccess)
-    }
+    suspend fun getLoggedUser(
+        block: (Either<HttpError, UserData?>) -> Unit
+    ) = remote.getLoggedUser(block)
 
     suspend fun logoutUser(onSuccess: () -> Unit) {
         remote.logoutUser(onSuccess)

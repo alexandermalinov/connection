@@ -16,6 +16,7 @@ import com.connection.vo.post.PostUiModel
 import com.connection.vo.post.toPost
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,13 +44,19 @@ class CreatePostViewModel @Inject constructor(
      * Private
    ---------------------------------------------------------------------------------------------*/
     private suspend fun loadLoggedUser() {
-        userRepository.getLoggedUser { user ->
-            _uiLiveData.value = PostUiModel(
-                creatorId = user?.id ?: EMPTY,
-                creatorUsername = user?.username ?: EMPTY,
-                creatorPicture = user?.picture ?: EMPTY,
-                picture = getSelectedImage()
-            )
+        userRepository.getLoggedUser { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred while fetching user data: $error")
+            }, { user ->
+                user?.apply {
+                    _uiLiveData.value = PostUiModel(
+                        creatorId = id,
+                        creatorUsername = username,
+                        creatorPicture = picture,
+                        picture = getSelectedImage()
+                    )
+                }
+            })
         }
     }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.connection.R
 import com.connection.data.remote.response.user.UserData
-import com.connection.data.remote.response.user.UsersData
 import com.connection.data.repository.user.UserRepository
 import com.connection.navigation.NavigationGraph
 import com.connection.ui.people.base.PeopleViewModel
@@ -44,14 +43,18 @@ class NotConnectedPeopleViewModel @Inject constructor(
     ---------------------------------------------------------------------------------------------*/
     private suspend fun loadPeople() {
         _uiLiveData.value?.loading = true
-        userRepository.getUsers(
-            onSuccess = { users -> setUiData(users) },
-            onFailure = { Timber.e("error occurred while settings peoples data") })
-        _uiLiveData.value?.loading = false
+        userRepository.getUsers() { either ->
+            either.fold({ error ->
+                Timber.e("Error occurred while fetching users data: $error")
+            }, { users ->
+                setUiData(users)
+                _uiLiveData.value?.loading = false
+            })
+        }
     }
 
-    private fun setUiData(usersData: UsersData) {
-        filterNotConnectedPeople(usersData).let { people ->
+    private fun setUiData(users: List<UserData>) {
+        filterNotConnectedPeople(users).let { people ->
             if (people.isNotEmpty())
                 _uiLiveData.value = NotConnectedUiModel(people)
             else
@@ -59,7 +62,7 @@ class NotConnectedPeopleViewModel @Inject constructor(
         }
     }
 
-    private fun filterNotConnectedPeople(usersData: UsersData) = usersData.users
+    private fun filterNotConnectedPeople(users: List<UserData>) = users
         .filter { user -> isConnected(user).not() && user.id != loggedUser?.id }
         .toUiModels()
 
