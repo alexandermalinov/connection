@@ -102,9 +102,7 @@ class AllTabsViewModel @Inject constructor(
     override fun onConnectionClick(id: String) {
         _navigationLiveData.value = NavigationGraph(
             R.id.action_allMessagesFragment_to_connectionChatFragment,
-            bundleOf(
-                HEADER_MODEL to getConnectionById(id)?.toUiModel()
-            )
+            bundleOf(HEADER_MODEL to getConnectionById(id)?.toUiModel())
         )
     }
 }

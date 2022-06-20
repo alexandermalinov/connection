@@ -51,9 +51,9 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_search_outlined"
+                    android:src="@drawable/ic_add_outlined"
                     app:tint="@color/white"
-                    android:onClick="@{() -> presenter.onSearchClick()}"
+                    android:onClick="@{() -> presenter.onCreatePostClick()}"
                     android:layout_marginEnd="@dimen/margin_medium"
                     app:layout_constraintBottom_toBottomOf="@+id/image_profile"
                     app:layout_constraintEnd_toStartOf="@+id/image_profile"

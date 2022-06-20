@@ -65,9 +65,11 @@ class CreatePostViewModel @Inject constructor(
 
     private suspend fun handleOnSave() {
         _uiLiveData.value?.let {
+            it.loadingCreatePost = true
             postRepository.savePostPicture(it.picture) { either ->
                 viewModelScope.launch {
                     either.foldSuspend({ error ->
+                        it.loadingCreatePost = false
                         Timber.e("Error occurred saving post picture: $error")
                     }, { picture ->
                         createPost(it.toPost(picture))
@@ -80,6 +82,7 @@ class CreatePostViewModel @Inject constructor(
     private suspend fun createPost(post: Post) {
         postRepository.createPost(post) { either ->
             either.fold({ error ->
+                _uiLiveData.value?.loadingCreatePost = false
                 Timber.e("Error occurred while creating post: $error")
             }, {
                 navigateToProfile()

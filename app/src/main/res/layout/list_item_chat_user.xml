@@ -21,7 +21,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:onClick="@{() -> presenter.onConnectionClick(model.id)}">
+        android:onClick="@{() -> presenter.onConnectionClick(model.id)}"
+        android:paddingHorizontal="@dimen/margin_medium">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_avatar"
@@ -62,9 +63,9 @@
             android:maxLines="1"
             android:text="@{model.username}"
             android:textSize="@dimen/text_medium"
+            app:boldText="@{model.unreadMessagesCount >= 1}"
             app:layout_constraintStart_toEndOf="@+id/image_avatar"
             app:layout_constraintTop_toTopOf="@+id/image_avatar"
-            app:boldText="@{model.unreadMessagesCount >= 1}"
             tools:text="Alice Henry" />
 
         <TextView
@@ -74,11 +75,11 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@{model.lastMessage}"
+            app:boldText="@{model.unreadMessagesCount >= 1}"
             app:layout_constraintBottom_toBottomOf="@+id/image_avatar"
             app:layout_constraintEnd_toStartOf="@+id/text_last_message_date"
             app:layout_constraintStart_toStartOf="@+id/text_name"
             app:layout_constraintTop_toBottomOf="@+id/text_name"
-            app:boldText="@{model.unreadMessagesCount >= 1}"
             tools:text="Great. I will have a look" />
 
         <TextView
@@ -86,10 +87,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{model.lastMessageAt}"
+            app:boldText="@{model.unreadMessagesCount >= 1}"
             app:layout_constraintBottom_toBottomOf="@+id/text_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_name"
-            app:boldText="@{model.unreadMessagesCount >= 1}"
             tools:text="12:34 AM" />
 
         <TextView
