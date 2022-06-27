@@ -26,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/black"
-            android:padding="@dimen/padding_medium">
+            android:paddingVertical="@dimen/padding_small"
+            android:paddingHorizontal="@dimen/padding_medium">
 
             <TextView
                 android:id="@+id/text_feed"
@@ -44,12 +45,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginBottom="@dimen/margin_small"
                 android:background="@drawable/sp_edit_text"
                 android:hint="@string/find_people"
                 android:padding="@dimen/padding_small"
                 android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_feed"
-                app:textChanges="@{(flow) -> presenter.onSearchChanged(flow)}" />
+                app:textChanges="@{(flow) -> presenter.onSearchChanged(flow)}"
+                tools:layout_editor_absoluteX="16dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

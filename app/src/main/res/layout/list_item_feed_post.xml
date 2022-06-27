@@ -33,6 +33,7 @@
             app:layout_constraintBottom_toTopOf="@+id/image_post_picture"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceCornerSizeFifty"
             tools:src="@drawable/ic_profile_picture" />
 
@@ -73,12 +74,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
-            android:scaleType="centerCrop"
-            app:defaultGlideRess="@{R.drawable.ic_aircraft}"
-            app:glideRess="@{model.picture}"
-            app:layout_constraintBottom_toTopOf="@+id/button_like"
+            app:defaultGlideRes="@{R.drawable.ic_aircraft}"
+            app:glideRes="@{model.picture}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_max="400dp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_avatar"
